@@ -1,5 +1,6 @@
 # guessmelody
 
-npm run eslint
+npm run eslint //for linter
 
-npm run lint
+npm start
+

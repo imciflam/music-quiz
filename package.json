@@ -1,36 +1,40 @@
 {
   "name": "GuessMelody",
-  "version": "5.0.0",
+  "version": "3.0.0",
   "private": true,
-  "description": "Личный проект «{{projectTitle}}» от HTML Academy",
+  "description": "Личный проект «Угадай мелодию»  ",
   "scripts": {
-    "editorconfig": "editorconfig-cli",
-    "stylelint": "stylelint 'sass/**/*.scss' --syntax scss",
-    "eslint": "eslint ./gulpfile.js js/",
+    "eslint": "eslint js/",
     "build": "gulp build",
     "start": "gulp serve",
-    "test": "npm run eslint && npm run stylelint && gulp test"
+    "test": "npm run eslint && gulp test"
   },
   "devDependencies": {
-    "autoprefixer": "8.5.1",
-    "browser-sync": "2.24.4",
-    "css-mqpacker": "6.0.2",
-    "del": "3.0.0",
-    "eslint": "4.19.1",
-    "eslint-config-htmlacademy": "0.5.x",
+    "autoprefixer": "6.7.7",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
+    "babel-register": "6.26.0",
+    "browser-sync": "2.18.8",
+    "css-mqpacker": "6.0.0",
+    "del": "2.2.2",
+    "eslint": "4.2.0",
+    "eslint-config-htmlacademy": "0.3.x",
     "gulp": "3.9.1",
-    "gulp-better-rollup": "4.0.1",
-    "gulp-csso": "3.0.1",
-    "gulp-imagemin": "4.1.0",
-    "gulp-plumber": "1.2.0",
-    "gulp-postcss": "7.0.1",
-    "gulp-rename": "1.2.3",
-    "gulp-sass": "4.0.1",
-    "gulp-sourcemaps": "2.6.5",
-    "stylelint": "8.4.x",
-    "stylelint-config-htmlacademy": "0.1.x"
+    "gulp-better-rollup": "1.1.1",
+    "gulp-csso": "3.0.0",
+    "gulp-imagemin": "3.2.0",
+    "gulp-mocha": "4.3.1",
+    "gulp-plumber": "1.1.0",
+    "gulp-postcss": "7.0.0",
+    "gulp-rename": "1.2.2",
+    "gulp-sass": "3.1.0",
+    "gulp-sourcemaps": "2.6.1"
   },
   "engines": {
-    "node": "8"
+    "node": "6.11.3"
+  },
+  "babel": {
+    "plugins": [
+      "transform-es2015-modules-commonjs"
+    ]
   }
 }

@@ -1,40 +1,14 @@
+import welcomeScreen from "./welcomeScreen";
+import gameGenreScreen from "./gameGenreScreen";
+import gameArtistScreen from "./gameArtistScreen";
+import resultSuccessScreen from "./resultSuccessScreen";
+import failTimeScreen from "./failTimeScreen";
+import failTriesScreen from "./failTriesScreen";
+
 const main = document.querySelector(`.main`);
-const welcome = document
-  .getElementById(`welcome`)
-  .content.querySelector(`.welcome`);
-const gameGenre = document
-  .getElementById(`game-genre`)
-  .content.querySelector(`.game`);
-const gameArtist = document
-  .getElementById(`game-artist`)
-  .content.querySelector(`.game`);
-const resultSuccess = document
-  .getElementById(`result-success`)
-  .content.querySelector(`.result`);
-const failTime = document
-  .getElementById(`fail-time`)
-  .content.querySelector(`.result`);
-const failTries = document
-  .getElementById(`fail-tries`)
-  .content.querySelector(`.result`);
-const resultArtist = document
-  .getElementById(`result-artist`)
-  .content.querySelector(`.result`);
-const resultList = document
-  .getElementById(`result-list`)
-  .content.querySelector(`.result`);
-const resultGenre = document
-  .getElementById(`result-genre`)
-  .content.querySelector(`.result`);
-const modalError = document
-  .getElementById(`modal-error`)
-  .content.querySelector(`.modal`);
-const modalConfirm = document
-  .getElementById(`modal-confirm`)
-  .content.querySelector(`.modal`);
 
 const ready = () => {
-  main.appendChild(welcome);
+  main.appendChild(welcomeScreen);
   const app = document.querySelector(`.app`);
   app.insertAdjacentHTML(
     "afterend",
@@ -79,44 +53,44 @@ const slider = counter => {
   console.log(counter);
   switch (counter) {
     case 0:
-      main.removeChild(gameGenre);
-      main.appendChild(welcome);
+      main.removeChild(gameGenreScreen);
+      main.appendChild(welcomeScreen);
       break;
     case 1:
-      if (gameArtist.parentNode == main) {
-        main.removeChild(gameArtist);
+      if (gameArtistScreen.parentNode == main) {
+        main.removeChild(gameArtistScreen);
       } else {
-        main.removeChild(welcome);
+        main.removeChild(welcomeScreen);
       }
-      main.appendChild(gameGenre);
+      main.appendChild(gameGenreScreen);
       break;
     case 2:
-      if (gameGenre.parentNode == main) {
-        main.removeChild(gameGenre);
+      if (gameGenreScreen.parentNode == main) {
+        main.removeChild(gameGenreScreen);
       } else {
-        main.removeChild(resultSuccess);
+        main.removeChild(resultSuccessScreen);
       }
-      main.appendChild(gameArtist);
+      main.appendChild(gameArtistScreen);
       break;
     case 3:
-      if (resultGenre.parentNode == main) {
-        main.removeChild(resultGenre);
+      if (failTriesScreen.parentNode == main) {
+        main.removeChild(failTriesScreen);
       } else {
-        main.removeChild(gameArtist);
+        main.removeChild(gameArtistScreen);
       }
-      main.appendChild(resultSuccess);
+      main.appendChild(resultSuccessScreen);
       break;
     case 4:
-      if (resultList.parentNode == main) {
-        main.removeChild(resultList);
+      if (failTimeScreen.parentNode == main) {
+        main.removeChild(failTimeScreen);
       } else {
-        main.removeChild(resultSuccess);
+        main.removeChild(resultSuccessScreen);
       }
-      main.appendChild(resultGenre);
+      main.appendChild(failTriesScreen);
       break;
     case 5:
-      main.removeChild(resultGenre);
-      main.appendChild(resultList);
+      main.removeChild(failTriesScreen);
+      main.appendChild(welcomeScreen);
       break;
     default:
       break;

@@ -99,11 +99,19 @@ const slider = counter => {
       main.appendChild(gameArtist);
       break;
     case 3:
-      main.removeChild(gameArtist);
+      if (resultGenre.parentNode == main) {
+        main.removeChild(resultGenre);
+      } else {
+        main.removeChild(gameArtist);
+      }
       main.appendChild(resultSuccess);
       break;
     case 4:
-      main.removeChild(resultSuccess);
+      if (resultList.parentNode == main) {
+        main.removeChild(resultList);
+      } else {
+        main.removeChild(resultSuccess);
+      }
       main.appendChild(resultGenre);
       break;
     case 5:

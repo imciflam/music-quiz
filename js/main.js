@@ -19,11 +19,43 @@ document.addEventListener("DOMContentLoaded", ready);
 
 function ready() {
   main.appendChild(welcome);
+  const app = document.querySelector(`.app`);
+  app.insertAdjacentHTML(
+    "afterend",
+    `<div class="arrows__wrap">
+        <style>
+        .arrows__wrap {
+            position: absolute;
+            top: 135px;
+            left: 50%;
+            margin-left: -56px;
+        }
+        .arrows__btn {
+            background: none;
+            border: 2px solid black;
+            padding: 5px 20px;
+        }
+        </style>
+        <button class="arrows__btn"><-</button>
+        <button class="arrows__btn">-></button>
+</div>
+`
+  );
 }
 
 document.addEventListener("keydown", function(event) {
   console.log(event.which);
+  let counter = 0;
   if (event.which == 39) {
+    counter++;
+    console.log(counter);
     main.appendChild(gameGenre);
+    main.removeChild(welcome);
   }
+  if (event.which == 37) {
+    counter--;
+    main.appendChild(gameGenre);
+    main.removeChild(welcome);
+  }
+  console.log(counter);
 });

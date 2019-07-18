@@ -15,9 +15,7 @@ const resultGenre = document.getElementById(`result-genre`);
 const modalError = document.getElementById(`modal-error`);
 const modalConfirm = document.getElementById(`modal-confirm`);
 
-document.addEventListener("DOMContentLoaded", ready);
-
-function ready() {
+const ready = () => {
   main.appendChild(welcome);
   const app = document.querySelector(`.app`);
   app.insertAdjacentHTML(
@@ -41,21 +39,29 @@ function ready() {
 </div>
 `
   );
-}
+};
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener("DOMContentLoaded", ready);
+
+let counter = 0;
+const switcher = () => {
   console.log(event.which);
-  let counter = 0;
-  if (event.which == 39) {
-    counter++;
-    console.log(counter);
-    main.appendChild(gameGenre);
-    main.removeChild(welcome);
-  }
-  if (event.which == 37) {
-    counter--;
-    main.appendChild(gameGenre);
-    main.removeChild(welcome);
-  }
+  const kek = () => {
+    if (event.which == 39) {
+      counter++;
+      console.log(counter);
+      main.appendChild(gameGenre);
+      main.removeChild(welcome);
+    }
+    if (event.which == 37) {
+      counter--;
+      console.log(counter);
+      main.appendChild(welcome);
+      main.removeChild(gameGenre);
+    }
+  };
+  kek();
   console.log(counter);
-});
+};
+
+document.addEventListener("keydown", switcher);

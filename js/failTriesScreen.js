@@ -1,6 +1,6 @@
 import { htmlToElement } from "./elementCreator";
 
-//Результат игры: проигрыш, время вышло
+//  Результат игры: проигрыш, время вышло
 const failTriesScreen = htmlToElement(`
 <section class="result">
   <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>

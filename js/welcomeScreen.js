@@ -1,6 +1,6 @@
 import { htmlToElement } from "./elementCreator";
 
-//Приветствие
+//  Приветствие
 const welcomeScreen = htmlToElement(`
   <section class="welcome">
     <div class="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>

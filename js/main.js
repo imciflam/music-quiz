@@ -38,11 +38,11 @@ document.addEventListener("DOMContentLoaded", ready);
 let counter = 0;
 const switcher = () => {
   console.log(event.which);
-  if (event.which == 39) {
+  if (event.which === 39) {
     counter++;
     slider(counter);
   }
-  if (event.which == 37) {
+  if (event.which === 37) {
     counter--;
     slider(counter);
   }
@@ -57,7 +57,7 @@ const slider = counter => {
       main.appendChild(welcomeScreen);
       break;
     case 1:
-      if (gameArtistScreen.parentNode == main) {
+      if (gameArtistScreen.parentNode === main) {
         main.removeChild(gameArtistScreen);
       } else {
         main.removeChild(welcomeScreen);
@@ -65,7 +65,7 @@ const slider = counter => {
       main.appendChild(gameGenreScreen);
       break;
     case 2:
-      if (gameGenreScreen.parentNode == main) {
+      if (gameGenreScreen.parentNode === main) {
         main.removeChild(gameGenreScreen);
       } else {
         main.removeChild(resultSuccessScreen);
@@ -73,7 +73,7 @@ const slider = counter => {
       main.appendChild(gameArtistScreen);
       break;
     case 3:
-      if (failTriesScreen.parentNode == main) {
+      if (failTriesScreen.parentNode === main) {
         main.removeChild(failTriesScreen);
       } else {
         main.removeChild(gameArtistScreen);
@@ -81,7 +81,7 @@ const slider = counter => {
       main.appendChild(resultSuccessScreen);
       break;
     case 4:
-      if (failTimeScreen.parentNode == main) {
+      if (failTimeScreen.parentNode === main) {
         main.removeChild(failTimeScreen);
       } else {
         main.removeChild(resultSuccessScreen);

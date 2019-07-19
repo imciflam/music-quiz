@@ -1,6 +1,6 @@
 import { htmlToElement } from "./elementCreator";
 
-//Игра на выбор жанра
+//  Игра на выбор жанра
 const gameGenreScreen = htmlToElement(`
 <section class="game game--genre">
     <header class="game__header">

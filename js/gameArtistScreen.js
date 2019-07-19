@@ -1,6 +1,6 @@
 import { htmlToElement } from "./elementCreator";
 
-//Игра на выбор исполнителя
+//  Игра на выбор исполнителя
 const gameArtistScreen = htmlToElement(`
 <section class="game game--artist">
     <header class="game__header">

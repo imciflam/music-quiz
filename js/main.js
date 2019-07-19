@@ -11,7 +11,7 @@ const ready = () => {
   main.appendChild(welcomeScreen);
   const app = document.querySelector(`.app`);
   app.insertAdjacentHTML(
-    "afterend",
+    `afterend`,
     `<div class="arrows__wrap">
         <style>
         .arrows__wrap {
@@ -33,11 +33,10 @@ const ready = () => {
   );
 };
 
-document.addEventListener("DOMContentLoaded", ready);
+document.addEventListener(`DOMContentLoaded`, ready);
 
 let counter = 0;
 const switcher = () => {
-  console.log(event.which);
   if (event.which === 39) {
     counter++;
     slider(counter);
@@ -46,11 +45,9 @@ const switcher = () => {
     counter--;
     slider(counter);
   }
-  console.log(counter);
 };
 
 const slider = counter => {
-  console.log(counter);
   switch (counter) {
     case 0:
       main.removeChild(gameGenreScreen);

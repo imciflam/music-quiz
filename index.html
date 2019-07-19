@@ -1,156 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Угадай мелодию</title>
-  <link href="css/style.css" rel="stylesheet">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Угадай мелодию</title>
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="app">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        style="position: absolute; left: -1200em;"
+      >
+        <filter id="blur">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="5"></feGaussianBlur>
+          <feOffset dx="0" dy="0"></feOffset>
+          <feMerge>
+            <feMergeNode></feMergeNode>
+            <feMergeNode in="SourceGraphic"></feMergeNode>
+          </feMerge>
+        </filter>
+      </svg>
 
-  <main class="app">
-    <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: -1200em;">
-      <filter id="blur">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="5"></feGaussianBlur>
-        <feOffset dx="0" dy="0"></feOffset>
-        <feMerge>
-          <feMergeNode></feMergeNode>
-          <feMergeNode in="SourceGraphic"></feMergeNode>
-        </feMerge>
-      </filter>
-    </svg>
+      <section class="main"></section>
+    </main>
 
-    <section class="main">
+    <footer class="footer">
+      <section class="copyright">
+        <a class="copyright__logo" href="https://htmlacademy.ru"
+          ><img
+            src="../img/logo-htmla.svg"
+            width="144"
+            height="49"
+            alt="HTML Academy"
+        /></a>
+        <p class="copyright__text">
+          Сделано в 2019 году
+        </p>
+      </section>
+    </footer>
 
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <section class="copyright">
-      <a class="copyright__logo"  ><img src="../img/logo-htmla.svg" width="144" height="49" alt="HTML Academy"></a> 
-      <p class="copyright__text">Сделано в  HTML Academy</a></p>
-    </section>
-  </footer> 
- 
-  
-
-<!-- Результат игры: проигрыш, закончились попытки -->
-<template id="fail-tries">
-  <section class="result">
-    <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
-    <h2 class="result__title">Какая жалость!</h2>
-    <p class="result__total result__total--fail">У вас закончились все попытки. Ничего, повезёт в следующий раз!</p>
-    <button class="result__replay" type="button">Попробовать ещё раз</button>
-  </section>
-</template>
-
-<!-- Результат игры на выбор исполнителя -->
-<template id="result-artist">
-  <section class="result result--artist">
-    <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
-    <h2 class="result__title">Вы отгадали 4 мелодии</h2>
-    <p class="result__text">Это лучше чем у 80% игроков</p>
-    <div class="result__answer">
-      <div class="artist">
-        <p class="artist__text">Самый<br>быстрый ответ</p>
-        <div class="artist__name">
-          <img class="artist__picture" src="http://placehold.it/134x134" alt="Пелагея">
-          Пелагея
+    <!-- Результат игры: проигрыш, закончились попытки -->
+    <template id="fail-tries">
+      <section class="result">
+        <div class="result__logo">
+          <img
+            src="img/melody-logo.png"
+            alt="Угадай мелодию"
+            width="186"
+            height="83"
+          />
         </div>
-        <span class="artist__time">3 секунды</span>
-      </div>
+        <h2 class="result__title">Какая жалость!</h2>
+        <p class="result__total result__total--fail">
+          У вас закончились все попытки. Ничего, повезёт в следующий раз!
+        </p>
+        <button class="result__replay" type="button">
+          Попробовать ещё раз
+        </button>
+      </section>
+    </template>
 
-      <div class="artist">
-        <p class="artist__text">Самый<br>долгий ответ</p>
-        <div class="artist__name">
-          <img class="artist__picture" src="http://placehold.it/134x134" alt="Пелагея">
-          Не Пелагея
+    <!-- Результат игры на выбор исполнителя -->
+    <template id="result-artist">
+      <section class="result result--artist">
+        <div class="result__logo">
+          <img
+            src="img/melody-logo.png"
+            alt="Угадай мелодию"
+            width="186"
+            height="83"
+          />
         </div>
-        <span class="artist__time">10 секунд</span>
-      </div>
-    </div>
-    <p class="result__total">Вы настоящий меломан!</p>
-    <button class="result__replay" type="button">Сыграть ещё раз</button>
-  </section>
-</template>
+        <h2 class="result__title">Вы отгадали 4 мелодии</h2>
+        <p class="result__text">Это лучше чем у 80% игроков</p>
+        <div class="result__answer">
+          <div class="artist">
+            <p class="artist__text">Самый<br />быстрый ответ</p>
+            <div class="artist__name">
+              <img
+                class="artist__picture"
+                src="http://placehold.it/134x134"
+                alt="Пелагея"
+              />
+              Пелагея
+            </div>
+            <span class="artist__time">3 секунды</span>
+          </div>
 
-<!-- Результат игры на выбор исполнителя. Список -->
-<template id="result-list">
-  <section class="result result--list">
-    <h2 class="result__title">Вы набрали 20 баллов</h2>
-    <p class="result__text">Мгновенный ответ — 2</p>
-    <p class="result__text">Музкомбо — 1</p>
-    <ol class="result__list">
-      <li class="result__item result__item--correct">Gorillaz – Clint Eastwood</li>
-      <li class="result__item">Сплин – Моё сердце остановилось</li>
-      <li class="result__item">Anacondaz – Семь миллиардов</li>
-      <li class="result__item result__item--correct">L'One – Якутяночка<span class="result__extra">+5 баллов</span></li>
-      <li class="result__item">Nirvana – Lithium</li>
-      <li class="result__item">Nickelback – Lullaby</li>
-      <li class="result__item result__item--correct">Eminem & Linkin Park–Gravity</li>
-      <li class="result__item">Gorillaz – Clint Eastwood</li>
-      <li class="result__item">Сплин – Моё сердце остановилось</li>
-      <li class="result__item">Anacondaz – Семь миллиардов</li>
-      <li class="result__item">L'One – Якутяночка</li>
-      <li class="result__item result__item--correct">Nirvana – Lithium</li>
-      <li class="result__item">Nickelback – Lullaby</li>
-      <li class="result__item">Eminem & Linkin Park–Gravity</li>
-    </ol>
-    <p class="result__total">Вы настоящий меломан!</p>
-    <button class="result__replay" type="button">Попробовать ещё раз</button>
-  </section>
-</template>
+          <div class="artist">
+            <p class="artist__text">Самый<br />долгий ответ</p>
+            <div class="artist__name">
+              <img
+                class="artist__picture"
+                src="http://placehold.it/134x134"
+                alt="Пелагея"
+              />
+              Не Пелагея
+            </div>
+            <span class="artist__time">10 секунд</span>
+          </div>
+        </div>
+        <p class="result__total">Вы настоящий меломан!</p>
+        <button class="result__replay" type="button">Сыграть ещё раз</button>
+      </section>
+    </template>
 
-<!-- Результат игры на выбор жанра -->
-<template id="result-genre">
-  <section class="result result--genre">
-    <h2 class="result__title">Вы набрали 20 баллов</h2>
-    <p class="result__text">Это лучше чем у 50% игроков</p>
-    <div class="result__correct">
-      <div class="correct"></div>
-      <div class="correct"></div>
-      <div class="correct"></div>
-      <div class="correct"></div>
-      <div class="correct"></div>
-      <div class="correct"></div>
-      <div class="correct"></div>
-      <div class="correct"></div>
-      <div class="correct"></div>
-      <div class="correct"></div>
-    </div>
-    <p class="result__total">10 правильных ответов</p>
-    <div class="result__wrong">
-      <div class="wrong"></div>
-      <div class="wrong"></div>
-      <div class="wrong"></div>
-    </div>
-    <p class="result__total">3 ошибки</p>
-    <p class="result__genre">Лучше всего вы разбираетесь в Инди-роке</p>
-    <button class="result__replay" type="button">Попробовать ещё раз</button>
-  </section>
-</template>
+    <!-- Результат игры на выбор исполнителя. Список -->
+    <template id="result-list">
+      <section class="result result--list">
+        <h2 class="result__title">Вы набрали 20 баллов</h2>
+        <p class="result__text">Мгновенный ответ — 2</p>
+        <p class="result__text">Музкомбо — 1</p>
+        <ol class="result__list">
+          <li class="result__item result__item--correct">
+            Gorillaz – Clint Eastwood
+          </li>
+          <li class="result__item">Сплин – Моё сердце остановилось</li>
+          <li class="result__item">Anacondaz – Семь миллиардов</li>
+          <li class="result__item result__item--correct">
+            L'One – Якутяночка<span class="result__extra">+5 баллов</span>
+          </li>
+          <li class="result__item">Nirvana – Lithium</li>
+          <li class="result__item">Nickelback – Lullaby</li>
+          <li class="result__item result__item--correct">
+            Eminem & Linkin Park–Gravity
+          </li>
+          <li class="result__item">Gorillaz – Clint Eastwood</li>
+          <li class="result__item">Сплин – Моё сердце остановилось</li>
+          <li class="result__item">Anacondaz – Семь миллиардов</li>
+          <li class="result__item">L'One – Якутяночка</li>
+          <li class="result__item result__item--correct">Nirvana – Lithium</li>
+          <li class="result__item">Nickelback – Lullaby</li>
+          <li class="result__item">Eminem & Linkin Park–Gravity</li>
+        </ol>
+        <p class="result__total">Вы настоящий меломан!</p>
+        <button class="result__replay" type="button">
+          Попробовать ещё раз
+        </button>
+      </section>
+    </template>
 
-<!-- Модальное окно: ошибка -->
-<template id="modal-error">
-  <section class="modal">
-    <h2 class="modal__title">Произошла ошибка!</h2>
-    <p class="modal__text">Статус: 404. Пожалуйста, перезагрузите страницу.</p>
-  </section>
-</template>
+    <!-- Результат игры на выбор жанра -->
+    <template id="result-genre">
+      <section class="result result--genre">
+        <h2 class="result__title">Вы набрали 20 баллов</h2>
+        <p class="result__text">Это лучше чем у 50% игроков</p>
+        <div class="result__correct">
+          <div class="correct"></div>
+          <div class="correct"></div>
+          <div class="correct"></div>
+          <div class="correct"></div>
+          <div class="correct"></div>
+          <div class="correct"></div>
+          <div class="correct"></div>
+          <div class="correct"></div>
+          <div class="correct"></div>
+          <div class="correct"></div>
+        </div>
+        <p class="result__total">10 правильных ответов</p>
+        <div class="result__wrong">
+          <div class="wrong"></div>
+          <div class="wrong"></div>
+          <div class="wrong"></div>
+        </div>
+        <p class="result__total">3 ошибки</p>
+        <p class="result__genre">Лучше всего вы разбираетесь в Инди-роке</p>
+        <button class="result__replay" type="button">
+          Попробовать ещё раз
+        </button>
+      </section>
+    </template>
 
-<!--Модальное окно: подтверждение -->
-<template id="modal-confirm">
-  <section class="modal">
-    <button class="modal__close" type="button"><span class="visually-hidden">Закрыть</span></button>
-    <h2 class="modal__title">Подтверждение</h2>
-    <p class="modal__text">Вы уверены что хотите начать игру заново?</p>
-    <div class="modal__buttons">
-      <button class="modal__button button">Ок</button>
-      <button class="modal__button button">Отмена</button>
-    </div>
-  </section>
-</template>
-<script type="text/javascript" src="js/main.js" defer></script>
+    <!-- Модальное окно: ошибка -->
+    <template id="modal-error">
+      <section class="modal">
+        <h2 class="modal__title">Произошла ошибка!</h2>
+        <p class="modal__text">
+          Статус: 404. Пожалуйста, перезагрузите страницу.
+        </p>
+      </section>
+    </template>
 
-</body>
+    <!--Модальное окно: подтверждение -->
+    <template id="modal-confirm">
+      <section class="modal">
+        <button class="modal__close" type="button">
+          <span class="visually-hidden">Закрыть</span>
+        </button>
+        <h2 class="modal__title">Подтверждение</h2>
+        <p class="modal__text">Вы уверены что хотите начать игру заново?</p>
+        <div class="modal__buttons">
+          <button class="modal__button button">Ок</button>
+          <button class="modal__button button">Отмена</button>
+        </div>
+      </section>
+    </template>
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
 </html>

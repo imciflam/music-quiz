@@ -2,7 +2,7 @@
   "name": "GuessMelody",
   "version": "3.0.0",
   "private": true,
-  "description": "Личный проект «Угадай мелодию»  ",
+  "description": "Личный проект «Угадай мелодию»",
   "scripts": {
     "eslint": "eslint js/",
     "build": "gulp build",

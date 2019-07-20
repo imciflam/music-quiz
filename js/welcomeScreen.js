@@ -1,4 +1,4 @@
-import { htmlToElement } from "./elementCreator";
+import {htmlToElement} from "./elementCreator";
 
 //  Приветствие
 const welcomeScreen = htmlToElement(`

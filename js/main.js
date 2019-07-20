@@ -47,7 +47,7 @@ const switcher = () => {
   }
 };
 
-const slider = (slideNumbers) => {
+const slider = slideNumbers => {
   switch (slideNumbers) {
     case 0:
       main.removeChild(gameGenreScreen);

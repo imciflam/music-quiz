@@ -1,4 +1,4 @@
-import { htmlToElement } from "./elementCreator";
+import {htmlToElement} from "./elementCreator";
 
 //  Результат игры: проигрыш, время вышло
 const failTimeScreen = htmlToElement(`

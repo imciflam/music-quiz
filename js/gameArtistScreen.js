@@ -1,4 +1,4 @@
-import { htmlToElement } from "./elementCreator";
+import {htmlToElement} from "./elementCreator";
 
 //  Игра на выбор исполнителя
 const gameArtistScreen = htmlToElement(`

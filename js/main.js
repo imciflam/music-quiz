@@ -94,4 +94,4 @@ const slider = counter => {
   }
 };
 
-document.addEventListener("keydown", switcher);
+document.addEventListener(`keydown`, switcher);

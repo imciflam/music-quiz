@@ -31,6 +31,11 @@ const ready = () => {
 </div>
 `
   );
+
+  const welcomeButton = document.querySelector(`.welcome__button`);
+  welcomeButton.addEventListener(`click`, function() {
+    slider(1);
+  });
 };
 
 document.addEventListener(`DOMContentLoaded`, ready);

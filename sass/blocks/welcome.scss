@@ -24,7 +24,7 @@
 .welcome__button {
   position: absolute;
   left: 350px;
-  top: 415px;
+  top: 380px;
 
   padding: 0;
 
@@ -48,7 +48,7 @@
 .welcome__rules-title {
   @include italic-title;
 
-  margin-top: 300px;
+  margin-top: 280px;
 }
 
 .welcome__text {

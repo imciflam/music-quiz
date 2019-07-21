@@ -38,12 +38,20 @@ const ready = () => {
   });
 };
 
+const returner = () => {
+  const returnButton = document.querySelector(`.game__back`);
+  returnButton.addEventListener(`click`, function() {
+    slider(0);
+  });
+};
 document.addEventListener(`DOMContentLoaded`, ready);
 
 const slider = slideNumbers => {
   switch (slideNumbers) {
     case 0:
-      main.removeChild(gameGenreScreen);
+      while (main.firstChild) {
+        main.removeChild(main.firstChild);
+      }
       main.appendChild(welcomeScreen);
       break;
     case 1:
@@ -65,6 +73,7 @@ const slider = slideNumbers => {
         if (flag > 0) slider(2);
         else alert("выберите хотя бы один вариант");
       };
+      returner();
       break;
     case 2:
       if (gameGenreScreen.parentNode === main) {
@@ -80,6 +89,7 @@ const slider = slideNumbers => {
           slider(3);
         });
       }
+      returner();
       break;
     case 3:
       if (failTriesScreen.parentNode === main) {
@@ -88,6 +98,11 @@ const slider = slideNumbers => {
         main.removeChild(gameArtistScreen);
       }
       main.appendChild(resultSuccessScreen);
+
+      document.querySelector(".result__replay").onclick = function(e) {
+        e.preventDefault();
+        slider(0);
+      };
       break;
     case 4:
       if (failTimeScreen.parentNode === main) {
@@ -96,10 +111,6 @@ const slider = slideNumbers => {
         main.removeChild(resultSuccessScreen);
       }
       main.appendChild(failTriesScreen);
-      break;
-    case 5:
-      main.removeChild(failTriesScreen);
-      main.appendChild(welcomeScreen);
       break;
     default:
       break;

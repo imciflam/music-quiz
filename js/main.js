@@ -40,18 +40,6 @@ const ready = () => {
 
 document.addEventListener(`DOMContentLoaded`, ready);
 
-let counter = 0;
-const switcher = () => {
-  if (event.which === 39) {
-    counter++;
-    slider(counter);
-  }
-  if (event.which === 37) {
-    counter--;
-    slider(counter);
-  }
-};
-
 const slider = slideNumbers => {
   switch (slideNumbers) {
     case 0:
@@ -65,6 +53,18 @@ const slider = slideNumbers => {
         main.removeChild(welcomeScreen);
       }
       main.appendChild(gameGenreScreen);
+      let flag = 0;
+      const gameInputs = document.querySelectorAll(".game__input");
+      for (let i = 0; i < gameInputs.length; i++) {
+        gameInputs[i].addEventListener("click", function() {
+          flag++;
+        });
+      }
+      document.querySelector(".game__submit").onclick = function(e) {
+        e.preventDefault();
+        if (flag > 0) slider(2);
+        else alert("выберите хотя бы один вариант");
+      };
       break;
     case 2:
       if (gameGenreScreen.parentNode === main) {
@@ -73,6 +73,13 @@ const slider = slideNumbers => {
         main.removeChild(resultSuccessScreen);
       }
       main.appendChild(gameArtistScreen);
+      const artistsInputs = document.querySelectorAll(".artist__input ");
+      for (let i = 0; i < artistsInputs.length; i++) {
+        artistsInputs[i].addEventListener("click", function() {
+          const rand = Math.floor(Math.random() * 2) + 3;
+          slider(3);
+        });
+      }
       break;
     case 3:
       if (failTriesScreen.parentNode === main) {
@@ -98,5 +105,3 @@ const slider = slideNumbers => {
       break;
   }
 };
-
-document.addEventListener(`keydown`, switcher);

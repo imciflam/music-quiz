@@ -6,7 +6,6 @@
 @import "../variables/layout";
 @import "../mixins/text";
 
-
 .result {
   display: flex;
   align-items: center;
@@ -19,7 +18,7 @@
 
 .result__logo {
   margin: 0;
-  margin-top: 220px;
+  margin-top: 200px;
 }
 
 .result__title {

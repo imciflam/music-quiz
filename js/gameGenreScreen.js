@@ -9,7 +9,7 @@ const gameGenreScreen = htmlToElement(`
         <img class="game__logo" src="/img/melody-logo-ginger.png" alt="Угадай мелодию">
       </a>
 
-      <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
+      <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 40 780 780">
         <circle class="timer__line" cx="390" cy="390" r="370" style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center">
       </svg>
 
@@ -68,12 +68,12 @@ const gameGenreScreen = htmlToElement(`
             <audio></audio>
           </div>
           <div class="game__answer">
-            <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="answer-4">
-            <label class="game__check" for="answer-4">Отметить</label>
+            <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1"  id="answer-4">
+            <label class="game__check " for="answer-4">Отметить</label>
           </div>
         </div>
 
-        <button class="game__submit button" type="submit">Ответить</button>
+        <button class="game__submit button" type="submit"  >Ответить</button>
       </form>
     </section>
   </section>`);

@@ -9,33 +9,6 @@ const main = document.querySelector(`.main`);
 
 const ready = () => {
   main.appendChild(welcomeScreen);
-  const app = document.querySelector(`.app`);
-  app.insertAdjacentHTML(
-    `afterend`,
-    `<div class="arrows__wrap">
-        <style>
-        .arrows__wrap {
-            position: absolute;
-            top: 135px;
-            left: 50%;
-            margin-left: -56px;
-        }
-        .arrows__btn {
-            background: none;
-            border: 2px solid black;
-            padding: 5px 20px;
-        }
-        </style>
-        <button class="arrows__btn"><-</button>
-        <button class="arrows__btn">-></button>
-</div>
-`
-  );
-
-  const welcomeButton = document.querySelector(`.welcome__button`);
-  welcomeButton.addEventListener(`click`, function() {
-    slider(1);
-  });
 };
 
 const returner = () => {

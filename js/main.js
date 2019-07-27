@@ -27,7 +27,7 @@ const slider = slideNumbers => {
       }
       main.appendChild(welcomeScreen);
       break;
-    case 1:
+    case 1: {
       if (gameArtistScreen.parentNode === main) {
         main.removeChild(gameArtistScreen);
       } else {
@@ -48,7 +48,8 @@ const slider = slideNumbers => {
       };
       returner();
       break;
-    case 2:
+    }
+    case 2: {
       if (gameGenreScreen.parentNode === main) {
         main.removeChild(gameGenreScreen);
       } else {
@@ -59,11 +60,12 @@ const slider = slideNumbers => {
       for (let i = 0; i < artistsInputs.length; i++) {
         artistsInputs[i].addEventListener("click", function() {
           const rand = Math.floor(Math.random() * 2) + 3;
-          slider(3);
+          slider(rand);
         });
       }
       returner();
       break;
+    }
     case 3:
       if (failTriesScreen.parentNode === main) {
         main.removeChild(failTriesScreen);

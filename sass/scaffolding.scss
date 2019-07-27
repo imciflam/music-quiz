@@ -74,7 +74,7 @@ body {
   flex-direction: column;
 
   height: 100%;
-  min-height: 1000px;
+  min-height: 850px;
 
   background: url("../img/vinyl.png") center no-repeat;
 }
@@ -103,8 +103,6 @@ img {
 .app {
   position: relative;
   margin-bottom: 50px;
-  padding-top: 10px;
-
   width: $layout-width;
 }
 

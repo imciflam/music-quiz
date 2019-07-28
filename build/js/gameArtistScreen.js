@@ -8,7 +8,6 @@ function htmlToElement(html) {
   return div.firstChild;
 }
 
-//  Игра на выбор исполнителя
 const gameArtistScreen = htmlToElement(`
 <section class="game game--artist">
     <header class="game__header">

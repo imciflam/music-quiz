@@ -9,6 +9,10 @@ const main = document.querySelector(`.main`);
 
 const ready = () => {
   main.appendChild(welcomeScreen);
+  const welcomeButton = document.querySelector(`.welcome__button`);
+  welcomeButton.addEventListener(`click`, function() {
+    slider(1);
+  });
 };
 
 const returner = () => {
@@ -43,8 +47,10 @@ const slider = slideNumbers => {
       }
       document.querySelector(".game__submit").onclick = function(e) {
         e.preventDefault();
-        if (flag > 0) slider(2);
-        else alert("выберите хотя бы один вариант");
+        if (flag > 0) {
+          document.querySelector(".game__tracks").reset();
+          slider(2);
+        } else alert("выберите хотя бы один вариант");
       };
       returner();
       break;

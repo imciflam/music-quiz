@@ -8,7 +8,6 @@ function htmlToElement(html) {
   return div.firstChild;
 }
 
-//  Приветствие
 const welcomeScreen = htmlToElement(`
   <section class="welcome">
     <div class="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -22,7 +21,6 @@ const welcomeScreen = htmlToElement(`
     <p class="welcome__text">Удачи!</p>
   </section>`);
 
-//  Игра на выбор жанра
 const gameGenreScreen = htmlToElement(`
 <section class="game game--genre">
     <header class="game__header">
@@ -100,7 +98,6 @@ const gameGenreScreen = htmlToElement(`
     </section>
   </section>`);
 
-//  Игра на выбор исполнителя
 const gameArtistScreen = htmlToElement(`
 <section class="game game--artist">
     <header class="game__header">
@@ -161,7 +158,6 @@ const gameArtistScreen = htmlToElement(`
     </section>
   </section>`);
 
-//  Результат игры: выигрыш
 const resultSuccessScreen = htmlToElement(`
 <section class="result">
 <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -171,7 +167,6 @@ const resultSuccessScreen = htmlToElement(`
 <button class="result__replay" type="button">Сыграть ещё раз</button>
 </section>`);
 
-//  Результат игры: проигрыш, время вышло
 const failTimeScreen = htmlToElement(`
 <section class="result">
   <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -180,7 +175,6 @@ const failTimeScreen = htmlToElement(`
   <button class="result__replay" type="button">Попробовать ещё раз</button>
 </section>`);
 
-//  Результат игры: проигрыш, время вышло
 const failTriesScreen = htmlToElement(`
 <section class="result">
   <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -193,9 +187,94 @@ const main = document.querySelector(`.main`);
 
 const ready = () => {
   main.appendChild(welcomeScreen);
+  const welcomeButton = document.querySelector(`.welcome__button`);
+  welcomeButton.addEventListener(`click`, function() {
+    slider(1);
+  });
 };
 
+const returner = () => {
+  const returnButton = document.querySelector(`.game__back`);
+  returnButton.addEventListener(`click`, function() {
+    slider(0);
+  });
+};
 document.addEventListener(`DOMContentLoaded`, ready);
+
+const slider = slideNumbers => {
+  switch (slideNumbers) {
+    case 0:
+      while (main.firstChild) {
+        main.removeChild(main.firstChild);
+      }
+      main.appendChild(welcomeScreen);
+      break;
+    case 1: {
+      if (gameArtistScreen.parentNode === main) {
+        main.removeChild(gameArtistScreen);
+      } else {
+        main.removeChild(welcomeScreen);
+      }
+      main.appendChild(gameGenreScreen);
+      let flag = 0;
+      const gameInputs = document.querySelectorAll(".game__input");
+      for (let i = 0; i < gameInputs.length; i++) {
+        gameInputs[i].addEventListener("click", function() {
+          flag++;
+        });
+      }
+      document.querySelector(".game__submit").onclick = function(e) {
+        e.preventDefault();
+        if (flag > 0) {
+          document.querySelector(".game__tracks").reset();
+          slider(2);
+        } else alert("выберите хотя бы один вариант");
+      };
+      returner();
+      break;
+    }
+    case 2: {
+      if (gameGenreScreen.parentNode === main) {
+        main.removeChild(gameGenreScreen);
+      } else {
+        main.removeChild(resultSuccessScreen);
+      }
+      main.appendChild(gameArtistScreen);
+      const artistsInputs = document.querySelectorAll(".artist__input ");
+      for (let i = 0; i < artistsInputs.length; i++) {
+        artistsInputs[i].addEventListener("click", function() {
+          const rand = Math.floor(Math.random() * 2) + 3;
+          slider(rand);
+        });
+      }
+      returner();
+      break;
+    }
+    case 3:
+      if (failTriesScreen.parentNode === main) {
+        main.removeChild(failTriesScreen);
+      } else {
+        main.removeChild(gameArtistScreen);
+      }
+      main.appendChild(resultSuccessScreen);
+
+      document.querySelector(".result__replay").onclick = function(e) {
+        e.preventDefault();
+        slider(0);
+      };
+      break;
+    case 4:
+      if (failTimeScreen.parentNode === main) {
+        main.removeChild(failTimeScreen);
+      } else {
+        main.removeChild(resultSuccessScreen);
+      }
+      main.appendChild(failTriesScreen);
+      break;
+    default:
+      break;
+  }
+};
 
 }());
 

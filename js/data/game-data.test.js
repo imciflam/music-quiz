@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { QUESTIONS_COUNT, resultsCount } from "./game.data";
+import { QUESTIONS_COUNT, resultsCount, printResult } from "./game.data";
 
 const results = [
   {
@@ -35,5 +35,41 @@ describe(`Результаты игр`, () => {
 
   it(`игрок  ответил на ${QUESTIONS_COUNT} вопросов, подсчитать очки`, () => {
     assert.equal(14, resultsCount(results[3]));
+  });
+});
+
+const gamesToPlaceInScoreboard = [
+  {
+    answers: [
+      { isCorrect: true, timeSpent: 40 },
+      { isCorrect: false, timeSpent: 20 },
+      { isCorrect: false, timeSpent: 10 }
+    ],
+    rest: 3,
+    result: `Время вышло! Вы не успели отгадать все мелодии`
+  },
+  {
+    answers: [
+      { isCorrect: true, timeSpent: 100 },
+      { isCorrect: false, timeSpent: 10 },
+      { isCorrect: false, timeSpent: 10 },
+      { isCorrect: false, timeSpent: 10 },
+      { isCorrect: false, timeSpent: 10 }
+    ],
+    rest: 0,
+    result: `У вас закончились все попытки. Ничего, повезёт в следующий раз!`
+  }
+];
+
+describe(`Результаты игр`, () => {
+  describe(`Функция вывода результата игрока`, () => {
+    for (let game of gamesToPlaceInScoreboard) {
+      makeTest(game);
+    }
+    function makeTest(game) {
+      it(game.result, () => {
+        assert.equal(game.result, printResult(gamesToPlaceInScoreboard, game));
+      });
+    }
   });
 });

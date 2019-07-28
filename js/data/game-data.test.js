@@ -1,75 +1,92 @@
-import { assert } from "chai";
-import { QUESTIONS_COUNT, resultsCount, printResult } from "./game.data";
+import assert from 'assert';
 
-const results = [
-  {
-    attempt: [1, 2, -2],
-    livesLeft: 1
-  },
-  {
-    attempt: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    livesLeft: 3
-  },
-  {
-    attempt: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    livesLeft: 1
-  },
-  {
-    attempt: [3, 1, 1, 1, 1, 1, 3, 1, 1, 1],
-    livesLeft: 3
-  }
-];
+import {
+  LEVELS_COUNT,
+  MAX_ERRORS_COUNT,
+  getScore,
+  printResult,
+} from './game.data';
+import Timer from './timer';
+import {
+  games,
+  statisctics,
+  gamesToTestInScoreboard
+} from './game-data.mock';
 
-describe(`Результаты игр`, () => {
-  it(`игрок не ответил на ${QUESTIONS_COUNT} вопросов`, () => {
-    assert.equal(-1, resultsCount(results[0]));
-  });
-
-  it(`игрок  ответил на ${QUESTIONS_COUNT} вопросов`, () => {
-    assert.equal(10, resultsCount(results[1]));
-  });
-
-  it(`Игрок ответил на не меньше, чем  ${QUESTIONS_COUNT} вопросов, ошибался`, () => {
-    assert.notEqual(10, resultsCount(results[2]));
-  });
-
-  it(`игрок  ответил на ${QUESTIONS_COUNT} вопросов, подсчитать очки`, () => {
-    assert.equal(14, resultsCount(results[3]));
-  });
-});
-
-const gamesToPlaceInScoreboard = [
-  {
-    answers: [
-      { isCorrect: true, timeSpent: 40 },
-      { isCorrect: false, timeSpent: 20 },
-      { isCorrect: false, timeSpent: 10 }
-    ],
-    rest: 3,
-    result: `Время вышло! Вы не успели отгадать все мелодии`
-  },
-  {
-    answers: [
-      { isCorrect: true, timeSpent: 100 },
-      { isCorrect: false, timeSpent: 10 },
-      { isCorrect: false, timeSpent: 10 },
-      { isCorrect: false, timeSpent: 10 },
-      { isCorrect: false, timeSpent: 10 }
-    ],
-    rest: 0,
-    result: `У вас закончились все попытки. Ничего, повезёт в следующий раз!`
-  }
-];
+const text = (testData) => `
+  Игрок отвечал на ${testData.answers.length} вопрос(ов|а) из ${LEVELS_COUNT} вопросов.
+  Сделал ${MAX_ERRORS_COUNT - testData.remainingAttempts} ошиб(ки|ок|ку).
+  ${testData.points === -1
+    ? `и проиграл`
+    : `и набрал ${testData.points} балл(ов|а)`}
+`;
 
 describe(`Результаты игр`, () => {
+  describe(`Функция подсчёта набранных баллов игрока`, () => {
+    for (let game of games) {
+      makeTest(game);
+    }
+    function makeTest(game) {
+      it(text(game), () => {
+        assert.equal(game.points, getScore(game.answers));
+      });
+    }
+  });
+
   describe(`Функция вывода результата игрока`, () => {
-    for (let game of gamesToPlaceInScoreboard) {
+    for (let game of gamesToTestInScoreboard) {
       makeTest(game);
     }
     function makeTest(game) {
       it(game.result, () => {
-        assert.equal(game.result, printResult(gamesToPlaceInScoreboard, game));
+        assert.equal(game.result,
+            printResult(statisctics, game));
       });
     }
+  });
+});
+
+describe(`Таймер`, () => {
+
+  beforeEach((done) => {
+    Timer.stop();
+    Timer.reset();
+    done();
+  });
+  afterEach(() => {
+    Timer.stop();
+    Timer.reset();
+  });
+
+  it(`сброшен`, () => {
+    assert.strictEqual(-1, Timer.time);
+  });
+
+  it(`стартовал`, () => {
+    Timer.start();
+    assert.strictEqual(0, Timer.time);
+  });
+});
+
+describe(`Таймер`, function () {
+  before((done) => {
+    Timer.stop();
+    Timer.reset();
+    Timer.start();
+
+    Timer.tick();
+    Timer.tick();
+    Timer.tick();
+
+    done();
+  });
+
+  it(`отсчитал три секунды`, () => {
+    assert.strictEqual(3, Timer.time);
+  });
+
+  after(() => {
+    Timer.stop();
+    Timer.reset();
   });
 });

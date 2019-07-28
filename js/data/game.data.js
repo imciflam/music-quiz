@@ -1,75 +1,170 @@
-const QUESTIONS_COUNT = 10;
-const FAST_ANSWER_PERIOD = 30;
-const statistics = [];
-const PRICE_OF_ERROR = 2;
-const MAX_ERRORS_COUNT = 3;
+export const LEVELS_COUNT = 10;
+export const FAST_ANSWER_PERIOD = 30;
+export const MAX_ERRORS_COUNT = 4;
+export const TIME_FOR_GAME = 60 * 5 + 1; // 5 minutes + 1 second
 
-const phrases = {
-  timeIsUp: () => `Время вышло! Вы не успели отгадать все мелодии`,
+const Label = {
+  GAME: `Угадай мелодию`,
+
+  TITLE_WIN: `Вы настоящий меломан!`,
+  TITLE_WELCOME: `Правила игры`,
+  TITLE_FAIL_TIME: `Увы и ах!`,
+  TITLE_FAIL_TRY: `Какая жалость!`,
+
+  BUTTON_WELCOME: `Начать игру`,
+  BUTTON_WIN: `Сыграть ещё раз`,
+  BUTTON_FAIL: `Попробовать ещё раз`
+};
+
+export const phrase = {
+  timeIsUp: () => `Время вышло!<br>Вы не успели отгадать все мелодии`,
   noMoreAttempts: () =>
-    `У вас закончились все попытки. Ничего, повезёт в следующий раз!`,
-  win: ({ place, playersCount, betterThan }) =>
-    `Вы заняли ${place}-ое место из ${playersCount} игроков. Это лучше чем у ${betterThan} игроков`
+    `У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!`,
+  win: ({place, playersCount, betterThan}) =>
+    `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
 };
 
-const sum = arr => arr.reduce((acc, item) => acc + item);
-const penalty = livesLeft => (MAX_ERRORS_COUNT - livesLeft) * PRICE_OF_ERROR;
+export const welcome = {
+  name: Label.GAME,
+  title: Label.TITLE_WELCOME,
+  rules: [
+    `Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.`,
+    `Ошибиться можно 3 раза.`,
+    `Удачи!`
+  ],
+  button: Label.BUTTON_WELCOME
+};
 
-export const resultsCount = ({ attempt, livesLeft }) => {
-  let result = -1;
+export const resultTry = {
+  name: Label.GAME,
+  title: Label.TITLE_FAIL_TRY,
+  button: Label.BUTTON_FAIL,
+  isWin: false,
+};
 
-  if (attempt.length === QUESTIONS_COUNT) {
-    result = sum(attempt) - penalty(livesLeft);
+export const resultTime = {
+  name: Label.GAME,
+  title: Label.TITLE_FAIL_TIME,
+  button: Label.BUTTON_FAIL,
+  content: phrase.timeIsUp(),
+  isWin: false
+};
+
+export const resultWin = {
+  name: Label.GAME,
+  title: Label.TITLE_WIN,
+  button: Label.BUTTON_WIN,
+  isWin: true
+};
+
+export const initialGame = {
+  level: -1,
+  remainingAttempts: MAX_ERRORS_COUNT,
+  time: TIME_FOR_GAME,
+  answers: []
+};
+
+export const tick = (game) => {
+  game = Object.assign({}, game);
+  game.time--;
+  return game;
+};
+
+export const getLevel = (index, allLevels) => allLevels[index];
+
+export const showNextLevel = (state, allLevels) => {
+  const index = state.level + 1;
+  if (!getLevel(index, allLevels)) {
+    throw new RangeError(`Can't find level ${index}`);
   }
-  return result;
+  state.level = index;
+  return state;
 };
 
-const getScore = ({ answers }) => {
+export const startGame = () => {
+  showNextLevel();
+};
+
+export const getScore = (answers) => {
   let score = -1;
 
-  if (answers.length === QUESTIONS_COUNT) {
-    score = answers
-      .map(it => {
-        let points = -2;
-        if (it.isCorrect) {
-          if (it.timeSpent < FAST_ANSWER_PERIOD) {
-            points = 2;
-          } else {
-            points = 1;
-          }
-        }
-        return points;
-      })
-      .reduce((acc, it) => acc + it);
+  if (answers.length === LEVELS_COUNT) {
+    score = answers.reduce((acc, it) => {
+      let point = -2;
+      if (it.isCorrect) {
+        point = (it.timeSpent < FAST_ANSWER_PERIOD) ? 2 : 1;
+      }
+      return acc + point;
+    }, 0);
   }
   return score;
 };
 
-const printResult = (games, game) => {
-  const score = getScore(game);
-  if (score < 0) {
-    if (game.rest > 0) {
-      return phrases.timeIsUp();
-    } else {
-      return phrases.noMoreAttempts();
-    }
-  }
-
-  const gameId = +new Date();
-  statistics.push({ score, gameId });
-  const index = statistics
-    .sort((a, b) => b - a)
-    .filter((it, i) => (it.gameId === gameId ? i : null));
-
-  if (index === null) {
-    throw new Error(`Алгоритм сломалсо`);
-  }
-  const stats = {
-    playersCount: statistics.length,
-    place: index + 1,
-    betterThan: ((stats.playersCount - stats.place) * 100) / stats.playersCount
-  };
-  return phrases.win(stats);
+export const getFastScore = (answers) => {
+  const slowScore = answers
+      .filter((it) => it.isCorrect && it.timeSpent >= FAST_ANSWER_PERIOD)
+      .length;
+  return getScore(answers) - slowScore;
 };
 
-export { MAX_ERRORS_COUNT, getScore, printResult, QUESTIONS_COUNT };
+const getTimeSpent = (answers) => {
+  let time = answers.reduce((acc, it) => {
+    return acc + it.timeSpent;
+  }, 0);
+  return time;
+};
+
+const getPosition = (scoreBoard, score) => {
+  // создаём из таблицы результатов, массив объектов: { position, score }
+  const statisticsIndexed = scoreBoard
+      .map((scoreFromStaticstics, position) => ({
+        position,
+        score: scoreFromStaticstics
+      }));
+
+  // кладём в таблицу результат новой игры
+  statisticsIndexed.push({
+    position: null,
+    score
+  });
+
+  // получаем позицию новой игры в таблице результатов
+  const position = statisticsIndexed
+      .sort((a, b) => b.score - a.score)
+      .reduce((acc, it, index) => {
+        if (it.position === null) {
+          acc = index;
+        }
+        return acc;
+      }, -1);
+
+  if (position === -1) {
+    throw new Error(`Can't define position in Scoreboard`);
+  }
+  return position;
+};
+
+export const printResult = (scoreBoard = [], game) => {
+  let endGameMessage = ``;
+  const score = getScore(game.answers);
+  const time = getTimeSpent(game.answers);
+
+  if (game.remainingAttempts > 0 && time < TIME_FOR_GAME) {
+    // выйгрыш
+    const position = getPosition(scoreBoard, score);
+    scoreBoard.push(score);
+    scoreBoard.sort((a, b) => b - a);
+
+    resultWin.place = position + 1;
+    resultWin.playersCount = scoreBoard.length;
+    resultWin.betterThan = Math.round((scoreBoard.length - position - 1) * 100 / scoreBoard.length);
+
+    endGameMessage = phrase.win(resultWin);
+
+  } else {
+    // проигрыш
+    endGameMessage = (time > TIME_FOR_GAME) ? phrase.timeIsUp() : phrase.noMoreAttempts();
+  }
+
+  return endGameMessage;
+};

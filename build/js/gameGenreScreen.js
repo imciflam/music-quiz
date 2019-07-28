@@ -8,6 +8,7 @@ function htmlToElement(html) {
   return div.firstChild;
 }
 
+//  Игра на выбор жанра
 const gameGenreScreen = htmlToElement(`
 <section class="game game--genre">
     <header class="game__header">

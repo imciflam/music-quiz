@@ -2,7 +2,6 @@ import welcomeScreen from "./welcomeScreen";
 import gameGenreScreen from "./gameGenreScreen";
 import gameArtistScreen from "./gameArtistScreen";
 import resultSuccessScreen from "./resultSuccessScreen";
-import failTimeScreen from "./failTimeScreen";
 import failTriesScreen from "./failTriesScreen";
 
 const main = document.querySelector(`.main`);
@@ -56,10 +55,8 @@ const slider = slideNumbers => {
       break;
     }
     case 2: {
-      if (gameGenreScreen.parentNode === main) {
-        main.removeChild(gameGenreScreen);
-      } else {
-        main.removeChild(resultSuccessScreen);
+      while (main.firstChild) {
+        main.removeChild(main.firstChild);
       }
       main.appendChild(gameArtistScreen);
       const artistsInputs = document.querySelectorAll(".artist__input ");
@@ -73,25 +70,24 @@ const slider = slideNumbers => {
       break;
     }
     case 3:
-      if (failTriesScreen.parentNode === main) {
-        main.removeChild(failTriesScreen);
-      } else {
-        main.removeChild(gameArtistScreen);
+      while (main.firstChild) {
+        main.removeChild(main.firstChild);
       }
       main.appendChild(resultSuccessScreen);
-
       document.querySelector(".result__replay").onclick = function(e) {
         e.preventDefault();
         slider(0);
       };
       break;
     case 4:
-      if (failTimeScreen.parentNode === main) {
-        main.removeChild(failTimeScreen);
-      } else {
-        main.removeChild(resultSuccessScreen);
+      while (main.firstChild) {
+        main.removeChild(main.firstChild);
       }
       main.appendChild(failTriesScreen);
+      document.querySelector(".result__replay").onclick = function(e) {
+        e.preventDefault();
+        slider(0);
+      };
       break;
     default:
       break;

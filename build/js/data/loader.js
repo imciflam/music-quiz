@@ -1,3 +1,6 @@
+var loader = (function () {
+'use strict';
+
 const URL = `https://es.dump.academy/guess-melody`;
 const NAME_ID = `rusak178490`;
 const CHUNK_SIZE = 4;
@@ -6,7 +9,7 @@ let AUDIO_LOAD_TIMEOUT = 5000; // 5 sec initial timeframe to load one chunk
 let timeout;
 let notLoadedUrls = [];
 
-export default class Loader {
+class Loader {
   static getLevels() {
     return fetch(`${URL}/questions`)
       .then(response => {
@@ -118,3 +121,9 @@ export default class Loader {
     return fetch(`${URL}/stats/${NAME_ID}`, requestSettings);
   }
 }
+
+return Loader;
+
+}());
+
+//# sourceMappingURL=loader.js.map

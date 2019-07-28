@@ -8,6 +8,7 @@ function htmlToElement(html) {
   return div.firstChild;
 }
 
+//  Результат игры: проигрыш, время вышло
 const failTimeScreen = htmlToElement(`
 <section class="result">
   <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>

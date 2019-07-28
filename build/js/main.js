@@ -8,6 +8,7 @@ function htmlToElement(html) {
   return div.firstChild;
 }
 
+//  Приветствие
 const welcomeScreen = htmlToElement(`
   <section class="welcome">
     <div class="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -21,6 +22,7 @@ const welcomeScreen = htmlToElement(`
     <p class="welcome__text">Удачи!</p>
   </section>`);
 
+//  Игра на выбор жанра
 const gameGenreScreen = htmlToElement(`
 <section class="game game--genre">
     <header class="game__header">
@@ -98,6 +100,7 @@ const gameGenreScreen = htmlToElement(`
     </section>
   </section>`);
 
+//  Игра на выбор исполнителя
 const gameArtistScreen = htmlToElement(`
 <section class="game game--artist">
     <header class="game__header">
@@ -158,6 +161,7 @@ const gameArtistScreen = htmlToElement(`
     </section>
   </section>`);
 
+//  Результат игры: выигрыш
 const resultSuccessScreen = htmlToElement(`
 <section class="result">
 <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -167,14 +171,7 @@ const resultSuccessScreen = htmlToElement(`
 <button class="result__replay" type="button">Сыграть ещё раз</button>
 </section>`);
 
-const failTimeScreen = htmlToElement(`
-<section class="result">
-  <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
-  <h2 class="result__title">Увы и ах!</h2>
-  <p class="result__total result__total--fail">Время вышло! Вы не успели отгадать все мелодии</p>
-  <button class="result__replay" type="button">Попробовать ещё раз</button>
-</section>`);
-
+//  Результат игры: проигрыш, время вышло
 const failTriesScreen = htmlToElement(`
 <section class="result">
   <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -234,10 +231,8 @@ const slider = slideNumbers => {
       break;
     }
     case 2: {
-      if (gameGenreScreen.parentNode === main) {
-        main.removeChild(gameGenreScreen);
-      } else {
-        main.removeChild(resultSuccessScreen);
+      while (main.firstChild) {
+        main.removeChild(main.firstChild);
       }
       main.appendChild(gameArtistScreen);
       const artistsInputs = document.querySelectorAll(".artist__input ");
@@ -251,25 +246,24 @@ const slider = slideNumbers => {
       break;
     }
     case 3:
-      if (failTriesScreen.parentNode === main) {
-        main.removeChild(failTriesScreen);
-      } else {
-        main.removeChild(gameArtistScreen);
+      while (main.firstChild) {
+        main.removeChild(main.firstChild);
       }
       main.appendChild(resultSuccessScreen);
-
       document.querySelector(".result__replay").onclick = function(e) {
         e.preventDefault();
         slider(0);
       };
       break;
     case 4:
-      if (failTimeScreen.parentNode === main) {
-        main.removeChild(failTimeScreen);
-      } else {
-        main.removeChild(resultSuccessScreen);
+      while (main.firstChild) {
+        main.removeChild(main.firstChild);
       }
       main.appendChild(failTriesScreen);
+      document.querySelector(".result__replay").onclick = function(e) {
+        e.preventDefault();
+        slider(0);
+      };
       break;
     default:
       break;

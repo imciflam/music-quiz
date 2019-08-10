@@ -127,13 +127,11 @@ const getPosition = (scoreBoard, score) => {
     })
   );
 
-  // кладём в таблицу результат новой игры
   statisticsIndexed.push({
     position: null,
     score
   });
 
-  // получаем позицию новой игры в таблице результатов
   const position = statisticsIndexed
     .sort((a, b) => b.score - a.score)
     .reduce((acc, it, index) => {

@@ -416,7 +416,8 @@ body {
 
 img {
   max-width: 100%;
-  height: auto; }
+  height: auto;
+  margin-top: 2%; }
 
 .visually-hidden {
   position: absolute;
@@ -601,6 +602,7 @@ img {
 .game__mistakes {
   display: flex;
   justify-content: flex-end;
+  margin-top: 2%;
   width: 260px; }
 
 .game__screen {
@@ -686,6 +688,7 @@ img {
 
 .timer__value {
   width: 260px;
+  margin-top: 2%;
   font-size: 30px;
   color: #ff9749;
   text-align: center; }

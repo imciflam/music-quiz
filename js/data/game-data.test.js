@@ -1,24 +1,24 @@
-import assert from 'assert';
+import assert from "assert";
 
 import {
   LEVELS_COUNT,
   MAX_ERRORS_COUNT,
   getScore,
-  printResult,
-} from './game.data';
-import Timer from './timer';
-import {
-  games,
-  statisctics,
-  gamesToTestInScoreboard
-} from './game-data.mock';
+  printResult
+} from "./game.data";
+import Timer from "./timer";
+import { games, statistics, gamesToTestInScoreboard } from "./game-data.mock";
 
-const text = (testData) => `
-  Игрок отвечал на ${testData.answers.length} вопрос(ов|а) из ${LEVELS_COUNT} вопросов.
+const text = testData => `
+  Игрок отвечал на ${
+    testData.answers.length
+  } вопрос(ов|а) из ${LEVELS_COUNT} вопросов.
   Сделал ${MAX_ERRORS_COUNT - testData.remainingAttempts} ошиб(ки|ок|ку).
-  ${testData.points === -1
-    ? `и проиграл`
-    : `и набрал ${testData.points} балл(ов|а)`}
+  ${
+    testData.points === -1
+      ? `и проиграл`
+      : `и набрал ${testData.points} балл(ов|а)`
+  }
 `;
 
 describe(`Результаты игр`, () => {
@@ -39,16 +39,14 @@ describe(`Результаты игр`, () => {
     }
     function makeTest(game) {
       it(game.result, () => {
-        assert.equal(game.result,
-            printResult(statisctics, game));
+        assert.equal(game.result, printResult(statistics, game));
       });
     }
   });
 });
 
 describe(`Таймер`, () => {
-
-  beforeEach((done) => {
+  beforeEach(done => {
     Timer.stop();
     Timer.reset();
     done();
@@ -68,8 +66,8 @@ describe(`Таймер`, () => {
   });
 });
 
-describe(`Таймер`, function () {
-  before((done) => {
+describe(`Таймер`, function() {
+  before(done => {
     Timer.stop();
     Timer.reset();
     Timer.start();

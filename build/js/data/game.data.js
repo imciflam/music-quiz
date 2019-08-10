@@ -23,7 +23,7 @@ const phrase = {
   timeIsUp: () => `Время вышло!<br>Вы не успели отгадать все мелодии`,
   noMoreAttempts: () =>
     `У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!`,
-  win: ({place, playersCount, betterThan}) =>
+  win: ({ place, playersCount, betterThan }) =>
     `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
 };
 
@@ -42,7 +42,7 @@ const resultTry = {
   name: Label.GAME,
   title: Label.TITLE_FAIL_TRY,
   button: Label.BUTTON_FAIL,
-  isWin: false,
+  isWin: false
 };
 
 const resultTime = {
@@ -67,7 +67,7 @@ const initialGame = {
   answers: []
 };
 
-const tick = (game) => {
+const tick = game => {
   game = Object.assign({}, game);
   game.time--;
   return game;
@@ -88,14 +88,15 @@ const startGame = () => {
   showNextLevel();
 };
 
-const getScore = (answers) => {
+const getScore = answers => {
   let score = -1;
-
+  //if all answers were submitted
   if (answers.length === LEVELS_COUNT) {
     score = answers.reduce((acc, it) => {
       let point = -2;
       if (it.isCorrect) {
-        point = (it.timeSpent < FAST_ANSWER_PERIOD) ? 2 : 1;
+        //if faster than 30 s then +2 points
+        point = it.timeSpent < FAST_ANSWER_PERIOD ? 2 : 1;
       }
       return acc + point;
     }, 0);
@@ -103,14 +104,14 @@ const getScore = (answers) => {
   return score;
 };
 
-const getFastScore = (answers) => {
-  const slowScore = answers
-      .filter((it) => it.isCorrect && it.timeSpent >= FAST_ANSWER_PERIOD)
-      .length;
+const getFastScore = answers => {
+  const slowScore = answers.filter(
+    it => it.isCorrect && it.timeSpent >= FAST_ANSWER_PERIOD
+  ).length;
   return getScore(answers) - slowScore;
 };
 
-const getTimeSpent = (answers) => {
+const getTimeSpent = answers => {
   let time = answers.reduce((acc, it) => {
     return acc + it.timeSpent;
   }, 0);
@@ -119,11 +120,12 @@ const getTimeSpent = (answers) => {
 
 const getPosition = (scoreBoard, score) => {
   // создаём из таблицы результатов, массив объектов: { position, score }
-  const statisticsIndexed = scoreBoard
-      .map((scoreFromStaticstics, position) => ({
-        position,
-        score: scoreFromStaticstics
-      }));
+  const statisticsIndexed = scoreBoard.map(
+    (scoreFromStaticstics, position) => ({
+      position,
+      score: scoreFromStaticstics
+    })
+  );
 
   // кладём в таблицу результат новой игры
   statisticsIndexed.push({
@@ -133,13 +135,13 @@ const getPosition = (scoreBoard, score) => {
 
   // получаем позицию новой игры в таблице результатов
   const position = statisticsIndexed
-      .sort((a, b) => b.score - a.score)
-      .reduce((acc, it, index) => {
-        if (it.position === null) {
-          acc = index;
-        }
-        return acc;
-      }, -1);
+    .sort((a, b) => b.score - a.score)
+    .reduce((acc, it, index) => {
+      if (it.position === null) {
+        acc = index;
+      }
+      return acc;
+    }, -1);
 
   if (position === -1) {
     throw new Error(`Can't define position in Scoreboard`);
@@ -160,13 +162,15 @@ const printResult = (scoreBoard = [], game) => {
 
     resultWin.place = position + 1;
     resultWin.playersCount = scoreBoard.length;
-    resultWin.betterThan = Math.round((scoreBoard.length - position - 1) * 100 / scoreBoard.length);
+    resultWin.betterThan = Math.round(
+      ((scoreBoard.length - position - 1) * 100) / scoreBoard.length
+    );
 
     endGameMessage = phrase.win(resultWin);
-
   } else {
     // проигрыш
-    endGameMessage = (time > TIME_FOR_GAME) ? phrase.timeIsUp() : phrase.noMoreAttempts();
+    endGameMessage =
+      time > TIME_FOR_GAME ? phrase.timeIsUp() : phrase.noMoreAttempts();
   }
 
   return endGameMessage;

@@ -8,6 +8,7 @@ function htmlToElement(html) {
   return div.firstChild;
 }
 
+//  Приветствие
 const welcomeScreen = htmlToElement(`
   <section class="welcome">
     <div class="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -253,46 +254,43 @@ const questionsTemplate = levels$$1 => {
 
 const genreLevel = htmlToElement(gameGenreScreen(levels, 1));
 
-const gameArtistScreen = () => `
+const gameArtistScreen = (levels$$1, remainingAttempts) => `
 <section class="game game--artist">
-${header(1)}
+${header(remainingAttempts)}
     <section class="game__screen">
-      <h2 class="game__title">Кто исполняет эту песню?</h2>
+      <h2 class="game__title">${levels$$1[6].title}</h2>
       <div class="game__track">
         <button class="track__button track__button--play" type="button"></button>
-        <audio></audio>
+        <audio loop autoplay src="${levels$$1[6].src}"></audio>
       </div>
 
       <form class="game__artist">
-        <div class="artist">
-          <input class="artist__input visually-hidden" type="radio" name="answer" value="artist-1" id="answer-1">
-          <label class="artist__name" for="answer-1">
-            <img class="artist__picture" src="http://placehold.it/134x134" alt="Пелагея">
-            Пелагея
-          </label>
-        </div>
-
-        <div class="artist">
-          <input class="artist__input visually-hidden" type="radio" name="answer" value="artist-2" id="answer-2">
-          <label class="artist__name" for="answer-2">
-            <img class="artist__picture" src="http://placehold.it/134x134" alt="Пелагея">
-            Краснознаменная дивизия имени моей бабушки
-          </label>
-        </div>
-
-        <div class="artist">
-          <input class="artist__input visually-hidden" type="radio" name="answer" value="artist-3" id="answer-3">
-          <label class="artist__name" for="answer-3">
-            <img class="artist__picture" src="http://placehold.it/134x134" alt="Пелагея">
-            Lorde
-          </label>
-        </div>
+      ${questionsTemplate$1(levels$$1[6].questions)}
+         
       </form>
     </section>
   </section>`;
 
-const artistLevel = htmlToElement(gameArtistScreen(1));
+const questionsTemplate$1 = data => {
+  console.log(data);
+  return data.reduce((string, it, index) => {
+    const n = index++;
+    const itemTemplate = `
+      <div class="artist">
+        <input class="artist__input visually-hidden" type="radio" name="answer" value="artist-${n}" id="answer-${n}">
+        <label class="artist__name" for="answer-${n}">
+          <img class="artist__picture" src="${it.image}" alt="${it.artist}">
+          ${it.artist}
+        </label>
+      </div> `;
 
+    return string + itemTemplate;
+  }, ``);
+};
+
+const artistLevel = htmlToElement(gameArtistScreen(levels, 1));
+
+//  Результат игры: выигрыш
 const resultSuccessScreen = htmlToElement(`
 <section class="result">
 <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -302,6 +300,7 @@ const resultSuccessScreen = htmlToElement(`
 <button class="result__replay" type="button">Сыграть ещё раз</button>
 </section>`);
 
+//  Результат игры: проигрыш, время вышло
 const failTriesScreen = htmlToElement(`
 <section class="result">
   <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>

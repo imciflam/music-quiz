@@ -44,6 +44,135 @@ const resultTime = {
   isWin: false
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const samples = [
+  {
+    artist: `Kevin MacLeod`,
+    name: `Long Stroll`,
+    image: `https://yt3.ggpht.com/-fkDeGauT7Co/AAAAAAAAAAI/AAAAAAAAAAA/dkF5ZKkrxRo/s900-c-k-no-mo-rj-c0xffffff/photo.jpg`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=91624fdc22fc54ed`,
+    genre: `Jazz`
+  },
+  {
+    artist: `Jingle Punks`,
+    name: `In the Land of Rhinoplasty`,
+    image: `https://i.vimeocdn.com/portrait/992615_300x300`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=dc3b4dc549becd6b`,
+    genre: `Rock`
+  },
+  {
+    artist: `Audionautix`,
+    name: `Travel Light`,
+    image: `http://4.bp.blogspot.com/-kft9qu5ET6U/VPFUBi9W-MI/AAAAAAAACYM/UxXilXKYwOc/s1600/audionautix%2BHalf%2BSize.jpg`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=a127d9b7de8a17cf`,
+    genre: `Country`
+  },
+  {
+    artist: `Riot`,
+    name: `	Level Plane`,
+    image: `https://i.ytimg.com/vi/jzgM3m8Vp1k/maxresdefault.jpg`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
+    genre: `R&B`
+  },
+  {
+    artist: `Jingle Punks`,
+    name: `Lucky Day`,
+    image: `https://i.vimeocdn.com/portrait/992615_300x300`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`,
+    genre: `Pop`
+  },
+  {
+    artist: `Gunnar Olsen`,
+    name: `Home Stretch`,
+    image: `https://f4.bcbits.com/img/0004181452_10.jpg`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`,
+    genre: `Electronic`
+  }
+];
+
+const levels = [
+  {
+    type: `Genre`,
+    title: `Выберите Jazz треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `1000`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите Rock треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `0110`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите Country треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `0010`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите R&B треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `0001`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите Pop треки`,
+    questions: [samples[4], samples[1], samples[2], samples[3]],
+    answer: `1000`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите Electronic треки`,
+    questions: [samples[0], samples[5], samples[2], samples[3]],
+    answer: `0100`
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[0], samples[1], samples[2]],
+    src: samples[0].src,
+    answer: 0
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[1], samples[2], samples[3]],
+    src: samples[2].src,
+    answer: 1
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[3], samples[2], samples[1]],
+    src: samples[1].src,
+    answer: 2
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[0], samples[1], samples[2]],
+    src: samples[1].src,
+    answer: 1
+  }
+];
+
 const header = attemptsLeft => `<header class="game__header">
 <a class="game__back" href="#">
   <span class="visually-hidden">Сыграть ещё раз</span>
@@ -77,45 +206,41 @@ const mistakes = errors => {
   return mistakeElement;
 };
 
-const gameArtistScreen = () => `
+const gameArtistScreen = (levels$$1, remainingAttempts) => `
 <section class="game game--artist">
-${header(1)}
+${header(remainingAttempts)}
     <section class="game__screen">
-      <h2 class="game__title">Кто исполняет эту песню?</h2>
+      <h2 class="game__title">${levels$$1[6].title}</h2>
       <div class="game__track">
         <button class="track__button track__button--play" type="button"></button>
-        <audio></audio>
+        <audio loop autoplay src="${levels$$1[6].src}"></audio>
       </div>
 
       <form class="game__artist">
-        <div class="artist">
-          <input class="artist__input visually-hidden" type="radio" name="answer" value="artist-1" id="answer-1">
-          <label class="artist__name" for="answer-1">
-            <img class="artist__picture" src="http://placehold.it/134x134" alt="Пелагея">
-            Пелагея
-          </label>
-        </div>
-
-        <div class="artist">
-          <input class="artist__input visually-hidden" type="radio" name="answer" value="artist-2" id="answer-2">
-          <label class="artist__name" for="answer-2">
-            <img class="artist__picture" src="http://placehold.it/134x134" alt="Пелагея">
-            Краснознаменная дивизия имени моей бабушки
-          </label>
-        </div>
-
-        <div class="artist">
-          <input class="artist__input visually-hidden" type="radio" name="answer" value="artist-3" id="answer-3">
-          <label class="artist__name" for="answer-3">
-            <img class="artist__picture" src="http://placehold.it/134x134" alt="Пелагея">
-            Lorde
-          </label>
-        </div>
+      ${questionsTemplate(levels$$1[6].questions)}
+         
       </form>
     </section>
   </section>`;
 
-const artistLevel = htmlToElement(gameArtistScreen(1));
+const questionsTemplate = data => {
+  console.log(data);
+  return data.reduce((string, it, index) => {
+    const n = index++;
+    const itemTemplate = `
+      <div class="artist">
+        <input class="artist__input visually-hidden" type="radio" name="answer" value="artist-${n}" id="answer-${n}">
+        <label class="artist__name" for="answer-${n}">
+          <img class="artist__picture" src="${it.image}" alt="${it.artist}">
+          ${it.artist}
+        </label>
+      </div> `;
+
+    return string + itemTemplate;
+  }, ``);
+};
+
+const artistLevel = htmlToElement(gameArtistScreen(levels, 1));
 
 exports.artistLevel = artistLevel;
 

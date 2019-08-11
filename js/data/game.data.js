@@ -1,6 +1,6 @@
 export const LEVELS_COUNT = 10;
 export const FAST_ANSWER_PERIOD = 30;
-export const MAX_ERRORS_COUNT = 4;
+export const MAX_ERRORS_COUNT = 3;
 export const TIME_FOR_GAME = 60 * 5 + 1; // 5 minutes + 1 second
 
 const Label = {

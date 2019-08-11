@@ -21,7 +21,43 @@ const welcomeScreen = htmlToElement(`
     <p class="welcome__text">Удачи!</p>
   </section>`);
 
-const header = () => `<header class="game__header">
+const MAX_ERRORS_COUNT = 3;
+ // 5 minutes + 1 second
+
+const Label = {
+  GAME: `Угадай мелодию`,
+
+  TITLE_WIN: `Вы настоящий меломан!`,
+  TITLE_WELCOME: `Правила игры`,
+  TITLE_FAIL_TIME: `Увы и ах!`,
+  TITLE_FAIL_TRY: `Какая жалость!`,
+
+  BUTTON_WELCOME: `Начать игру`,
+  BUTTON_WIN: `Сыграть ещё раз`,
+  BUTTON_FAIL: `Попробовать ещё раз`
+};
+
+const phrase = {
+  timeIsUp: () => `Время вышло!<br>Вы не успели отгадать все мелодии`,
+  noMoreAttempts: () =>
+    `У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!`,
+  win: ({ place, playersCount, betterThan }) =>
+    `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
+};
+
+
+
+
+
+const resultTime = {
+  name: Label.GAME,
+  title: Label.TITLE_FAIL_TIME,
+  button: Label.BUTTON_FAIL,
+  content: phrase.timeIsUp(),
+  isWin: false
+};
+
+const header = attemptsLeft => `<header class="game__header">
 <a class="game__back" href="#">
   <span class="visually-hidden">Сыграть ещё раз</span>
   <img class="game__logo" src="/img/melody-logo-ginger.png" alt="Угадай мелодию">
@@ -38,16 +74,27 @@ const header = () => `<header class="game__header">
 </div>
 
 <div class="game__mistakes">
-  <div class="wrong"></div>
-  <div class="wrong"></div>
-  <div class="wrong"></div>
+  ${mistakes(MAX_ERRORS_COUNT - attemptsLeft, attemptsLeft)}
 </div>
 </header>`;
+
+const mistakes = (errors, attemptsLeft) => {
+  console.log(attemptsLeft);
+  let mistakeElement = ``;
+  if (errors > 0) {
+    while (errors) {
+      mistakeElement += `
+      <div class="wrong"></div>`;
+      errors--;
+    }
+  }
+  return mistakeElement;
+};
 
 //  Игра на выбор жанра
 const gameGenreScreen = htmlToElement(`
 <section class="game game--genre">
-${header()}
+${header(1)}
     <section class="game__screen">
       <h2 class="game__title">Выберите инди-рок треки</h2>
       <form class="game__tracks">
@@ -102,7 +149,7 @@ ${header()}
 
 const gameArtistScreen = htmlToElement(`
 <section class="game game--artist">
-${header()}
+${header(1)}
     <section class="game__screen">
       <h2 class="game__title">Кто исполняет эту песню?</h2>
       <div class="game__track">

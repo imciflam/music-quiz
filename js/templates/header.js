@@ -1,4 +1,6 @@
-export const header = () => `<header class="game__header">
+import { MAX_ERRORS_COUNT } from "../data/game.data";
+
+export const header = attemptsLeft => `<header class="game__header">
 <a class="game__back" href="#">
   <span class="visually-hidden">Сыграть ещё раз</span>
   <img class="game__logo" src="/img/melody-logo-ginger.png" alt="Угадай мелодию">
@@ -15,8 +17,19 @@ export const header = () => `<header class="game__header">
 </div>
 
 <div class="game__mistakes">
-  <div class="wrong"></div>
-  <div class="wrong"></div>
-  <div class="wrong"></div>
+  ${mistakes(MAX_ERRORS_COUNT - attemptsLeft, attemptsLeft)}
 </div>
 </header>`;
+
+const mistakes = (errors, attemptsLeft) => {
+  console.log(attemptsLeft);
+  let mistakeElement = ``;
+  if (errors > 0) {
+    while (errors) {
+      mistakeElement += `
+      <div class="wrong"></div>`;
+      errors--;
+    }
+  }
+  return mistakeElement;
+};

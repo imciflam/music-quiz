@@ -3,7 +3,7 @@ import { header } from "./templates/header";
 //  Игра на выбор жанра
 const gameGenreScreen = htmlToElement(`
 <section class="game game--genre">
-${header()}
+${header(1)}
     <section class="game__screen">
       <h2 class="game__title">Выберите инди-рок треки</h2>
       <form class="game__tracks">

@@ -3,7 +3,7 @@ import { header } from "./templates/header";
 //  Игра на выбор исполнителя
 const gameArtistScreen = htmlToElement(`
 <section class="game game--artist">
-${header()}
+${header(1)}
     <section class="game__screen">
       <h2 class="game__title">Кто исполняет эту песню?</h2>
       <div class="game__track">

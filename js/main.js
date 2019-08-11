@@ -1,6 +1,6 @@
 import welcomeScreen from "./welcomeScreen";
-import gameGenreScreen from "./gameGenreScreen";
-import gameArtistScreen from "./gameArtistScreen";
+import genreLevel from "./templates/genreLevel";
+import artistLevel from "./templates/artistLevel";
 import resultSuccessScreen from "./resultSuccessScreen";
 import failTriesScreen from "./failTriesScreen";
 
@@ -31,12 +31,12 @@ const slider = slideNumbers => {
       main.appendChild(welcomeScreen);
       break;
     case 1: {
-      if (gameArtistScreen.parentNode === main) {
-        main.removeChild(gameArtistScreen);
+      if (artistLevel.parentNode === main) {
+        main.removeChild(artistLevel);
       } else {
         main.removeChild(welcomeScreen);
       }
-      main.appendChild(gameGenreScreen);
+      main.appendChild(genreLevel);
       let flag = 0;
       const gameInputs = document.querySelectorAll(".game__input");
       for (let i = 0; i < gameInputs.length; i++) {
@@ -58,7 +58,7 @@ const slider = slideNumbers => {
       while (main.firstChild) {
         main.removeChild(main.firstChild);
       }
-      main.appendChild(gameArtistScreen);
+      main.appendChild(artistLevel);
       const artistsInputs = document.querySelectorAll(".artist__input ");
       for (let i = 0; i < artistsInputs.length; i++) {
         artistsInputs[i].addEventListener("click", function() {

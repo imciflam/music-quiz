@@ -54,12 +54,11 @@ const header = attemptsLeft => `<header class="game__header">
 </div>
 
 <div class="game__mistakes">
-  ${mistakes(MAX_ERRORS_COUNT - attemptsLeft, attemptsLeft)}
+  ${mistakes(MAX_ERRORS_COUNT - attemptsLeft)}
 </div>
 </header>`;
 
-const mistakes = (errors, attemptsLeft) => {
-  console.log(attemptsLeft);
+const mistakes = errors => {
   let mistakeElement = ``;
   if (errors > 0) {
     while (errors) {

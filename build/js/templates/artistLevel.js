@@ -1,4 +1,4 @@
-var gameArtistScreen = (function () {
+var artistLevel = (function () {
 'use strict';
 
 function htmlToElement(html) {
@@ -77,6 +77,7 @@ const mistakes = errors => {
   return mistakeElement;
 };
 
+//  Игра на выбор исполнителя
 const gameArtistScreen = `
 <section class="game game--artist">
 ${header(1)}
@@ -121,4 +122,4 @@ return artistLevel;
 
 }());
 
-//# sourceMappingURL=gameArtistScreen.js.map
+//# sourceMappingURL=artistLevel.js.map

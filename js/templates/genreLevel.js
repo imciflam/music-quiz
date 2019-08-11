@@ -1,7 +1,7 @@
-import { htmlToElement } from "./elementCreator";
-import { header } from "./templates/header";
+import { htmlToElement } from "../elementCreator";
+import { header } from "./header";
 //  Игра на выбор жанра
-const gameGenreScreen = htmlToElement(`
+const gameGenreScreen = `
 <section class="game game--genre">
 ${header(1)}
     <section class="game__screen">
@@ -54,6 +54,8 @@ ${header(1)}
         <button class="game__submit button" type="submit"  >Ответить</button>
       </form>
     </section>
-  </section>`);
+  </section>`;
 
-export default gameGenreScreen;
+const genreLevel = htmlToElement(gameGenreScreen);
+
+export default genreLevel;

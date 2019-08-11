@@ -61,12 +61,11 @@ const header = attemptsLeft => `<header class="game__header">
 </div>
 
 <div class="game__mistakes">
-  ${mistakes(MAX_ERRORS_COUNT - attemptsLeft, attemptsLeft)}
+  ${mistakes(MAX_ERRORS_COUNT - attemptsLeft)}
 </div>
 </header>`;
 
-const mistakes = (errors, attemptsLeft) => {
-  console.log(attemptsLeft);
+const mistakes = errors => {
   let mistakeElement = ``;
   if (errors > 0) {
     while (errors) {
@@ -78,8 +77,7 @@ const mistakes = (errors, attemptsLeft) => {
   return mistakeElement;
 };
 
-//  Игра на выбор жанра
-const gameGenreScreen = htmlToElement(`
+const gameGenreScreen = `
 <section class="game game--genre">
 ${header(1)}
     <section class="game__screen">
@@ -132,9 +130,11 @@ ${header(1)}
         <button class="game__submit button" type="submit"  >Ответить</button>
       </form>
     </section>
-  </section>`);
+  </section>`;
 
-return gameGenreScreen;
+const genreLevel = htmlToElement(gameGenreScreen);
+
+return genreLevel;
 
 }());
 

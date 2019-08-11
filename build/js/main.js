@@ -8,6 +8,7 @@ function htmlToElement(html) {
   return div.firstChild;
 }
 
+//  Приветствие
 const welcomeScreen = htmlToElement(`
   <section class="welcome">
     <div class="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -74,12 +75,11 @@ const header = attemptsLeft => `<header class="game__header">
 </div>
 
 <div class="game__mistakes">
-  ${mistakes(MAX_ERRORS_COUNT - attemptsLeft, attemptsLeft)}
+  ${mistakes(MAX_ERRORS_COUNT - attemptsLeft)}
 </div>
 </header>`;
 
-const mistakes = (errors, attemptsLeft) => {
-  console.log(attemptsLeft);
+const mistakes = errors => {
   let mistakeElement = ``;
   if (errors > 0) {
     while (errors) {
@@ -92,7 +92,7 @@ const mistakes = (errors, attemptsLeft) => {
 };
 
 //  Игра на выбор жанра
-const gameGenreScreen = htmlToElement(`
+const gameGenreScreen = `
 <section class="game game--genre">
 ${header(1)}
     <section class="game__screen">
@@ -145,9 +145,12 @@ ${header(1)}
         <button class="game__submit button" type="submit"  >Ответить</button>
       </form>
     </section>
-  </section>`);
+  </section>`;
 
-const gameArtistScreen = htmlToElement(`
+const genreLevel = htmlToElement(gameGenreScreen);
+
+//  Игра на выбор исполнителя
+const gameArtistScreen = `
 <section class="game game--artist">
 ${header(1)}
     <section class="game__screen">
@@ -183,8 +186,11 @@ ${header(1)}
         </div>
       </form>
     </section>
-  </section>`);
+  </section>`;
 
+const artistLevel = htmlToElement(gameArtistScreen);
+
+//  Результат игры: выигрыш
 const resultSuccessScreen = htmlToElement(`
 <section class="result">
 <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -194,6 +200,7 @@ const resultSuccessScreen = htmlToElement(`
 <button class="result__replay" type="button">Сыграть ещё раз</button>
 </section>`);
 
+//  Результат игры: проигрыш, время вышло
 const failTriesScreen = htmlToElement(`
 <section class="result">
   <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -229,12 +236,12 @@ const slider = slideNumbers => {
       main.appendChild(welcomeScreen);
       break;
     case 1: {
-      if (gameArtistScreen.parentNode === main) {
-        main.removeChild(gameArtistScreen);
+      if (artistLevel.parentNode === main) {
+        main.removeChild(artistLevel);
       } else {
         main.removeChild(welcomeScreen);
       }
-      main.appendChild(gameGenreScreen);
+      main.appendChild(genreLevel);
       let flag = 0;
       const gameInputs = document.querySelectorAll(".game__input");
       for (let i = 0; i < gameInputs.length; i++) {
@@ -256,7 +263,7 @@ const slider = slideNumbers => {
       while (main.firstChild) {
         main.removeChild(main.firstChild);
       }
-      main.appendChild(gameArtistScreen);
+      main.appendChild(artistLevel);
       const artistsInputs = document.querySelectorAll(".artist__input ");
       for (let i = 0; i < artistsInputs.length; i++) {
         artistsInputs[i].addEventListener("click", function() {

@@ -1,7 +1,7 @@
-import { htmlToElement } from "./elementCreator";
-import { header } from "./templates/header";
+import { htmlToElement } from "../elementCreator";
+import { header } from "./header";
 //  Игра на выбор исполнителя
-const gameArtistScreen = htmlToElement(`
+const gameArtistScreen = `
 <section class="game game--artist">
 ${header(1)}
     <section class="game__screen">
@@ -37,6 +37,8 @@ ${header(1)}
         </div>
       </form>
     </section>
-  </section>`);
+  </section>`;
 
-export default gameArtistScreen;
+const artistLevel = htmlToElement(gameArtistScreen);
+
+export default artistLevel;

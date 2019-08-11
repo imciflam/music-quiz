@@ -74,89 +74,115 @@ const resultTime = {
 
 
 
+const samples = [
+  {
+    artist: `Kevin MacLeod`,
+    name: `Long Stroll`,
+    image: `https://yt3.ggpht.com/-fkDeGauT7Co/AAAAAAAAAAI/AAAAAAAAAAA/dkF5ZKkrxRo/s900-c-k-no-mo-rj-c0xffffff/photo.jpg`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=91624fdc22fc54ed`,
+    genre: `Jazz`
+  },
+  {
+    artist: `Jingle Punks`,
+    name: `In the Land of Rhinoplasty`,
+    image: `https://i.vimeocdn.com/portrait/992615_300x300`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=dc3b4dc549becd6b`,
+    genre: `Rock`
+  },
+  {
+    artist: `Audionautix`,
+    name: `Travel Light`,
+    image: `http://4.bp.blogspot.com/-kft9qu5ET6U/VPFUBi9W-MI/AAAAAAAACYM/UxXilXKYwOc/s1600/audionautix%2BHalf%2BSize.jpg`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=a127d9b7de8a17cf`,
+    genre: `Country`
+  },
+  {
+    artist: `Riot`,
+    name: `	Level Plane`,
+    image: `https://i.ytimg.com/vi/jzgM3m8Vp1k/maxresdefault.jpg`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
+    genre: `R&B`
+  },
+  {
+    artist: `Jingle Punks`,
+    name: `Lucky Day`,
+    image: `https://i.vimeocdn.com/portrait/992615_300x300`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`,
+    genre: `Pop`
+  },
+  {
+    artist: `Gunnar Olsen`,
+    name: `Home Stretch`,
+    image: `https://f4.bcbits.com/img/0004181452_10.jpg`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`,
+    genre: `Electronic`
+  }
+];
 
 const levels = [
-  // {
-  //   type: `artist`,
-  //   levelName: `Who is performing this song?`,
-  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-  //   answer: 2
-  // },
-  // {
-  //   type: `artist`,
-  //   levelName: `Who is performing this song?`,
-  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-  //   answer: 2
-  // },
-  // {
-  //   type: `artist`,
-  //   levelName: `Who is performing this song?`,
-  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-  //   answer: 2
-  // },
-  // {
-  //   type: `artist`,
-  //   levelName: `Who is performing this song?`,
-  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-  //   answer: 2
-  // },
-  // {
-  //   type: `artist`,
-  //   levelName: `Who is performing this song?`,
-  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-  //   answer: 2
-  // },
-  // {
-  //   type: `Genre`,
-  //   title: `Choose rock tracks`,
-  //   questions: [
-  //     {
-  //       url: `url1`
-  //     },
-  //     {
-  //       url: `url2`
-  //     }
-  //   ],
-  //   answer: `01`
-  // },
   {
     type: `Genre`,
-    title: `Choose rock tracks`,
-    questions: [
-      {
-        url: `url1`
-      },
-      {
-        url: `url2`
-      }
-    ],
-    answer: `01`
+    title: `Выберите Jazz треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `1000`
   },
   {
     type: `Genre`,
-    title: `Choose rock tracks`,
-    questions: [
-      {
-        url: `url1`
-      },
-      {
-        url: `url2`
-      }
-    ],
-    answer: `01`
+    title: `Выберите Rock треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `0110`
   },
   {
     type: `Genre`,
-    title: `Choose rock tracks`,
-    questions: [
-      {
-        url: `url1`
-      },
-      {
-        url: `url2`
-      }
-    ],
-    answer: `01`
+    title: `Выберите Country треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `0010`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите R&B треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `0001`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите Pop треки`,
+    questions: [samples[4], samples[1], samples[2], samples[3]],
+    answer: `1000`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите Electronic треки`,
+    questions: [samples[0], samples[5], samples[2], samples[3]],
+    answer: `0100`
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[0], samples[1], samples[2]],
+    src: samples[0].src,
+    answer: 0
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[1], samples[2], samples[3]],
+    src: samples[2].src,
+    answer: 1
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[3], samples[2], samples[1]],
+    src: samples[1].src,
+    answer: 2
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[0], samples[1], samples[2]],
+    src: samples[1].src,
+    answer: 1
   }
 ];
 
@@ -197,12 +223,9 @@ const gameGenreScreen = (levels$$1, remainingAttempts) => `
 <section class="game game--genre">
 ${header(remainingAttempts)}
     <section class="game__screen">
-      <h2 class="game__title">Выберите инди-рок треки</h2>
-      <form class="game__tracks"> 
-        
-      ${questionsTemplate(levels$$1)}
- 
-
+      <h2 class="game__title">${levels$$1[0].title}</h2>
+      <form class="game__tracks">
+      ${questionsTemplate(levels$$1[0].questions)}
         <button class="game__submit button" type="submit"  >Ответить</button>
       </form>
     </section>
@@ -210,19 +233,19 @@ ${header(remainingAttempts)}
 
 const questionsTemplate = levels$$1 => {
   return levels$$1.reduce((string, it, index) => {
+    console.log(it);
     const n = index++;
     const itemTemplate = `
-   
     <div class="track">
-    <button class="track__button track__button--play" type="button"></button>
-    <div class="track__status">
-      <audio></audio>
-    </div>
-    <div class="game__answer">
-      <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1"  id="answer-4">
-      <label class="game__check " for="answer-4">Отметить</label>
-    </div>
-  </div>`;
+          <button class="track__button track__button--play" type="button"></button>
+          <div class="track__status">            
+          <audio src="${it.src}"></audio>
+          </div>
+          <div class="game__answer">
+            <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-${n}" id="answer-${n}">
+            <label class="game__check" for="answer-${n}">Отметить</label>
+          </div>
+        </div>`;
 
     return string + itemTemplate;
   }, ``);

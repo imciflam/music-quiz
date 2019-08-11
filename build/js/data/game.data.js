@@ -173,93 +173,7 @@ const printResult = (scoreBoard = [], game) => {
 
   return endGameMessage;
 };
-
-const levels = [
-  // {
-  //   type: `artist`,
-  //   levelName: `Who is performing this song?`,
-  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-  //   answer: 2
-  // },
-  // {
-  //   type: `artist`,
-  //   levelName: `Who is performing this song?`,
-  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-  //   answer: 2
-  // },
-  // {
-  //   type: `artist`,
-  //   levelName: `Who is performing this song?`,
-  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-  //   answer: 2
-  // },
-  // {
-  //   type: `artist`,
-  //   levelName: `Who is performing this song?`,
-  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-  //   answer: 2
-  // },
-  // {
-  //   type: `artist`,
-  //   levelName: `Who is performing this song?`,
-  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-  //   answer: 2
-  // },
-  // {
-  //   type: `Genre`,
-  //   title: `Choose rock tracks`,
-  //   questions: [
-  //     {
-  //       url: `url1`
-  //     },
-  //     {
-  //       url: `url2`
-  //     }
-  //   ],
-  //   answer: `01`
-  // },
-  {
-    type: `Genre`,
-    title: `Choose rock tracks`,
-    questions: [
-      {
-        url: `url1`
-      },
-      {
-        url: `url2`
-      }
-    ],
-    answer: `01`
-  },
-  {
-    type: `Genre`,
-    title: `Choose rock tracks`,
-    questions: [
-      {
-        url: `url1`
-      },
-      {
-        url: `url2`
-      }
-    ],
-    answer: `01`
-  },
-  {
-    type: `Genre`,
-    title: `Choose rock tracks`,
-    questions: [
-      {
-        url: `url1`
-      },
-      {
-        url: `url2`
-      }
-    ],
-    answer: `01`
-  }
-];
-
-const sampleTracks = [
+const samples = [
   {
     artist: `Kevin MacLeod`,
     name: `Long Stroll`,
@@ -304,6 +218,73 @@ const sampleTracks = [
   }
 ];
 
+const levels = [
+  {
+    type: `Genre`,
+    title: `Выберите Jazz треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `1000`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите Rock треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `0110`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите Country треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `0010`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите R&B треки`,
+    questions: [samples[0], samples[1], samples[2], samples[3]],
+    answer: `0001`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите Pop треки`,
+    questions: [samples[4], samples[1], samples[2], samples[3]],
+    answer: `1000`
+  },
+  {
+    type: `Genre`,
+    title: `Выберите Electronic треки`,
+    questions: [samples[0], samples[5], samples[2], samples[3]],
+    answer: `0100`
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[0], samples[1], samples[2]],
+    src: samples[0].src,
+    answer: 0
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[1], samples[2], samples[3]],
+    src: samples[2].src,
+    answer: 1
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[3], samples[2], samples[1]],
+    src: samples[1].src,
+    answer: 2
+  },
+  {
+    type: `Artist`,
+    title: `Кто исполняет эту песню?`,
+    questions: [samples[0], samples[1], samples[2]],
+    src: samples[1].src,
+    answer: 1
+  }
+];
+
 exports.LEVELS_COUNT = LEVELS_COUNT;
 exports.FAST_ANSWER_PERIOD = FAST_ANSWER_PERIOD;
 exports.MAX_ERRORS_COUNT = MAX_ERRORS_COUNT;
@@ -322,7 +303,6 @@ exports.getScore = getScore;
 exports.getFastScore = getFastScore;
 exports.printResult = printResult;
 exports.levels = levels;
-exports.sampleTracks = sampleTracks;
 
 }((this.gameData = this.gameData || {})));
 

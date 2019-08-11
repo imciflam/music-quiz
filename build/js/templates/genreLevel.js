@@ -1,4 +1,4 @@
-var genreLevel = (function () {
+(function (exports) {
 'use strict';
 
 function htmlToElement(html) {
@@ -77,7 +77,7 @@ const mistakes = errors => {
   return mistakeElement;
 };
 
-const gameGenreScreen = `
+const gameGenreScreen = () => `
 <section class="game game--genre">
 ${header(1)}
     <section class="game__screen">
@@ -132,10 +132,10 @@ ${header(1)}
     </section>
   </section>`;
 
-const genreLevel = htmlToElement(gameGenreScreen);
+const genreLevel = htmlToElement(gameGenreScreen());
 
-return genreLevel;
+exports.genreLevel = genreLevel;
 
-}());
+}((this.genreLevel = this.genreLevel || {})));
 
 //# sourceMappingURL=genreLevel.js.map

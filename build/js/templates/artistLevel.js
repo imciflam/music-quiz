@@ -1,4 +1,4 @@
-var artistLevel = (function () {
+(function (exports) {
 'use strict';
 
 function htmlToElement(html) {
@@ -77,8 +77,7 @@ const mistakes = errors => {
   return mistakeElement;
 };
 
-//  Игра на выбор исполнителя
-const gameArtistScreen = `
+const gameArtistScreen = () => `
 <section class="game game--artist">
 ${header(1)}
     <section class="game__screen">
@@ -116,10 +115,10 @@ ${header(1)}
     </section>
   </section>`;
 
-const artistLevel = htmlToElement(gameArtistScreen);
+const artistLevel = htmlToElement(gameArtistScreen());
 
-return artistLevel;
+exports.artistLevel = artistLevel;
 
-}());
+}((this.artistLevel = this.artistLevel || {})));
 
 //# sourceMappingURL=artistLevel.js.map

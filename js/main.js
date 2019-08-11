@@ -1,6 +1,6 @@
 import welcomeScreen from "./welcomeScreen";
-import genreLevel from "./templates/genreLevel";
-import artistLevel from "./templates/artistLevel";
+import { genreLevel } from "./templates/genreLevel";
+import { artistLevel } from "./templates/artistLevel";
 import resultSuccessScreen from "./resultSuccessScreen";
 import failTriesScreen from "./failTriesScreen";
 

@@ -8,7 +8,6 @@ function htmlToElement(html) {
   return div.firstChild;
 }
 
-//  Приветствие
 const welcomeScreen = htmlToElement(`
   <section class="welcome">
     <div class="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -91,8 +90,7 @@ const mistakes = errors => {
   return mistakeElement;
 };
 
-//  Игра на выбор жанра
-const gameGenreScreen = `
+const gameGenreScreen = () => `
 <section class="game game--genre">
 ${header(1)}
     <section class="game__screen">
@@ -147,10 +145,9 @@ ${header(1)}
     </section>
   </section>`;
 
-const genreLevel = htmlToElement(gameGenreScreen);
+const genreLevel = htmlToElement(gameGenreScreen());
 
-//  Игра на выбор исполнителя
-const gameArtistScreen = `
+const gameArtistScreen = () => `
 <section class="game game--artist">
 ${header(1)}
     <section class="game__screen">
@@ -188,9 +185,8 @@ ${header(1)}
     </section>
   </section>`;
 
-const artistLevel = htmlToElement(gameArtistScreen);
+const artistLevel = htmlToElement(gameArtistScreen());
 
-//  Результат игры: выигрыш
 const resultSuccessScreen = htmlToElement(`
 <section class="result">
 <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -200,7 +196,6 @@ const resultSuccessScreen = htmlToElement(`
 <button class="result__replay" type="button">Сыграть ещё раз</button>
 </section>`);
 
-//  Результат игры: проигрыш, время вышло
 const failTriesScreen = htmlToElement(`
 <section class="result">
   <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>

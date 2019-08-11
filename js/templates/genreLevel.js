@@ -1,7 +1,7 @@
 import { htmlToElement } from "../elementCreator";
 import { header } from "./header";
-//  Игра на выбор жанра
-const gameGenreScreen = `
+
+const gameGenreScreen = () => `
 <section class="game game--genre">
 ${header(1)}
     <section class="game__screen">
@@ -56,6 +56,4 @@ ${header(1)}
     </section>
   </section>`;
 
-const genreLevel = htmlToElement(gameGenreScreen);
-
-export default genreLevel;
+export const genreLevel = htmlToElement(gameGenreScreen());

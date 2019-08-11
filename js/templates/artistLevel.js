@@ -1,7 +1,8 @@
 import { htmlToElement } from "../elementCreator";
 import { header } from "./header";
-//  Игра на выбор исполнителя
-const gameArtistScreen = `
+import { levels } from "../data/game.data";
+
+const gameArtistScreen = () => `
 <section class="game game--artist">
 ${header(1)}
     <section class="game__screen">
@@ -39,6 +40,4 @@ ${header(1)}
     </section>
   </section>`;
 
-const artistLevel = htmlToElement(gameArtistScreen);
-
-export default artistLevel;
+export const artistLevel = htmlToElement(gameArtistScreen());

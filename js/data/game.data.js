@@ -172,49 +172,49 @@ export const printResult = (scoreBoard = [], game) => {
 };
 
 export const levels = [
-  {
-    type: `artist`,
-    levelName: `Who is performing this song?`,
-    options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-    answer: 2
-  },
-  {
-    type: `artist`,
-    levelName: `Who is performing this song?`,
-    options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-    answer: 2
-  },
-  {
-    type: `artist`,
-    levelName: `Who is performing this song?`,
-    options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-    answer: 2
-  },
-  {
-    type: `artist`,
-    levelName: `Who is performing this song?`,
-    options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-    answer: 2
-  },
-  {
-    type: `artist`,
-    levelName: `Who is performing this song?`,
-    options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
-    answer: 2
-  },
-  {
-    type: `Genre`,
-    title: `Choose rock tracks`,
-    questions: [
-      {
-        url: `url1`
-      },
-      {
-        url: `url2`
-      }
-    ],
-    answer: `01`
-  },
+  // {
+  //   type: `artist`,
+  //   levelName: `Who is performing this song?`,
+  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
+  //   answer: 2
+  // },
+  // {
+  //   type: `artist`,
+  //   levelName: `Who is performing this song?`,
+  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
+  //   answer: 2
+  // },
+  // {
+  //   type: `artist`,
+  //   levelName: `Who is performing this song?`,
+  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
+  //   answer: 2
+  // },
+  // {
+  //   type: `artist`,
+  //   levelName: `Who is performing this song?`,
+  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
+  //   answer: 2
+  // },
+  // {
+  //   type: `artist`,
+  //   levelName: `Who is performing this song?`,
+  //   options: [`Пелагея`, `Краснознаменная дивизия имени моей бабушки`, `Lorde`],
+  //   answer: 2
+  // },
+  // {
+  //   type: `Genre`,
+  //   title: `Choose rock tracks`,
+  //   questions: [
+  //     {
+  //       url: `url1`
+  //     },
+  //     {
+  //       url: `url2`
+  //     }
+  //   ],
+  //   answer: `01`
+  // },
   {
     type: `Genre`,
     title: `Choose rock tracks`,

@@ -40,4 +40,4 @@ ${header(1)}
     </section>
   </section>`;
 
-export const artistLevel = htmlToElement(gameArtistScreen());
+export const artistLevel = htmlToElement(gameArtistScreen(1));

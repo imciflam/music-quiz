@@ -115,7 +115,7 @@ ${header(1)}
     </section>
   </section>`;
 
-const artistLevel = htmlToElement(gameArtistScreen());
+const artistLevel = htmlToElement(gameArtistScreen(1));
 
 exports.artistLevel = artistLevel;
 

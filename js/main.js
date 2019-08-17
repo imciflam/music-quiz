@@ -4,6 +4,12 @@ import { artistLevel } from "./templates/artistLevel";
 import resultSuccessScreen from "./resultSuccessScreen";
 import failTriesScreen from "./failTriesScreen";
 
+const linkAddresses = Object.freeze({
+  WELCOMESCREEN: ``,
+  GAME: `game`,
+  RESULTSCREEN: `result`
+});
+
 const main = document.querySelector(`.main`);
 
 const ready = () => {

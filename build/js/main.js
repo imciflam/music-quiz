@@ -309,6 +309,12 @@ const failTriesScreen = htmlToElement(`
   <button class="result__replay" type="button">Попробовать ещё раз</button>
 </section>`);
 
+const linkAddresses = Object.freeze({
+  WELCOMESCREEN: ``,
+  GAME: `game`,
+  RESULTSCREEN: `result`
+});
+
 const main = document.querySelector(`.main`);
 
 const ready = () => {

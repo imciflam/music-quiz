@@ -1,4 +1,4 @@
-(function () {
+var app = (function () {
 'use strict';
 
 function htmlToElement(html) {
@@ -406,8 +406,8 @@ class App {
   }
 }
 
-const app = new App();
+return App;
 
 }());
 
-//# sourceMappingURL=main.js.map
+//# sourceMappingURL=app.js.map

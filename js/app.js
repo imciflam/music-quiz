@@ -15,15 +15,13 @@ export default class App {
     this.main = document.querySelector(`.main`);
     this.main.addEventListener("DOMContentLoaded", this.ready());
   }
-
   ready() {
     this.main.appendChild(welcomeScreen);
     const welcomeButton = document.querySelector(`.welcome__button`);
-    welcomeButton.addEventListener(`click`, function() {
-      slider(1);
+    welcomeButton.addEventListener(`click`, () => {
+      this.slider(1);
     });
   }
-
   returner() {
     const returnButton = document.querySelector(`.game__back`);
     returnButton.addEventListener(`click`, function() {
@@ -40,12 +38,12 @@ export default class App {
         main.appendChild(welcomeScreen);
         break;
       case 1: {
-        if (artistLevel.parentNode === main) {
-          main.removeChild(artistLevel);
+        if (artistLevel.parentNode === this.main) {
+          this.main.removeChild(artistLevel);
         } else {
-          main.removeChild(welcomeScreen);
+          this.main.removeChild(welcomeScreen);
         }
-        main.appendChild(genreLevel);
+        this.main.appendChild(genreLevel);
         let flag = 0;
         const gameInputs = document.querySelectorAll(".game__input");
         for (let i = 0; i < gameInputs.length; i++) {

@@ -326,18 +326,18 @@ class App {
   }
   returner() {
     const returnButton = document.querySelector(`.game__back`);
-    returnButton.addEventListener(`click`, function() {
-      slider(0);
+    returnButton.addEventListener(`click`, () => {
+      this.slider(0);
     });
   }
 
   slider(slideNumbers) {
     switch (slideNumbers) {
       case 0:
-        while (main.firstChild) {
-          main.removeChild(main.firstChild);
+        while (this.main.firstChild) {
+          this.main.removeChild(this.main.firstChild);
         }
-        main.appendChild(welcomeScreen);
+        this.main.appendChild(welcomeScreen);
         break;
       case 1: {
         if (artistLevel.parentNode === this.main) {
@@ -360,7 +360,7 @@ class App {
             slider(2);
           } else alert("выберите хотя бы один вариант");
         };
-        returner();
+        this.returner();
         break;
       }
       case 2: {
@@ -375,7 +375,7 @@ class App {
             slider(rand);
           });
         }
-        returner();
+        this.returner();
         break;
       }
       case 3:

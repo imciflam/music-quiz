@@ -4,7 +4,7 @@ var dataLoader = (function () {
 const URL = `https://es.dump.academy/guess-melody`;
 
 class Loader {
-  getLevels() {
+  static getLevels() {
     return fetch(`${URL}/questions`)
       .then(response => {
         if (response.ok) {

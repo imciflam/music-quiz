@@ -306,6 +306,26 @@ const failTriesScreen = htmlToElement(`
   <button class="result__replay" type="button">Попробовать ещё раз</button>
 </section>`);
 
+const URL = `https://es.dump.academy/guess-melody`;
+
+class Loader {
+  getLevels() {
+    return fetch(`${URL}/questions`)
+      .then(response => {
+        if (response.ok) {
+          console.log(response);
+          return response.json();
+        } else if (response.status === 404) {
+          throw new Error(`Request ${URL}/questions failed.`);
+        }
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      })
+      .then(data => {
+        return data;
+      });
+  }
+}
+
 const linkAddresses = Object.freeze({
   WELCOMESCREEN: ``,
   GAME: `game`,
@@ -340,6 +360,10 @@ class App {
         this.main.appendChild(welcomeScreen);
         break;
       case 1: {
+        //static, so call class method
+        Loader.getLevels().then(data => {
+          console.log(data);
+        });
         if (artistLevel.parentNode === this.main) {
           this.main.removeChild(artistLevel);
         } else {

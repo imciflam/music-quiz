@@ -3,6 +3,7 @@ import { genreLevel } from "./templates/genreLevel";
 import { artistLevel } from "./templates/artistLevel";
 import resultSuccessScreen from "./resultSuccessScreen";
 import failTriesScreen from "./failTriesScreen";
+import Loader from "./dataLoader";
 
 const linkAddresses = Object.freeze({
   WELCOMESCREEN: ``,
@@ -38,6 +39,10 @@ export default class App {
         this.main.appendChild(welcomeScreen);
         break;
       case 1: {
+        //static, so call class method
+        Loader.getLevels().then(data => {
+          console.log(data);
+        });
         if (artistLevel.parentNode === this.main) {
           this.main.removeChild(artistLevel);
         } else {

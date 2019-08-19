@@ -1,4 +1,4 @@
-# guessmelody
+# Music quiz game
 
 ### Installation
 

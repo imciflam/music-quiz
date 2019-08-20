@@ -326,12 +326,6 @@ class Loader {
   }
 }
 
-const linkAddresses = Object.freeze({
-  WELCOMESCREEN: ``,
-  GAME: `game`,
-  RESULTSCREEN: `result`
-});
-
 class App {
   constructor() {
     this.main = document.querySelector(`.main`);
@@ -342,6 +336,11 @@ class App {
     const welcomeButton = document.querySelector(`.welcome__button`);
     welcomeButton.addEventListener(`click`, () => {
       this.slider(1);
+
+      //static, so call class method
+      Loader.getLevels().then(data => {
+        console.log(data);
+      });
     });
   }
   returner() {
@@ -360,10 +359,6 @@ class App {
         this.main.appendChild(welcomeScreen);
         break;
       case 1: {
-        //static, so call class method
-        Loader.getLevels().then(data => {
-          console.log(data);
-        });
         if (artistLevel.parentNode === this.main) {
           this.main.removeChild(artistLevel);
         } else {
@@ -388,10 +383,10 @@ class App {
         break;
       }
       case 2: {
-        while (main.firstChild) {
-          main.removeChild(main.firstChild);
+        while (this.main.firstChild) {
+          this.main.removeChild(main.firstChild);
         }
-        main.appendChild(artistLevel);
+        this.main.appendChild(artistLevel);
         const artistsInputs = document.querySelectorAll(".artist__input ");
         for (let i = 0; i < artistsInputs.length; i++) {
           artistsInputs[i].addEventListener("click", function() {

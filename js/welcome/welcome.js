@@ -1,8 +1,6 @@
-import {changeView} from '../util';
-import WelcomeView from './welcome-view';
-import {
-  welcome as data
-} from '../data/game.data';
+import { changeView } from "../util";
+import WelcomeView from "./welcome-view";
+import { welcome as data } from "../data/game.data";
 
 class WelcomeScreen {
   constructor() {

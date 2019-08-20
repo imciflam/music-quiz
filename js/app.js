@@ -11,7 +11,7 @@ export default class App {
     this.main.addEventListener("DOMContentLoaded", this.ready());
   }
   ready() {
-    this.main.appendChild(welcomeScreen);
+    welcomeScreen.init();
     const welcomeButton = document.querySelector(`.welcome__button`);
     welcomeButton.addEventListener(`click`, () => {
       this.slider(1);

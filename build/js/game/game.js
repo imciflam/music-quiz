@@ -1,4 +1,4 @@
-var app = (function () {
+var game = (function () {
 'use strict';
 
 // create element
@@ -33,68 +33,6 @@ const $trigger = (eventName, data = null) => {
   let customEvent = new CustomEvent(eventName, { detail: data });
   appElement.dispatchEvent(customEvent);
 };
-
-class AbstractView {
-
-  get template() {
-    throw new Error(`You have to define template for view`);
-  }
-
-  render() {
-    return createElement(this.template.trim());
-  }
-
-  bind() {
-
-  }
-
-  get element() {
-    if (!this._element) {
-      this._element = this.render();
-      this.bind();
-    }
-    return this._element;
-  }
-
-}
-
-class WelcomeView extends AbstractView {
-  constructor() {
-    super();
-  }
-
-  get template() {
-    return `
-<section class="welcome">
-  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
-  <button class="welcome__button"><span class="visually-hidden">Начать игру</span></button>
-  <h2 class="welcome__rules-title">Правила игры</h2>
-    <p class="welcome__text">Правила просты:</p>
-    <ul class="welcome__rules-list">
-      <li>За 5 минут нужно ответить на все вопросы.</li>
-      <li>Можно допустить 3 ошибки.</li>
-    </ul>
-    <p class="welcome__text">Удачи!</p>`.trim();
-  }
-
-  bind() {
-    $on(`click`, () => $trigger(`start`), $$(`.welcome__button`, this.element));
-  }
-
-  onStart() {}
-}
-
-class WelcomeScreen {
-  constructor() {
-    this.view = new WelcomeView();
-  }
-
-  init() {
-    changeView(this.view);
-  }
-}
-
-var welcomeScreen = new WelcomeScreen();
 
 const samples = [
   {
@@ -401,6 +339,101 @@ const printResult = (statistics, game) => {
 
   return endGameMessage;
 };
+
+class AbstractView {
+
+  get template() {
+    throw new Error(`You have to define template for view`);
+  }
+
+  render() {
+    return createElement(this.template.trim());
+  }
+
+  bind() {
+
+  }
+
+  get element() {
+    if (!this._element) {
+      this._element = this.render();
+      this.bind();
+    }
+    return this._element;
+  }
+
+}
+
+class WelcomeView extends AbstractView {
+  constructor() {
+    super();
+  }
+
+  get template() {
+    return `
+<section class="welcome">
+  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+  <button class="welcome__button"><span class="visually-hidden">Начать игру</span></button>
+  <h2 class="welcome__rules-title">Правила игры</h2>
+    <p class="welcome__text">Правила просты:</p>
+    <ul class="welcome__rules-list">
+      <li>За 5 минут нужно ответить на все вопросы.</li>
+      <li>Можно допустить 3 ошибки.</li>
+    </ul>
+    <p class="welcome__text">Удачи!</p>`.trim();
+  }
+
+  bind() {
+    $on(`click`, () => $trigger(`start`), $$(`.welcome__button`, this.element));
+  }
+
+  onStart() {}
+}
+
+class WelcomeScreen {
+  constructor() {
+    this.view = new WelcomeView();
+  }
+
+  init() {
+    changeView(this.view);
+  }
+}
+
+var welcomeScreen = new WelcomeScreen();
+
+class App {
+  // constructor() {
+  //   this.main = document.querySelector(`.app`);
+  //   this.main.addEventListener("DOMContentLoaded", this.ready());
+  // }
+  static init(data) {
+    welcomeScreen.init();
+    App.game = new GameScreen(data);
+    $on(`start`, App.startGame);
+    $on(`replay`, App.startGame);
+    // welcomeButton.addEventListener(`click`, () => {
+    //  //static, so call class method
+    //  Loader.getLevels().then(data => {
+    //    console.log(data);
+    //  });
+    // });
+  }
+
+  static startGame(evt, state = initialGame) {
+    App.game.init(state);
+    App.game.tick();
+  }
+
+  returner() {
+    const returnButton = document.querySelector(`.game__back`);
+    returnButton.addEventListener(`click`, () => {
+      this.slider(0);
+    });
+  }
+}
+
+App.init(levels);
 
 class GameModel {
   constructor(data = levels) {
@@ -792,41 +825,8 @@ class GameScreen {
   }
 }
 
-class App {
-  // constructor() {
-  //   this.main = document.querySelector(`.app`);
-  //   this.main.addEventListener("DOMContentLoaded", this.ready());
-  // }
-  static init(data) {
-    welcomeScreen.init();
-    App.game = new GameScreen(data);
-    $on(`start`, App.startGame);
-    $on(`replay`, App.startGame);
-    // welcomeButton.addEventListener(`click`, () => {
-    //  //static, so call class method
-    //  Loader.getLevels().then(data => {
-    //    console.log(data);
-    //  });
-    // });
-  }
-
-  static startGame(evt, state = initialGame) {
-    App.game.init(state);
-    App.game.tick();
-  }
-
-  returner() {
-    const returnButton = document.querySelector(`.game__back`);
-    returnButton.addEventListener(`click`, () => {
-      this.slider(0);
-    });
-  }
-}
-
-App.init(levels);
-
-return App;
+return GameScreen;
 
 }());
 
-//# sourceMappingURL=app.js.map
+//# sourceMappingURL=game.js.map

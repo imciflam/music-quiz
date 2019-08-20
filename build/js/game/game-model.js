@@ -1,4 +1,4 @@
-(function (exports) {
+var gameModel = (function () {
 'use strict';
 
 const samples = [
@@ -171,16 +171,7 @@ const phrases = {
     `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
 };
 
-const welcome = {
-  name: label.GAME,
-  title: label.TITLE_WELCOME,
-  rules: [
-    `Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.`,
-    `Ошибиться можно 3 раза.`,
-    `Удачи!`
-  ],
-  button: label.BUTTON_WELCOME
-};
+
 
 const resultTry = {
   name: label.GAME,
@@ -206,12 +197,7 @@ const resultWin = {
 
 const scoreBoard = [];
 
-const initialGame = {
-  level: -1,
-  remainingAttempts: MAX_ERRORS_COUNT,
-  time: TIME_FOR_GAME,
-  answers: []
-};
+
 
 const tick = (game) => {
   game = Object.assign({}, game);
@@ -230,22 +216,13 @@ const nextLevel = (state, allLevels = levels) => {
   return state;
 };
 
-const startGame = () => {
-  nextLevel();
-};
+
 
 const getAllLevelsTypes = (allLevels = levels) => {
   return allLevels.map((level) => level.type);
 };
 
-const setLives = (game, lives) => {
-  if (lives < 0) {
-    throw new RangeError(`Can't set negative lives`);
-  }
-  game = Object.assign({}, game);
-  game.lives = lives;
-  return game;
-};
+
 
 const getScore = (answers) => {
   let score = -1;
@@ -325,49 +302,60 @@ const printResult = (statistics, game) => {
   return endGameMessage;
 };
 
-class Timer {
-  constructor(time) {
-    this.time = time;
+class GameModel {
+  constructor(data = levels) {
+    this.data = data;
   }
 
-  get isFinished() {
-    return this.time < 1;
+  update(newState) {
+    this.state = Object.assign({}, this.state, newState);
+    return this.state;
   }
 
-  get time() {
-    return this._time;
+  resetAnswers(state) {
+    state.answers = [];
   }
 
-  set time(value) {
-    this._time = value;
+  getCurrentLevel() {
+    return getLevel(this.state.level, this.data);
+  }
+
+  nextLevel() {
+    this.update(nextLevel(this.state, this.data));
   }
 
   tick() {
-    this.time--;
+    this.update(tick(this.state));
+  }
+
+  getMistakes() {
+    return MAX_ERRORS_COUNT - this.state.remainingAttempts;
+  }
+
+  getLevelType() {
+    return this.getCurrentLevel().type;
+  }
+
+  getAllLevelsTypes() {
+    return getAllLevelsTypes();
+  }
+
+  isLastLevel() {
+    return this.state.level === LEVELS_COUNT - 1;
+  }
+
+  win() {
+    resultWin.content = printResult(scoreBoard, this.state);
+    resultWin.score = getScore(this.state.answers);
+    resultWin.errors = this.getMistakes();
+  }
+  failOnMistakes() {
+    resultTry.content = printResult(scoreBoard, this.state);
   }
 }
 
-exports.levels = levels;
-exports.LEVELS_COUNT = LEVELS_COUNT;
-exports.FAST_ANSWER_PERIOD = FAST_ANSWER_PERIOD;
-exports.MAX_ERRORS_COUNT = MAX_ERRORS_COUNT;
-exports.TIME_FOR_GAME = TIME_FOR_GAME;
-exports.welcome = welcome;
-exports.resultTry = resultTry;
-exports.resultTime = resultTime;
-exports.resultWin = resultWin;
-exports.scoreBoard = scoreBoard;
-exports.initialGame = initialGame;
-exports.tick = tick;
-exports.getLevel = getLevel;
-exports.nextLevel = nextLevel;
-exports.startGame = startGame;
-exports.getAllLevelsTypes = getAllLevelsTypes;
-exports.setLives = setLives;
-exports.getScore = getScore;
-exports.printResult = printResult;
-exports.Timer = Timer;
+return GameModel;
 
-}((this.gameData = this.gameData || {})));
+}());
 
-//# sourceMappingURL=game.data.js.map
+//# sourceMappingURL=game-model.js.map

@@ -17,6 +17,7 @@ const appElement = $$(`.app`);
 
 // replacing screen
 const changeView = view => {
+  console.log($$(`section.main`));
   appElement.replaceChild(view.element, $$(`section.main`));
 };
 
@@ -95,66 +96,6 @@ class WelcomeScreen {
 
 var welcomeScreen = new WelcomeScreen();
 
-function htmlToElement(html) {
-  const div = document.createElement(`div`);
-  html = html.trim(); // remove whitespaces
-  div.innerHTML = html;
-  return div.firstChild;
-}
-
-const MAX_ERRORS_COUNT = 3;
- // 5 minutes + 1 second
-
-const Label = {
-  GAME: `Угадай мелодию`,
-
-  TITLE_WIN: `Вы настоящий меломан!`,
-  TITLE_WELCOME: `Правила игры`,
-  TITLE_FAIL_TIME: `Увы и ах!`,
-  TITLE_FAIL_TRY: `Какая жалость!`,
-
-  BUTTON_WELCOME: `Начать игру`,
-  BUTTON_WIN: `Сыграть ещё раз`,
-  BUTTON_FAIL: `Попробовать ещё раз`
-};
-
-const phrase = {
-  timeIsUp: () => `Время вышло!<br>Вы не успели отгадать все мелодии`,
-  noMoreAttempts: () =>
-    `У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!`,
-  win: ({ place, playersCount, betterThan }) =>
-    `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
-};
-
-
-
-
-
-const resultTime = {
-  name: Label.GAME,
-  title: Label.TITLE_FAIL_TIME,
-  button: Label.BUTTON_FAIL,
-  content: phrase.timeIsUp(),
-  isWin: false
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const samples = [
   {
     artist: `Kevin MacLeod`,
@@ -162,36 +103,31 @@ const samples = [
     image: `https://yt3.ggpht.com/-fkDeGauT7Co/AAAAAAAAAAI/AAAAAAAAAAA/dkF5ZKkrxRo/s900-c-k-no-mo-rj-c0xffffff/photo.jpg`,
     src: `https://www.youtube.com/audiolibrary_download?vid=91624fdc22fc54ed`,
     genre: `Jazz`
-  },
-  {
+  }, {
     artist: `Jingle Punks`,
     name: `In the Land of Rhinoplasty`,
     image: `https://i.vimeocdn.com/portrait/992615_300x300`,
     src: `https://www.youtube.com/audiolibrary_download?vid=dc3b4dc549becd6b`,
     genre: `Rock`
-  },
-  {
+  }, {
     artist: `Audionautix`,
     name: `Travel Light`,
     image: `http://4.bp.blogspot.com/-kft9qu5ET6U/VPFUBi9W-MI/AAAAAAAACYM/UxXilXKYwOc/s1600/audionautix%2BHalf%2BSize.jpg`,
     src: `https://www.youtube.com/audiolibrary_download?vid=a127d9b7de8a17cf`,
     genre: `Country`
-  },
-  {
+  }, {
     artist: `Riot`,
     name: `	Level Plane`,
     image: `https://i.ytimg.com/vi/jzgM3m8Vp1k/maxresdefault.jpg`,
     src: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
     genre: `R&B`
-  },
-  {
+  }, {
     artist: `Jingle Punks`,
     name: `Lucky Day`,
     image: `https://i.vimeocdn.com/portrait/992615_300x300`,
     src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`,
     genre: `Pop`
-  },
-  {
+  }, {
     artist: `Gunnar Olsen`,
     name: `Home Stretch`,
     image: `https://f4.bcbits.com/img/0004181452_10.jpg`,
@@ -204,226 +140,681 @@ const levels = [
   {
     type: `Genre`,
     title: `Выберите Jazz треки`,
-    questions: [samples[0], samples[1], samples[2], samples[3]],
+    questions: [
+      samples[0],
+      samples[1],
+      samples[2],
+      samples[3]
+    ],
     answer: `1000`
-  },
-  {
+  }, {
     type: `Genre`,
     title: `Выберите Rock треки`,
-    questions: [samples[0], samples[1], samples[2], samples[3]],
+    questions: [
+      samples[0],
+      samples[1],
+      samples[2],
+      samples[3]
+    ],
     answer: `0110`
-  },
-  {
+  }, {
     type: `Genre`,
     title: `Выберите Country треки`,
-    questions: [samples[0], samples[1], samples[2], samples[3]],
+    questions: [
+      samples[0],
+      samples[1],
+      samples[2],
+      samples[3]
+    ],
     answer: `0010`
-  },
-  {
+  }, {
     type: `Genre`,
     title: `Выберите R&B треки`,
-    questions: [samples[0], samples[1], samples[2], samples[3]],
+    questions: [
+      samples[0],
+      samples[1],
+      samples[2],
+      samples[3]
+    ],
     answer: `0001`
-  },
-  {
+  }, {
     type: `Genre`,
     title: `Выберите Pop треки`,
-    questions: [samples[4], samples[1], samples[2], samples[3]],
+    questions: [
+      samples[4],
+      samples[1],
+      samples[2],
+      samples[3]
+    ],
     answer: `1000`
-  },
-  {
+  }, {
     type: `Genre`,
     title: `Выберите Electronic треки`,
-    questions: [samples[0], samples[5], samples[2], samples[3]],
+    questions: [
+      samples[0],
+      samples[5],
+      samples[2],
+      samples[3]
+    ],
     answer: `0100`
-  },
-  {
+  }, {
     type: `Artist`,
     title: `Кто исполняет эту песню?`,
-    questions: [samples[0], samples[1], samples[2]],
+    questions: [
+      samples[0],
+      samples[1],
+      samples[2]
+    ],
     src: samples[0].src,
     answer: 0
-  },
-  {
+  }, {
     type: `Artist`,
     title: `Кто исполняет эту песню?`,
-    questions: [samples[1], samples[2], samples[3]],
+    questions: [
+      samples[1],
+      samples[2],
+      samples[3]
+    ],
     src: samples[2].src,
     answer: 1
-  },
-  {
+  }, {
     type: `Artist`,
     title: `Кто исполняет эту песню?`,
-    questions: [samples[3], samples[2], samples[1]],
+    questions: [
+      samples[3],
+      samples[2],
+      samples[1]
+    ],
     src: samples[1].src,
     answer: 2
-  },
-  {
+  }, {
     type: `Artist`,
     title: `Кто исполняет эту песню?`,
-    questions: [samples[0], samples[1], samples[2]],
+    questions: [
+      samples[0],
+      samples[1],
+      samples[2]
+    ],
     src: samples[1].src,
     answer: 1
   }
 ];
 
-const header = attemptsLeft => `<header class="game__header">
-<a class="game__back" href="#">
-  <span class="visually-hidden">Сыграть ещё раз</span>
-  <img class="game__logo" src="/img/melody-logo-ginger.png" alt="Угадай мелодию">
-</a>
+const LEVELS_COUNT = 10;
+const FAST_ANSWER_PERIOD = 30;
+const MAX_ERRORS_COUNT$1 = 4;
+const TIME_FOR_GAME = 60 * 5 + 1; // 5 minutes + 1 second
 
-<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 40 780 780">
-  <circle class="timer__line" cx="390" cy="390" r="370" style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center">
-</svg>
+const label = {
+  GAME: `Угадай мелодию`,
 
-<div class="timer__value" xmlns="http://www.w3.org/1999/xhtml">
-  <span class="timer__mins">05</span>
-  <span class="timer__dots">:</span>
-  <span class="timer__secs">00</span>
-</div>
+  TITLE_WIN: `Вы настоящий меломан!`,
+  TITLE_WELCOME: `Правила игры`,
+  TITLE_FAIL_TIME: `Увы и ах!`,
+  TITLE_FAIL_TRY: `Какая жалость!`,
 
-<div class="game__mistakes">
-  ${mistakes(MAX_ERRORS_COUNT - attemptsLeft)}
-</div>
-</header>`;
+  BUTTON_WELCOME: `Начать игру`,
+  BUTTON_WIN: `Сыграть ещё раз`,
+  BUTTON_FAIL: `Попробовать ещё раз`
+};
 
-const mistakes = errors => {
+const phrases = {
+  timeIsUp: () => `Время вышло!<br>Вы не успели отгадать все мелодии`,
+  noMoreAttempts: () =>
+    `У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!`,
+  win: ({place, playersCount, betterThan}) =>
+    `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
+};
+
+
+
+const resultTry = {
+  name: label.GAME,
+  title: label.TITLE_FAIL_TRY,
+  button: label.BUTTON_FAIL,
+  isWin: false
+};
+
+const resultTime = {
+  name: label.GAME,
+  title: label.TITLE_FAIL_TIME,
+  button: label.BUTTON_FAIL,
+  content: phrases.timeIsUp(),
+  isWin: false
+};
+
+const resultWin = {
+  name: label.GAME,
+  title: label.TITLE_WIN,
+  button: label.BUTTON_WIN,
+  isWin: true
+};
+
+const scoreBoard = [];
+
+const initialGame = {
+  level: -1,
+  remainingAttempts: MAX_ERRORS_COUNT$1,
+  time: TIME_FOR_GAME,
+  answers: []
+};
+
+const tick = (game) => {
+  game = Object.assign({}, game);
+  game.time--;
+  return game;
+};
+
+const getLevel = (index, allLevels = levels) => allLevels[index];
+
+const nextLevel = (state, allLevels = levels) => {
+  const index = state.level + 1;
+  if (!getLevel(index, allLevels)) {
+    throw new RangeError(`Can't find level ${index}`);
+  }
+  state.level = index;
+  return state;
+};
+
+
+
+const getAllLevelsTypes = (allLevels = levels) => {
+  return allLevels.map((level) => level.type);
+};
+
+
+
+const getScore = (answers) => {
+  let score = -1;
+
+  if (answers.length === LEVELS_COUNT) {
+    score = answers.reduce((acc, it) => {
+      let point = -2;
+      if (it.isCorrect) {
+        point = (it.timeSpent < FAST_ANSWER_PERIOD) ? 2 : 1;
+      }
+      return acc + point;
+    }, 0);
+  }
+  return score;
+};
+
+const getTimeSpent = (answers) => {
+  let time = answers.reduce((acc, it) => {
+    return acc + it.timeSpent;
+  }, 0);
+  return time;
+};
+
+const getPosition = (statistics, score) => {
+  // создаём из таблицы результатов, массив объектов: { position, score }
+  const statisticsIndexed = statistics
+      .map((scoreFromStaticstics, position) => ({
+        position,
+        score: scoreFromStaticstics
+      }));
+
+  // кладём в таблицу результат новой игры
+  statisticsIndexed.push({
+    position: null,
+    score
+  });
+
+  // получаем позицию новой игры в таблице результатов
+  const position = statisticsIndexed
+      .sort((a, b) => b.score - a.score)
+      .reduce((acc, it, index) => {
+        if (it.position === null) {
+          acc = index;
+        }
+        return acc;
+      }, -1);
+
+  if (position === -1) {
+    throw new Error(`Can't define position in Scoreboard`);
+  }
+  return position;
+};
+
+const printResult = (statistics, game) => {
+  let endGameMessage = ``;
+  const score = getScore(game.answers);
+  const time = getTimeSpent(game.answers);
+
+  if (game.remainingAttempts > 0 && time < TIME_FOR_GAME) {
+    // выйгрыш
+    const position = getPosition(statistics, score);
+    statistics.push(score);
+    statistics.sort((a, b) => b - a);
+
+    const stats = {
+      place: position + 1,
+      playersCount: statistics.length,
+      betterThan: Math.round((statistics.length - position - 1) * 100 / statistics.length)
+    };
+    endGameMessage = phrases.win(stats);
+
+  } else {
+    // проигрыш
+    endGameMessage = (time > TIME_FOR_GAME) ? phrases.timeIsUp() : phrases.noMoreAttempts();
+  }
+
+  return endGameMessage;
+};
+
+class GameModel {
+  constructor(data = levels) {
+    this.data = data;
+  }
+
+  update(newState) {
+    this.state = Object.assign({}, this.state, newState);
+    return this.state;
+  }
+
+  resetAnswers(state) {
+    state.answers = [];
+  }
+
+  getCurrentLevel() {
+    return getLevel(this.state.level, this.data);
+  }
+
+  nextLevel() {
+    this.update(nextLevel(this.state, this.data));
+  }
+
+  tick() {
+    this.update(tick(this.state));
+  }
+
+  getMistakes() {
+    return MAX_ERRORS_COUNT$1 - this.state.remainingAttempts;
+  }
+
+  getLevelType() {
+    return this.getCurrentLevel().type;
+  }
+
+  getAllLevelsTypes() {
+    return getAllLevelsTypes();
+  }
+
+  isLastLevel() {
+    return this.state.level === LEVELS_COUNT - 1;
+  }
+
+  win() {
+    resultWin.content = printResult(scoreBoard, this.state);
+    resultWin.score = getScore(this.state.answers);
+    resultWin.errors = this.getMistakes();
+  }
+  failOnMistakes() {
+    resultTry.content = printResult(scoreBoard, this.state);
+  }
+}
+
+const mistakes = (errors) => {
   let mistakeElement = ``;
   if (errors > 0) {
     while (errors) {
-      mistakeElement += `
-      <div class="wrong"></div>`;
+      mistakeElement += `<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`;
       errors--;
     }
   }
   return mistakeElement;
 };
 
-const gameGenreScreen = (levels$$1, remainingAttempts) => `
-<section class="game game--genre">
-${header(remainingAttempts)}
-    <section class="game__screen">
-      <h2 class="game__title">${levels$$1[0].title}</h2>
-      <form class="game__tracks">
-      ${questionsTemplate(levels$$1[0].questions)}
-        <button class="game__submit button" type="submit"  >Ответить</button>
-      </form>
-    </section>
-  </section>`;
+class HeaderView extends AbstractView {
+  constructor(errors, time) {
+    super();
+    this.errors = errors;
+    this.time = time;
+  }
 
-const questionsTemplate = levels$$1 => {
-  return levels$$1.reduce((string, it, index) => {
-    console.log(it);
-    const n = index++;
-    const itemTemplate = `
-    <div class="track">
-          <button class="track__button track__button--play" type="button"></button>
-          <div class="track__status">            
-          <audio src="${it.src}"></audio>
-          </div>
-          <div class="game__answer">
-            <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-${n}" id="answer-${n}">
-            <label class="game__check" for="answer-${n}">Отметить</label>
-          </div>
-        </div>`;
+  get template() {
+    const minutes = parseInt(this.time / 60, 10);
+    const seconds = this.time - minutes * 60;
+    const zero = (value) => (value < 10) ? `0` : ``;
+    return `
+<header>
+  <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
+    <circle
+      cx="390" cy="390" r="370"
+      class="timer-line"
+      style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
 
-    return string + itemTemplate;
-  }, ``);
-};
+    <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
+      <span class="timer-value-mins">${zero(minutes)}${minutes}</span><!--
+      --><span class="timer-value-dots">:</span><!--
+      --><span class="timer-value-secs">${zero(seconds)}${seconds}</span>
+    </div>
+  </svg>
+  <div class="main-mistakes">
+    ${mistakes(this.errors)}
+  </div>
+</header>`;
+  }
+}
 
-const genreLevel = htmlToElement(gameGenreScreen(levels, 1));
+class LevelGenreView extends AbstractView {
+  constructor(level) {
+    super();
+    this.level = level;
+  }
 
-const gameArtistScreen = (levels$$1, remainingAttempts) => `
-<section class="game game--artist">
-${header(remainingAttempts)}
-    <section class="game__screen">
-      <h2 class="game__title">${levels$$1[6].title}</h2>
-      <div class="game__track">
-        <button class="track__button track__button--play" type="button"></button>
-        <audio loop autoplay src="${levels$$1[6].src}"></audio>
+  get template() {
+    const {title, questions} = this.level;
+
+    const questionsTemplate = (data) => {
+      return data.reduce((string, it, index) => {
+        const n = index++;
+        const itemTemplate = `
+<div class="genre-answer">
+  <div class="player-wrapper">
+    <div class="player">
+      <audio src="${it.src}"></audio>
+      <button class="player-control player-control--play"></button>
+      <div class="player-track">
+        <span class="player-status"></span>
       </div>
+    </div>
+  </div>
+  <input type="checkbox" name="answer" value="answer-${n}" id="a-${n}">
+  <label class="genre-answer-check" for="a-${n}"></label>
+</div>`;
+        return string + itemTemplate;
+      }, ``);
+    };
 
-      <form class="game__artist">
-      ${questionsTemplate$1(levels$$1[6].questions)}
-         
-      </form>
-    </section>
-  </section>`;
+    return `
+<section class="main main--level main--level-genre">
+  <div class="main-wrap">
+    <h2 class="title">${title}</h2>
+    <form class="genre">
 
-const questionsTemplate$1 = data => {
-  console.log(data);
-  return data.reduce((string, it, index) => {
-    const n = index++;
-    const itemTemplate = `
-      <div class="artist">
-        <input class="artist__input visually-hidden" type="radio" name="answer" value="artist-${n}" id="answer-${n}">
-        <label class="artist__name" for="answer-${n}">
-          <img class="artist__picture" src="${it.image}" alt="${it.artist}">
-          ${it.artist}
-        </label>
-      </div> `;
+      ${questionsTemplate(questions)}
 
-    return string + itemTemplate;
-  }, ``);
+      <button class="genre-answer-send" type="submit" disabled>Ответить</button>
+    </form>
+  </div>
+</section>`.trim();
+  }
+
+  bind() {
+    const answerButton = $$(`.genre-answer-send`, this.element);
+
+    const checkboxes = [...this.element.querySelectorAll(`.genre-answer input[type="checkbox"]`)];
+
+    checkboxes.forEach((checkbox) => {
+      $on(`change`, () => {
+        if (checkboxes.some((it) => it.checked)) {
+          answerButton.removeAttribute(`disabled`);
+        } else {
+          answerButton.setAttribute(`disabled`, `disabled`);
+        }
+      }, checkbox);
+    });
+
+    $on(`click`, (evt) => this.handlerAnswer(evt), answerButton);
+  }
+
+  handlerAnswer(evt) {
+    evt.preventDefault();
+    const answers = [...evt.target.form.elements.answer];
+    $trigger(`answerGenre`, answers);
+  }
+}
+
+class LevelArtistView extends AbstractView {
+  constructor(level) {
+    super();
+    this.level = level;
+  }
+
+  get template() {
+    const {title, questions, src} = this.level;
+
+    const questionsTemplate = (data) => {
+      return data.reduce((string, it, index) => {
+        const n = index++;
+        const itemTemplate = `
+<div class="main-answer-wrapper">
+  <input class="main-answer-r" type="radio" id="answer-${n}" name="answer" value="val-${n}"/>
+  <label class="main-answer" for="answer-${n}">
+    <img class="main-answer-preview" src="${it.image}"
+        alt="${it.artist}" width="134" height="134">
+    ${it.artist}
+  </label>
+</div>`.trim();
+        return string + itemTemplate;
+      }, ``);
+    };
+
+    return `
+<section class="main main--level main--level-genre">
+  <div class="main-wrap">
+    <h2 class="title main-title">${title}</h2>
+    <div class="player-wrapper">
+      <div class="player">
+        <audio src="${src}" loop autoplay></audio>
+        <button class="player-control player-control--pause"></button>
+        <div class="player-track">
+          <span class="player-status"></span>
+        </div>
+      </div>
+    </div>
+    <form class="main-list">
+
+      ${questionsTemplate(questions)}
+
+    </form>
+  </div>
+</section>`.trim();
+  }
+
+  bind() {
+    const buttons = [...this.element.querySelectorAll(`.main-answer-r`)];
+    buttons.forEach((button) => {
+      $on(`change`, () => {
+        const answer = button.form.elements.answer.value;
+        $trigger(`answerArtist`, answer);
+      }, button);
+    });
+  }
+}
+
+const audio = {
+  BUTTON: `player-control`,
+  PLAY: `player-control--pause`,
+  PAUSE: `player-control--play`
 };
 
-const artistLevel = htmlToElement(gameArtistScreen(levels, 1));
+class GameView extends AbstractView {
+  constructor(model) {
+    super();
+    this.model = model;
+  }
 
-const resultSuccessScreen = htmlToElement(`
-<section class="result">
-<div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
-<h2 class="result__title">Вы настоящий меломан!</h2>
-<p class="result__total">За 3 минуты и 25 секунд вы набрали 12 баллов (8 быстрых), совершив 3 ошибки</p>
-<p class="result__text">Вы заняли 2 место из 10. Это лучше чем у 80% игроков</p>
-<button class="result__replay" type="button">Сыграть ещё раз</button>
-</section>`);
+  get template() {
+    return `<section class="main"></section>`;
+  }
 
-const failTriesScreen = htmlToElement(`
-<section class="result">
-  <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
-  <h2 class="result__title">Увы и ах!</h2>
-  <p class="result__total result__total--fail">Время вышло! Вы не успели отгадать все мелодии</p>
-  <button class="result__replay" type="button">Попробовать ещё раз</button>
-</section>`);
+  bind() {
+    return super.bind();
+  }
 
-const URL = `https://es.dump.academy/guess-melody`;
+  bindAudioHandler() {
+    [...this.level.element.querySelectorAll(`.${audio.BUTTON}`)].forEach((button) => {
+      $on(`click`, (evt) => this.audioHandler(evt), button);
+    });
+  }
 
-class Loader {
-  static getLevels() {
-    return fetch(`${URL}/questions`)
-      .then(response => {
-        if (response.ok) {
-          console.log(response);
-          return response.json();
-        } else if (response.status === 404) {
-          throw new Error(`Request ${URL}/questions failed.`);
-        }
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
-      })
-      .then(data => {
-        return data;
-      });
+  get view() {
+    return {
+      Genre(level) {
+        return new LevelGenreView(level);
+      },
+      Artist(level) {
+        return new LevelArtistView(level);
+      }
+    };
+  }
+
+  updateLevel(type) {
+    this.level = this.view[type](this.model.getCurrentLevel());
+    this.bindAudioHandler();
+    changeView(this.level);
+    this.updateHeader();
+  }
+
+  updateHeader() {
+    const header = new HeaderView(this.model.getMistakes(), this.model.state.time);
+    const headerElement = $$(`section.main > header`);
+    if (headerElement !== null) {
+      headerElement.remove();
+    }
+    $$(`section.main`).prepend(header.element);
+  }
+
+  audioHandler(evt) {
+    if (evt && evt.target) {
+      evt.preventDefault();
+      const el = evt.target;
+      if (el.classList.contains(audio.PAUSE)) {
+        // play
+        [...this.level.element.querySelectorAll(`.${audio.PLAY}`)].forEach((button) => {
+          button.classList.remove(audio.PLAY);
+          button.classList.add(audio.PAUSE);
+          button.previousElementSibling.pause();
+        });
+        el.classList.remove(audio.PAUSE);
+        el.classList.add(audio.PLAY);
+        el.previousElementSibling.play();
+      } else {
+        // pause
+        el.classList.remove(audio.PLAY);
+        el.classList.add(audio.PAUSE);
+        el.previousElementSibling.pause();
+      }
+    }
+  }
+
+}
+
+const MAX_ERRORS_COUNT$$1 = 4;
+
+class GameScreen {
+  constructor(data = levels) {
+    this.model = new GameModel(data);
+    this.view = new GameView(this.model);
+    $on(`answerGenre`, evt => this.answerGenreHandler(evt));
+    $on(`answerArtist`, evt => this.answerArtistHandler(evt));
+  }
+
+  init(state = initialGame) {
+    this.model.resetAnswers(state);
+    this.model.update(state);
+    this.model.nextLevel();
+    this.changeLevel(this.model.getLevelType());
+  }
+
+  setAnswer(answer) {
+    const answerObj = {
+      isCorrect: answer === levels[this.model.state.level].answer,
+      timeSpent: 20
+    };
+    const answers = this.model.state.answers;
+    answers.push(answerObj);
+    let remainingAttempts = this.model.state.remainingAttempts;
+    if (!answerObj.isCorrect) {
+      remainingAttempts--;
+    }
+
+    this.model.update({
+      answers,
+      remainingAttempts
+    });
+  }
+
+  setGame() {
+    if (
+      this.model.isLastLevel() &&
+      this.model.getMistakes() < MAX_ERRORS_COUNT$$1
+    ) {
+      // сделан ответ на последнем уровне и есть запас по ошибкам
+      this.model.win();
+      App.showResult(`WIN`);
+    } else if (this.model.getMistakes() >= MAX_ERRORS_COUNT$$1) {
+      // превышен лимит ошибок
+      this.model.failOnMistakes();
+      App.showResult(`TRY`);
+    } else {
+      this.model.nextLevel();
+      this.changeLevel(this.model.getLevelType());
+    }
+  }
+
+  changeLevel(type) {
+    this.view.updateLevel(type);
+  }
+
+  tick() {
+    this.model.tick();
+    this.view.updateHeader();
+
+    if (this.model.state.time <= 0) {
+      // Application.failNoMoreTime();
+      App.showResult(`TIME`);
+    } else {
+      this.timer = setTimeout(() => this.tick(), 1000);
+    }
+  }
+
+  stopTimer() {
+    clearTimeout(this.timer);
+  }
+
+  answerGenreHandler(evt) {
+    const answers = evt.detail;
+    let answerMask = ``;
+    for (let answer of answers) {
+      answerMask += answer.checked ? 1 : 0;
+    }
+    this.setAnswer(answerMask);
+    this.setGame();
+  }
+
+  answerArtistHandler(evt) {
+    const answer = +evt.detail.split(`-`)[1];
+    this.setAnswer(answer);
+    this.setGame();
   }
 }
 
 class App {
-  constructor() {
-    this.main = document.querySelector(`.app`);
-    this.main.addEventListener("DOMContentLoaded", this.ready());
-  }
-  ready() {
+  // constructor() {
+  //   this.main = document.querySelector(`.app`);
+  //   this.main.addEventListener("DOMContentLoaded", this.ready());
+  // }
+  static init(data) {
     welcomeScreen.init();
-    const welcomeButton = document.querySelector(`.welcome__button`);
-    welcomeButton.addEventListener(`click`, () => {
-      this.slider(1);
-
-      //static, so call class method
-      Loader.getLevels().then(data => {
-        console.log(data);
-      });
-    });
+    App.game = new GameScreen(data);
+    $on(`start`, App.startGame);
+    $on(`replay`, App.startGame);
+    // welcomeButton.addEventListener(`click`, () => {
+    //  //static, so call class method
+    //  Loader.getLevels().then(data => {
+    //    console.log(data);
+    //  });
+    // });
   }
+
+  static startGame(evt, state = initialGame) {
+    App.game.init(state);
+    App.game.tick();
+  }
+
   returner() {
     const returnButton = document.querySelector(`.game__back`);
     returnButton.addEventListener(`click`, () => {
@@ -431,6 +822,8 @@ class App {
     });
   }
 }
+
+App.init(levels);
 
 const app = new App();
 

@@ -17,6 +17,7 @@ const appElement = $$(`.app`);
 
 // replacing screen
 const changeView = view => {
+  console.log($$(`section.main`));
   appElement.replaceChild(view.element, $$(`section.main`));
 };
 

@@ -1,27 +1,37 @@
 import welcomeScreen from "./welcome/welcome";
-import { genreLevel } from "./templates/genreLevel";
-import { artistLevel } from "./templates/artistLevel";
-import resultSuccessScreen from "./resultSuccessScreen";
-import failTriesScreen from "./failTriesScreen";
-import Loader from "./dataLoader";
+import GameScreen from "./game/game";
+import {
+  resultTry as tryData,
+  resultTime as timeData,
+  resultWin as winData,
+  levels as levelsData,
+  initialGame
+} from "./data/game.data";
+import { $on } from "./util";
 
 export default class App {
-  constructor() {
-    this.main = document.querySelector(`.app`);
-    this.main.addEventListener("DOMContentLoaded", this.ready());
-  }
-  ready() {
+  // constructor() {
+  //   this.main = document.querySelector(`.app`);
+  //   this.main.addEventListener("DOMContentLoaded", this.ready());
+  // }
+  static init(data) {
     welcomeScreen.init();
-    const welcomeButton = document.querySelector(`.welcome__button`);
-    welcomeButton.addEventListener(`click`, () => {
-      this.slider(1);
-
-      //static, so call class method
-      Loader.getLevels().then(data => {
-        console.log(data);
-      });
-    });
+    App.game = new GameScreen(data);
+    $on(`start`, App.startGame);
+    $on(`replay`, App.startGame);
+    // welcomeButton.addEventListener(`click`, () => {
+    //  //static, so call class method
+    //  Loader.getLevels().then(data => {
+    //    console.log(data);
+    //  });
+    // });
   }
+
+  static startGame(evt, state = initialGame) {
+    App.game.init(state);
+    App.game.tick();
+  }
+
   returner() {
     const returnButton = document.querySelector(`.game__back`);
     returnButton.addEventListener(`click`, () => {
@@ -29,3 +39,5 @@ export default class App {
     });
   }
 }
+
+App.init(levelsData);

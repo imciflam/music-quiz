@@ -1,10 +1,10 @@
 (function (exports) {
 'use strict';
 
-const MAX_ERRORS_COUNT = 3;
+const MAX_ERRORS_COUNT = 4;
  // 5 minutes + 1 second
 
-const Label = {
+const label = {
   GAME: `Угадай мелодию`,
 
   TITLE_WIN: `Вы настоящий меломан!`,
@@ -17,11 +17,11 @@ const Label = {
   BUTTON_FAIL: `Попробовать ещё раз`
 };
 
-const phrase = {
+const phrases = {
   timeIsUp: () => `Время вышло!<br>Вы не успели отгадать все мелодии`,
   noMoreAttempts: () =>
     `У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!`,
-  win: ({ place, playersCount, betterThan }) =>
+  win: ({place, playersCount, betterThan}) =>
     `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
 };
 
@@ -30,10 +30,10 @@ const phrase = {
 
 
 const resultTime = {
-  name: Label.GAME,
-  title: Label.TITLE_FAIL_TIME,
-  button: Label.BUTTON_FAIL,
-  content: phrase.timeIsUp(),
+  name: label.GAME,
+  title: label.TITLE_FAIL_TIME,
+  button: label.BUTTON_FAIL,
+  content: phrases.timeIsUp(),
   isWin: false
 };
 

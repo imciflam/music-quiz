@@ -1,96 +1,85 @@
 (function () {
 'use strict';
 
-// create element
-const createElement = template => {
+const createElement = (template) => {
   const outer = document.createElement(`div`);
   outer.innerHTML = template;
   return outer.firstElementChild;
 };
 
-// make selection
 const $$ = (selector, scope = window.document) => {
   return scope.querySelector(selector);
 };
 
 const appElement = $$(`.app`);
 
-// replacing screen
-const changeView = view => {
-  console.log($$(`section.main`));
+const changeView = (view) => {
   appElement.replaceChild(view.element, $$(`section.main`));
 };
 
-// listen to event
+
 const $on = (eventName, callback, el = appElement) => {
-  el.addEventListener(eventName, evt => {
+  el.addEventListener(eventName, (evt) => {
     callback(evt);
   });
 };
 
-// generate event
 const $trigger = (eventName, data = null) => {
-  let customEvent = new CustomEvent(eventName, { detail: data });
+  let customEvent = new CustomEvent(eventName, {detail: data});
   appElement.dispatchEvent(customEvent);
 };
 
 class AbstractView {
-
   get template() {
-    throw new Error(`You have to define template for view`);
+    throw new Error(`Define template for view`);
   }
 
   render() {
     return createElement(this.template.trim());
   }
 
-  bind() {
-
-  }
-
   get element() {
     if (!this._element) {
       this._element = this.render();
-      this.bind();
+      this.bind(); //bind to this
     }
     return this._element;
   }
-
 }
 
 class WelcomeView extends AbstractView {
-  constructor() {
+  constructor(data) {
     super();
+    this.data = data;
   }
 
   get template() {
+    const {name, button, title, rules} = this.data;
     return `
-<section class="main main--welcome welcome">
-  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
-  <button class="main-play welcome__button"></button>
-  <h2 class="title main-title"> </h2>
-  <p class="text main-text"> </p>
+<section class="main main--welcome">
+  <section class="logo" title="${name}"><h1>${name}</h1></section>
+  <button class="main-play">${button}</button>
+  <h2 class="title main-title">${title}</h2>
+  <p class="text main-text">${rules
+      .reduce((str, it, index, arr) => {
+        const linebreak = (index < arr.length - 1) ? `<br>` : ``;
+        it = it + linebreak;
+        return str + it;
+      }, ``)}</p>
 </section>`.trim();
   }
 
   bind() {
-    $on(`click`, () => $trigger(`start`), $$(`.welcome__button`, this.element));
+    $on(
+        `click`,
+        () => $trigger(`start`),
+        $$(`.main-play`, this.element)
+    );
   }
 
-  onStart() {}
-}
-
-class WelcomeScreen {
-  constructor() {
-    this.view = new WelcomeView();
-  }
-
-  init() {
-    changeView(this.view);
+  onStart() {
   }
 }
-
-var welcomeScreen = new WelcomeScreen();
 
 const samples = [
   {
@@ -238,7 +227,7 @@ const levels = [
 
 const LEVELS_COUNT = 10;
 const FAST_ANSWER_PERIOD = 30;
-const MAX_ERRORS_COUNT$1 = 4;
+const MAX_ERRORS_COUNT = 4;
 const TIME_FOR_GAME = 60 * 5 + 1; // 5 minutes + 1 second
 
 const label = {
@@ -262,7 +251,16 @@ const phrases = {
     `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
 };
 
-
+const welcome = {
+  name: label.GAME,
+  title: label.TITLE_WELCOME,
+  rules: [
+    `Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.`,
+    `Ошибиться можно 3 раза.`,
+    `Удачи!`
+  ],
+  button: label.BUTTON_WELCOME
+};
 
 const resultTry = {
   name: label.GAME,
@@ -290,7 +288,7 @@ const scoreBoard = [];
 
 const initialGame = {
   level: -1,
-  remainingAttempts: MAX_ERRORS_COUNT$1,
+  remainingAttempts: MAX_ERRORS_COUNT,
   time: TIME_FOR_GAME,
   answers: []
 };
@@ -398,6 +396,18 @@ const printResult = (statistics, game) => {
   return endGameMessage;
 };
 
+class WelcomeScreen {
+  constructor() {
+    this.view = new WelcomeView(welcome);
+  }
+
+  init() {
+    changeView(this.view);
+  }
+}
+
+var welcomeScreen = new WelcomeScreen();
+
 class GameModel {
   constructor(data = levels) {
     this.data = data;
@@ -425,7 +435,7 @@ class GameModel {
   }
 
   getMistakes() {
-    return MAX_ERRORS_COUNT$1 - this.state.remainingAttempts;
+    return MAX_ERRORS_COUNT - this.state.remainingAttempts;
   }
 
   getLevelType() {
@@ -698,14 +708,12 @@ class GameView extends AbstractView {
 
 }
 
-const MAX_ERRORS_COUNT$$1 = 4;
-
 class GameScreen {
   constructor(data = levels) {
     this.model = new GameModel(data);
     this.view = new GameView(this.model);
-    $on(`answerGenre`, evt => this.answerGenreHandler(evt));
-    $on(`answerArtist`, evt => this.answerArtistHandler(evt));
+    $on(`answerGenre`, (evt) => this.answerGenreHandler(evt));
+    $on(`answerArtist`, (evt) => this.answerArtistHandler(evt));
   }
 
   init(state = initialGame) {
@@ -729,22 +737,21 @@ class GameScreen {
 
     this.model.update({
       answers,
-      remainingAttempts
+      remainingAttempts,
     });
   }
 
   setGame() {
-    if (
-      this.model.isLastLevel() &&
-      this.model.getMistakes() < MAX_ERRORS_COUNT$$1
-    ) {
+    if (this.model.isLastLevel() && this.model.getMistakes() < MAX_ERRORS_COUNT) {
       // сделан ответ на последнем уровне и есть запас по ошибкам
       this.model.win();
-      App.showResult(`WIN`);
-    } else if (this.model.getMistakes() >= MAX_ERRORS_COUNT$$1) {
+      // Application.win();
+      Application.showResult(`WIN`);
+    } else if (this.model.getMistakes() >= MAX_ERRORS_COUNT) {
       // превышен лимит ошибок
       this.model.failOnMistakes();
-      App.showResult(`TRY`);
+      // Application.failOnMistakes();
+      Application.showResult(`TRY`);
     } else {
       this.model.nextLevel();
       this.changeLevel(this.model.getLevelType());
@@ -761,7 +768,7 @@ class GameScreen {
 
     if (this.model.state.time <= 0) {
       // Application.failNoMoreTime();
-      App.showResult(`TIME`);
+      Application.showResult(`TIME`);
     } else {
       this.timer = setTimeout(() => this.tick(), 1000);
     }
@@ -786,42 +793,81 @@ class GameScreen {
     this.setAnswer(answer);
     this.setGame();
   }
+
 }
 
-class App {
-  // constructor() {
-  //   this.main = document.querySelector(`.app`);
-  //   this.main.addEventListener("DOMContentLoaded", this.ready());
-  // }
+class ResultView extends AbstractView {
+  constructor(data) {
+    super();
+    this.data = data;
+  }
+
+  get template() {
+    const {name, button, title, content, isWin, score, errors} = this.data;
+    const winText = `
+За&nbsp;3&nbsp;минуты и 25&nbsp;секунд
+<br>вы&nbsp;набрали ${score} баллов (8 быстрых)
+<br>совершив ${errors} ошибки`;
+
+    return `
+<section class="main main--result">
+  <section class="logo" title="${name}"><h1>${name}</h1></section>
+
+  <h2 class="title">${title}</h2>
+  <div class="main-stat">
+    ${ isWin ? winText : content }
+  </div>
+  ${ isWin ? `<span class="main-comparison">${content}</span>` : `` }
+  <span role="button" tabindex="0" class="main-replay">${button}</span>
+</section>`.trim();
+  }
+
+  bind() {
+    $on(
+        `click`,
+        () => $trigger(`replay`),
+        $$(`.main-replay`, this.element)
+    );
+  }
+}
+
+class ResultScreen {
+  constructor(data) {
+    this.view = new ResultView(data);
+  }
+
+  init() {
+    changeView(this.view);
+  }
+}
+
+const resultData = {
+  TRY: resultTry,
+  TIME: resultTime,
+  WIN: resultWin
+};
+
+class Application {
   static init(data) {
     welcomeScreen.init();
-    App.game = new GameScreen(data);
-    $on(`start`, App.startGame);
-    $on(`replay`, App.startGame);
-    // welcomeButton.addEventListener(`click`, () => {
-    //  //static, so call class method
-    //  Loader.getLevels().then(data => {
-    //    console.log(data);
-    //  });
-    // });
+    Application.game = new GameScreen(data);
+    $on(`start`, Application.startGame);
+    $on(`replay`, Application.startGame);
   }
 
   static startGame(evt, state = initialGame) {
-    App.game.init(state);
-    App.game.tick();
+    Application.game.init(state);
+    Application.game.tick();
   }
 
-  returner() {
-    const returnButton = document.querySelector(`.game__back`);
-    returnButton.addEventListener(`click`, () => {
-      this.slider(0);
-    });
+  static showResult(type) {
+    Application.game.stopTimer();
+    const resultScreen = new ResultScreen(resultData[type]);
+    resultScreen.init();
   }
 }
 
-App.init(levels);
-
-const app = new App();
+Application.init(levels);
 
 }());
 

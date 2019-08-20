@@ -1,58 +1,48 @@
 var levelGenreView = (function () {
 'use strict';
 
-// create element
-const createElement = template => {
+const createElement = (template) => {
   const outer = document.createElement(`div`);
   outer.innerHTML = template;
   return outer.firstElementChild;
 };
 
-// make selection
 const $$ = (selector, scope = window.document) => {
   return scope.querySelector(selector);
 };
 
 const appElement = $$(`.app`);
 
-// replacing screen
 
 
-// listen to event
+
 const $on = (eventName, callback, el = appElement) => {
-  el.addEventListener(eventName, evt => {
+  el.addEventListener(eventName, (evt) => {
     callback(evt);
   });
 };
 
-// generate event
 const $trigger = (eventName, data = null) => {
-  let customEvent = new CustomEvent(eventName, { detail: data });
+  let customEvent = new CustomEvent(eventName, {detail: data});
   appElement.dispatchEvent(customEvent);
 };
 
 class AbstractView {
-
   get template() {
-    throw new Error(`You have to define template for view`);
+    throw new Error(`Define template for view`);
   }
 
   render() {
     return createElement(this.template.trim());
   }
 
-  bind() {
-
-  }
-
   get element() {
     if (!this._element) {
       this._element = this.render();
-      this.bind();
+      this.bind(); //bind to this
     }
     return this._element;
   }
-
 }
 
 class LevelGenreView extends AbstractView {

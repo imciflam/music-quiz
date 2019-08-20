@@ -1,4 +1,4 @@
-import welcomeScreen from "./welcomeScreen";
+import welcomeScreen from "./welcome/welcome";
 import { genreLevel } from "./templates/genreLevel";
 import { artistLevel } from "./templates/artistLevel";
 import resultSuccessScreen from "./resultSuccessScreen";

@@ -1,25 +1,85 @@
 var app = (function () {
 'use strict';
 
-function htmlToElement(html) {
-  const div = document.createElement(`div`);
-  html = html.trim(); // remove whitespaces
-  div.innerHTML = html;
-  return div.firstChild;
+const createElement = (template) => {
+  const outer = document.createElement(`div`);
+  outer.innerHTML = template;
+  return outer.firstElementChild;
+};
+
+const $$ = (selector, scope = window.document) => {
+  return scope.querySelector(selector);
+};
+
+const appElement = $$(`.app`);
+
+const changeView = (view) => {
+  appElement.replaceChild(view.element, $$(`section.main`));
+};
+
+
+const $on = (eventName, callback, el = appElement) => {
+  el.addEventListener(eventName, (evt) => {
+    callback(evt);
+  });
+};
+
+const $trigger = (eventName, data = null) => {
+  let customEvent = new CustomEvent(eventName, {detail: data});
+  appElement.dispatchEvent(customEvent);
+};
+
+class AbstractView {
+
+  get template() {
+    throw new Error(`You have to define template for view`);
+  }
+
+  render() {
+    return createElement(this.template.trim());
+  }
+
+  bind() {
+
+  }
+
+  get element() {
+    if (!this._element) {
+      this._element = this.render();
+      this.bind();
+    }
+    return this._element;
+  }
+
 }
 
-const welcomeScreen = htmlToElement(`
-  <section class="welcome">
-    <div class="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
-    <button class="welcome__button"><span class="visually-hidden">Начать игру</span></button>
-    <h2 class="welcome__rules-title">Правила игры</h2>
-    <p class="welcome__text">Правила просты:</p>
-    <ul class="welcome__rules-list">
-      <li>За 5 минут нужно ответить на все вопросы.</li>
-      <li>Можно допустить 3 ошибки.</li>
-    </ul>
-    <p class="welcome__text">Удачи!</p>
-  </section>`);
+class WelcomeView extends AbstractView {
+  constructor(data) {
+    super();
+    this.data = data;
+  }
+
+  get template() {
+    const { name, button, title, rules } = this.data;
+    return `
+<section class="main main--welcome">
+  <section class="logo" title="${name}"><h1>${name}</h1></section>
+  <button class="main-play">${button}</button>
+  <h2 class="title main-title">${title}</h2>
+  <p class="text main-text">${rules.reduce((str, it, index, arr) => {
+    const linebreak = index < arr.length - 1 ? `<br>` : ``;
+    it = it + linebreak;
+    return str + it;
+  }, ``)}</p>
+</section>`.trim();
+  }
+
+  bind() {
+    $on(`click`, () => $trigger(`start`), $$(`.main-play`, this.element));
+  }
+
+  onStart() {}
+}
 
 const MAX_ERRORS_COUNT = 3;
  // 5 minutes + 1 second
@@ -45,7 +105,16 @@ const phrase = {
     `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
 };
 
-
+const welcome = {
+  name: Label.GAME,
+  title: Label.TITLE_WELCOME,
+  rules: [
+    `Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.`,
+    `Ошибиться можно 3 раза.`,
+    `Удачи!`
+  ],
+  button: Label.BUTTON_WELCOME
+};
 
 
 
@@ -186,6 +255,25 @@ const levels = [
   }
 ];
 
+class WelcomeScreen {
+  constructor() {
+    this.view = new WelcomeView(welcome);
+  }
+
+  init() {
+    changeView(this.view);
+  }
+}
+
+var welcomeScreen = new WelcomeScreen();
+
+function htmlToElement(html) {
+  const div = document.createElement(`div`);
+  html = html.trim(); // remove whitespaces
+  div.innerHTML = html;
+  return div.firstChild;
+}
+
 const header = attemptsLeft => `<header class="game__header">
 <a class="game__back" href="#">
   <span class="visually-hidden">Сыграть ещё раз</span>
@@ -289,6 +377,7 @@ const questionsTemplate$1 = data => {
 
 const artistLevel = htmlToElement(gameArtistScreen(levels, 1));
 
+//  Результат игры: выигрыш
 const resultSuccessScreen = htmlToElement(`
 <section class="result">
 <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -298,6 +387,7 @@ const resultSuccessScreen = htmlToElement(`
 <button class="result__replay" type="button">Сыграть ещё раз</button>
 </section>`);
 
+//  Результат игры: проигрыш, время вышло
 const failTriesScreen = htmlToElement(`
 <section class="result">
   <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>

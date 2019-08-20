@@ -2,13 +2,11 @@ import AbstractView from "../view";
 import { $$, $on, $trigger } from "../util";
 
 export default class WelcomeView extends AbstractView {
-  constructor(data) {
+  constructor() {
     super();
-    this.data = data;
   }
 
   get template() {
-    const { name, button, title, rules } = this.data;
     return `
 <section class="welcome">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>

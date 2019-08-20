@@ -1,29 +1,33 @@
 var welcomeView = (function () {
 'use strict';
 
-const createElement = (template) => {
+// create element
+const createElement = template => {
   const outer = document.createElement(`div`);
   outer.innerHTML = template;
   return outer.firstElementChild;
 };
 
+// make selection
 const $$ = (selector, scope = window.document) => {
   return scope.querySelector(selector);
 };
 
 const appElement = $$(`.app`);
 
+// replacing screen
 
 
-
+// listen to event
 const $on = (eventName, callback, el = appElement) => {
-  el.addEventListener(eventName, (evt) => {
+  el.addEventListener(eventName, evt => {
     callback(evt);
   });
 };
 
+// generate event
 const $trigger = (eventName, data = null) => {
-  let customEvent = new CustomEvent(eventName, {detail: data});
+  let customEvent = new CustomEvent(eventName, { detail: data });
   appElement.dispatchEvent(customEvent);
 };
 
@@ -52,13 +56,11 @@ class AbstractView {
 }
 
 class WelcomeView extends AbstractView {
-  constructor(data) {
+  constructor() {
     super();
-    this.data = data;
   }
 
   get template() {
-    const { name, button, title, rules } = this.data;
     return `
 <section class="welcome">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>

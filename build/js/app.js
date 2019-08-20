@@ -1,31 +1,35 @@
 var app = (function () {
 'use strict';
 
-const createElement = (template) => {
+// create element
+const createElement = template => {
   const outer = document.createElement(`div`);
   outer.innerHTML = template;
   return outer.firstElementChild;
 };
 
+// make selection
 const $$ = (selector, scope = window.document) => {
   return scope.querySelector(selector);
 };
 
 const appElement = $$(`.app`);
 
-const changeView = (view) => {
+// replacing screen
+const changeView = view => {
   appElement.replaceChild(view.element, $$(`section.main`));
 };
 
-
+// listen to event
 const $on = (eventName, callback, el = appElement) => {
-  el.addEventListener(eventName, (evt) => {
+  el.addEventListener(eventName, evt => {
     callback(evt);
   });
 };
 
+// generate event
 const $trigger = (eventName, data = null) => {
-  let customEvent = new CustomEvent(eventName, {detail: data});
+  let customEvent = new CustomEvent(eventName, { detail: data });
   appElement.dispatchEvent(customEvent);
 };
 
@@ -54,13 +58,11 @@ class AbstractView {
 }
 
 class WelcomeView extends AbstractView {
-  constructor(data) {
+  constructor() {
     super();
-    this.data = data;
   }
 
   get template() {
-    const { name, button, title, rules } = this.data;
     return `
 <section class="welcome">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
@@ -79,6 +81,25 @@ class WelcomeView extends AbstractView {
   }
 
   onStart() {}
+}
+
+class WelcomeScreen {
+  constructor() {
+    this.view = new WelcomeView();
+  }
+
+  init() {
+    changeView(this.view);
+  }
+}
+
+var welcomeScreen = new WelcomeScreen();
+
+function htmlToElement(html) {
+  const div = document.createElement(`div`);
+  html = html.trim(); // remove whitespaces
+  div.innerHTML = html;
+  return div.firstChild;
 }
 
 const MAX_ERRORS_COUNT = 3;
@@ -105,16 +126,7 @@ const phrase = {
     `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
 };
 
-const welcome = {
-  name: Label.GAME,
-  title: Label.TITLE_WELCOME,
-  rules: [
-    `Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.`,
-    `Ошибиться можно 3 раза.`,
-    `Удачи!`
-  ],
-  button: Label.BUTTON_WELCOME
-};
+
 
 
 
@@ -254,25 +266,6 @@ const levels = [
     answer: 1
   }
 ];
-
-class WelcomeScreen {
-  constructor() {
-    this.view = new WelcomeView(welcome);
-  }
-
-  init() {
-    changeView(this.view);
-  }
-}
-
-var welcomeScreen = new WelcomeScreen();
-
-function htmlToElement(html) {
-  const div = document.createElement(`div`);
-  html = html.trim(); // remove whitespaces
-  div.innerHTML = html;
-  return div.firstChild;
-}
 
 const header = attemptsLeft => `<header class="game__header">
 <a class="game__back" href="#">
@@ -416,7 +409,7 @@ class Loader {
 
 class App {
   constructor() {
-    this.main = document.querySelector(`.main`);
+    this.main = document.querySelector(`.app`);
     this.main.addEventListener("DOMContentLoaded", this.ready());
   }
   ready() {
@@ -436,78 +429,6 @@ class App {
     returnButton.addEventListener(`click`, () => {
       this.slider(0);
     });
-  }
-
-  slider(slideNumbers) {
-    switch (slideNumbers) {
-      case 0:
-        while (this.main.firstChild) {
-          this.main.removeChild(this.main.firstChild);
-        }
-        this.main.appendChild(welcomeScreen);
-        break;
-      case 1: {
-        if (artistLevel.parentNode === this.main) {
-          this.main.removeChild(artistLevel);
-        } else {
-          this.main.removeChild(welcomeScreen);
-        }
-        this.main.appendChild(genreLevel);
-        let flag = 0;
-        const gameInputs = document.querySelectorAll(".game__input");
-        for (let i = 0; i < gameInputs.length; i++) {
-          gameInputs[i].addEventListener("click", function() {
-            flag++;
-          });
-        }
-        document.querySelector(".game__submit").onclick = function(e) {
-          e.preventDefault();
-          if (flag > 0) {
-            document.querySelector(".game__tracks").reset();
-            slider(2);
-          } else alert("выберите хотя бы один вариант");
-        };
-        this.returner();
-        break;
-      }
-      case 2: {
-        while (this.main.firstChild) {
-          this.main.removeChild(main.firstChild);
-        }
-        this.main.appendChild(artistLevel);
-        const artistsInputs = document.querySelectorAll(".artist__input ");
-        for (let i = 0; i < artistsInputs.length; i++) {
-          artistsInputs[i].addEventListener("click", function() {
-            const rand = Math.floor(Math.random() * 2) + 3;
-            slider(rand);
-          });
-        }
-        this.returner();
-        break;
-      }
-      case 3:
-        while (main.firstChild) {
-          main.removeChild(main.firstChild);
-        }
-        main.appendChild(resultSuccessScreen);
-        document.querySelector(".result__replay").onclick = function(e) {
-          e.preventDefault();
-          slider(0);
-        };
-        break;
-      case 4:
-        while (main.firstChild) {
-          main.removeChild(main.firstChild);
-        }
-        main.appendChild(failTriesScreen);
-        document.querySelector(".result__replay").onclick = function(e) {
-          e.preventDefault();
-          slider(0);
-        };
-        break;
-      default:
-        break;
-    }
   }
 }
 

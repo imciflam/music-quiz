@@ -1,17 +1,27 @@
 var view = (function () {
 'use strict';
 
-const createElement = (template) => {
+// create element
+const createElement = template => {
   const outer = document.createElement(`div`);
   outer.innerHTML = template;
   return outer.firstElementChild;
 };
 
+// make selection
 const $$ = (selector, scope = window.document) => {
   return scope.querySelector(selector);
 };
 
 const appElement = $$(`.app`);
+
+// replacing screen
+
+
+// listen to event
+
+
+// generate event
 
 class AbstractView {
 

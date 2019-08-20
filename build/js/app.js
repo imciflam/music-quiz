@@ -65,16 +65,12 @@ class WelcomeView extends AbstractView {
 
   get template() {
     return `
-<section class="welcome">
+<section class="main main--welcome welcome">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
-  <button class="welcome__button"><span class="visually-hidden">Начать игру</span></button>
-  <h2 class="welcome__rules-title">Правила игры</h2>
-    <p class="welcome__text">Правила просты:</p>
-    <ul class="welcome__rules-list">
-      <li>За 5 минут нужно ответить на все вопросы.</li>
-      <li>Можно допустить 3 ошибки.</li>
-    </ul>
-    <p class="welcome__text">Удачи!</p>`.trim();
+  <button class="main-play welcome__button"></button>
+  <h2 class="title main-title"> </h2>
+  <p class="text main-text"> </p>
+</section>`.trim();
   }
 
   bind() {

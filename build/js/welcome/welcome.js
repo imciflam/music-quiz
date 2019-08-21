@@ -81,36 +81,42 @@ class WelcomeView extends AbstractView {
   }
 }
 
-// 5 minutes + 1 second
+// todo: customize later
+
+
+
+
+
+
 
 const label = {
-  GAME: `Угадай мелодию`,
+  GAME: `Guess a melody`,
 
-  TITLE_WIN: `Вы настоящий меломан!`,
-  TITLE_WELCOME: `Правила игры`,
-  TITLE_FAIL_TIME: `Увы и ах!`,
-  TITLE_FAIL_TRY: `Какая жалость!`,
+  TITLE_WIN: `You're a true music fan!`,
+  TITLE_WELCOME: `Game rules`,
+  TITLE_FAIL_TIME: `Alas..`,
+  TITLE_FAIL_TRY: `Such a pity!`,
 
-  BUTTON_WELCOME: `Начать игру`,
-  BUTTON_WIN: `Сыграть ещё раз`,
-  BUTTON_FAIL: `Попробовать ещё раз`
+  BUTTON_WELCOME: `Start game`,
+  BUTTON_WIN: `Play again`,
+  BUTTON_FAIL: `Try again`
 };
 
 const phrases = {
-  timeIsUp: () => `Время вышло!<br>Вы не успели отгадать все мелодии`,
+  timeIsUp: () => `Time is up!<br>You didn't make it on time.`,
   noMoreAttempts: () =>
-    `У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!`,
-  win: ({place, playersCount, betterThan}) =>
-    `Вы заняли ${place}-ое место из ${playersCount} игроков. Это&nbsp;лучше чем у&nbsp;${betterThan}%&nbsp;игроков`
+    `You have run out of attempts.<br>Better luck next time!`,
+  win: ({ place, playersCount, betterThan }) =>
+    `You've taken ${place} place out of ${playersCount} players. It's&nbsp;better than &nbsp;${betterThan}%&nbsp; other players' results`
 };
 
 const welcome$1 = {
   name: label.GAME,
   title: label.TITLE_WELCOME,
   rules: [
-    `Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.`,
-    `Ошибиться можно 3 раза.`,
-    `Удачи!`
+    `Rules are simple&nbsp;— &nbsp;you have to answer all questions in 5 minites.`,
+    `You can make 3 mistakes.`,
+    `Good luck!`
   ],
   button: label.BUTTON_WELCOME
 };
@@ -124,6 +130,25 @@ const resultTime = {
   content: phrases.timeIsUp(),
   isWin: false
 };
+
+
+
+
+
+
+
+// copy game object and reassign it
+
+
+
+
+
+
+
+
+
+
+//copy game object and reassign it
 
 class WelcomeScreen {
   constructor() {

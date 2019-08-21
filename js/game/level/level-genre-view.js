@@ -57,9 +57,10 @@ export default class LevelGenreView extends AbstractView {
         `change`,
         () => {
           if (checkboxes.some(it => it.checked)) {
+            // if at least 1 checkbox checked, unblock button
             answerButton.removeAttribute(`disabled`)
           } else {
-            answerButton.setAttribute(`disabled`, `disabled`)
+            answerButton.setAttribute(`disabled`, `disabled`) // maybe add alert later?
           }
         },
         checkbox
@@ -72,6 +73,6 @@ export default class LevelGenreView extends AbstractView {
   handlerAnswer(evt) {
     evt.preventDefault()
     const answers = [...evt.target.form.elements.answer]
-    $trigger(`answerGenre`, answers)
+    $trigger(`answerGenre`, answers) // new event
   }
 }

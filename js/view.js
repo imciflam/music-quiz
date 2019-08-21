@@ -1,8 +1,9 @@
 import { createElement } from "./util"
 
+// base class
 export default class AbstractView {
   get template() {
-    throw new Error(`Define template for view`)
+    throw new Error(`Provide template for view`)
   }
 
   render() {

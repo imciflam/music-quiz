@@ -1,27 +1,28 @@
-import AbstractView from '../../view';
+import AbstractView from "../../view"
 
-const mistakes = (errors) => {
-  let mistakeElement = ``;
+const mistakes = errors => {
+  let mistakeElement = ``
   if (errors > 0) {
+    // create 1 note for each mistake and clump them together
     while (errors) {
-      mistakeElement += `<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`;
-      errors--;
+      mistakeElement += `<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`
+      errors--
     }
   }
-  return mistakeElement;
-};
+  return mistakeElement
+}
 
 export default class HeaderView extends AbstractView {
   constructor(errors, time) {
-    super();
-    this.errors = errors;
-    this.time = time;
+    super()
+    this.errors = errors
+    this.time = time
   }
 
   get template() {
-    const minutes = parseInt(this.time / 60, 10);
-    const seconds = this.time - minutes * 60;
-    const zero = (value) => (value < 10) ? `0` : ``;
+    const minutes = parseInt(this.time / 60, 10)
+    const seconds = this.time - minutes * 60
+    const zero = value => (value < 10 ? `0` : ``) //show 0 if no left
     return `
 <header>
   <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -39,7 +40,6 @@ export default class HeaderView extends AbstractView {
   <div class="main-mistakes">
     ${mistakes(this.errors)}
   </div>
-</header>`;
+</header>`
   }
 }
-

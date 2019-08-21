@@ -1,18 +1,19 @@
-import AbstractView from '../../view';
-import {$on, $trigger} from '../../util';
+import AbstractView from "../../view"
+import { $on, $trigger } from "../../util"
 
 export default class LevelArtistView extends AbstractView {
   constructor(level) {
-    super();
-    this.level = level;
+    super()
+    this.level = level
   }
 
   get template() {
-    const {title, questions, src} = this.level;
+    const { title, questions, src } = this.level
 
-    const questionsTemplate = (data) => {
+    const questionsTemplate = data => {
+      // for each element in data - template
       return data.reduce((string, it, index) => {
-        const n = index++;
+        const n = index++
         const itemTemplate = `
 <div class="main-answer-wrapper">
   <input class="main-answer-r" type="radio" id="answer-${n}" name="answer" value="val-${n}"/>
@@ -21,11 +22,11 @@ export default class LevelArtistView extends AbstractView {
         alt="${it.artist}" width="134" height="134">
     ${it.artist}
   </label>
-</div>`.trim();
-        return string + itemTemplate;
-      }, ``);
-    };
-
+</div>`.trim()
+        return string + itemTemplate
+      }, ``)
+    }
+    // autoplay, so audio plays automatically
     return `
 <section class="main main--level main--level-genre">
   <div class="main-wrap">
@@ -45,16 +46,20 @@ export default class LevelArtistView extends AbstractView {
 
     </form>
   </div>
-</section>`.trim();
+</section>`.trim()
   }
 
   bind() {
-    const buttons = [...this.element.querySelectorAll(`.main-answer-r`)];
-    buttons.forEach((button) => {
-      $on(`change`, () => {
-        const answer = button.form.elements.answer.value;
-        $trigger(`answerArtist`, answer);
-      }, button);
-    });
+    const buttons = [...this.element.querySelectorAll(`.main-answer-r`)]
+    buttons.forEach(button => {
+      $on(
+        `change`, // change event fired off
+        () => {
+          const answer = button.form.elements.answer.value
+          $trigger(`answerArtist`, answer) // new event created
+        },
+        button
+      )
+    })
   }
 }

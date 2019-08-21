@@ -15,3 +15,14 @@ node_modules/
 build/
 /build/
 ./build
+build/js/game/game-view.js
+build/js/game/game-view.js
+build/js/game/game-view.js.map
+build/js/game/game.js
+build/js/game/game.js.map
+build/js/game/level/level-genre-view.js
+build/js/main.js
+build/js/game/level/level-genre-view.js.map
+build/js/main.js.map
+build/js/welcome/welcome.js.map
+js/game/level/level-genre-view.js

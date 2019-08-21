@@ -320,19 +320,19 @@ const printResult = (statistics, game) => {
 
 class AbstractView {
   get template() {
-    throw new Error(`Define template for view`);
+    throw new Error(`Define template for view`)
   }
 
   render() {
-    return createElement(this.template.trim());
+    return createElement(this.template.trim())
   }
-
+  bind() {}
   get element() {
     if (!this._element) {
       this._element = this.render();
       this.bind(); //bind to this
     }
-    return this._element;
+    return this._element
   }
 }
 
@@ -557,9 +557,9 @@ class LevelGenreView extends AbstractView {
   }
 
   get template() {
-    const {title, questions} = this.level;
+    const { title, questions } = this.level;
 
-    const questionsTemplate = (data) => {
+    const questionsTemplate = data => {
       return data.reduce((string, it, index) => {
         const n = index++;
         const itemTemplate = `
@@ -576,8 +576,8 @@ class LevelGenreView extends AbstractView {
   <input type="checkbox" name="answer" value="answer-${n}" id="a-${n}">
   <label class="genre-answer-check" for="a-${n}"></label>
 </div>`;
-        return string + itemTemplate;
-      }, ``);
+        return string + itemTemplate
+      }, ``)
     };
 
     return `
@@ -588,28 +588,34 @@ class LevelGenreView extends AbstractView {
 
       ${questionsTemplate(questions)}
 
-      <button class="genre-answer-send" type="submit" disabled>Ответить</button>
+      <button class="genre-answer-send" type="submit" disabled>Answer</button>
     </form>
   </div>
-</section>`.trim();
+</section>`.trim()
   }
 
   bind() {
     const answerButton = $$(`.genre-answer-send`, this.element);
 
-    const checkboxes = [...this.element.querySelectorAll(`.genre-answer input[type="checkbox"]`)];
+    const checkboxes = [
+      ...this.element.querySelectorAll(`.genre-answer input[type="checkbox"]`)
+    ];
 
-    checkboxes.forEach((checkbox) => {
-      $on(`change`, () => {
-        if (checkboxes.some((it) => it.checked)) {
-          answerButton.removeAttribute(`disabled`);
-        } else {
-          answerButton.setAttribute(`disabled`, `disabled`);
-        }
-      }, checkbox);
+    checkboxes.forEach(checkbox => {
+      $on(
+        `change`,
+        () => {
+          if (checkboxes.some(it => it.checked)) {
+            answerButton.removeAttribute(`disabled`);
+          } else {
+            answerButton.setAttribute(`disabled`, `disabled`);
+          }
+        },
+        checkbox
+      );
     });
 
-    $on(`click`, (evt) => this.handlerAnswer(evt), answerButton);
+    $on(`click`, evt => this.handlerAnswer(evt), answerButton);
   }
 
   handlerAnswer(evt) {

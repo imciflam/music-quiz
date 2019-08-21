@@ -1,19 +1,19 @@
-import { createElement } from "./util";
+import { createElement } from "./util"
 
 export default class AbstractView {
   get template() {
-    throw new Error(`Define template for view`);
+    throw new Error(`Define template for view`)
   }
 
   render() {
-    return createElement(this.template.trim());
+    return createElement(this.template.trim())
   }
-
+  bind() {}
   get element() {
     if (!this._element) {
-      this._element = this.render();
-      this.bind(); //bind to this
+      this._element = this.render()
+      this.bind() //bind to this
     }
-    return this._element;
+    return this._element
   }
 }

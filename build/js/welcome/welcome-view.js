@@ -31,6 +31,7 @@ const $trigger = (eventName, data = null) => {
   appElement.dispatchEvent(customEvent);
 };
 
+// base class
 class AbstractView {
   get template() {
     throw new Error(`Provide template for view`)

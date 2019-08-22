@@ -18,6 +18,7 @@
     "del": "2.2.2",
     "eslint": "4.2.0",
     "eslint-config-htmlacademy": "0.3.x",
+    "gh-pages": "^2.1.1",
     "gulp": "3.9.1",
     "gulp-better-rollup": "1.1.1",
     "gulp-csso": "3.0.0",

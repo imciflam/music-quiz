@@ -12,19 +12,3 @@ Thumbs.db
 node_modules/
 
 # Папка с собранными файлами проекта
-build/
-/build/
-./build
-build/js/game/game-view.js
-build/js/game/game-view.js
-build/js/game/game-view.js.map
-build/js/game/game.js
-build/js/game/game.js.map
-build/js/game/level/level-genre-view.js
-build/js/main.js
-build/js/game/level/level-genre-view.js.map
-build/js/main.js.map
-build/js/welcome/welcome.js.map
-js/game/level/level-genre-view.js
-build/js/welcome/welcome.js.map
-build/css/style.css

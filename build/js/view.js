@@ -23,7 +23,6 @@ const appElement = $$(`.app`);
 
 // create a custom event to be triggered on
 
-// base class
 class AbstractView {
   get template() {
     throw new Error(`Provide template for view`)

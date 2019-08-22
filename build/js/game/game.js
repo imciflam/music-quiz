@@ -322,7 +322,6 @@ const printResult = (statistics, game) => {
   return endGameMessage
 };
 
-// base class
 class AbstractView {
   get template() {
     throw new Error(`Provide template for view`)

@@ -14,9 +14,7 @@ const imagemin = require("gulp-imagemin");
 const rollup = require("gulp-better-rollup");
 const sourcemaps = require("gulp-sourcemaps");
 const mocha = require("gulp-mocha");
-const deploy = require("gulp-gh-pages");
-const ghPages = require("gh-pages");
-const path = require("path");
+const ghPages = require("gulp-gh-pages");
 
 gulp.task("style", function() {
   return gulp
@@ -123,11 +121,6 @@ gulp.task("build", ["assemble", "imagemin"]);
 
 // Push build to gh-pages
 
-gulp.task("deploy", ["serve"], function() {
-  return gulp.src("./build/**/*").pipe(deploy());
+gulp.task("deploy", function() {
+  return gulp.src("./dist/**/*").pipe(ghPages());
 });
-
-function deploy(cb) {
-  ghPages.publish(path.join(process.cwd(), "./build"), cb);
-}
-exports.deploy = deploy;

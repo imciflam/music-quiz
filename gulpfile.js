@@ -14,6 +14,10 @@ const imagemin = require("gulp-imagemin");
 const rollup = require("gulp-better-rollup");
 const sourcemaps = require("gulp-sourcemaps");
 const mocha = require("gulp-mocha"); 
+const commonjs = require(`rollup-plugin-commonjs`);
+const resolve = require(`rollup-plugin-node-resolve`);
+const babel = require(`rollup-plugin-babel`);
+const uglify = require(`gulp-uglify`);
  
 
 gulp.task("style", function() {
@@ -44,7 +48,7 @@ gulp.task("style", function() {
 
 gulp.task("scripts", function() {
   return gulp
-    .src(["js/**/*.js", "!js/**/*.mock.js", "!js/**/*.test.js"])
+    .src(["js/main.js"])
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(rollup({}, "iife"))

@@ -13,12 +13,8 @@ const rename = require("gulp-rename");
 const imagemin = require("gulp-imagemin");
 const rollup = require("gulp-better-rollup");
 const sourcemaps = require("gulp-sourcemaps");
-const mocha = require("gulp-mocha");
-// const ghPages = require("gulp-gh-pages");
-
-const babel = require(`rollup-plugin-babel`);
-
-const deploy = require("gulp-gh-pages");
+const mocha = require("gulp-mocha"); 
+ 
 
 gulp.task("style", function() {
   return gulp
@@ -59,8 +55,8 @@ gulp.task("scripts", function() {
 gulp.task("test", function() {
   return gulp.src(["js/**/*.test.js"], { read: false }).pipe(
     mocha({
-      compilers: ["js:babel-register"], // Включим поддержку "import/export" в Mocha тестах
-      reporter: "spec" // Вид в котором я хочу отображать результаты тестирования
+      compilers: ["js:babel-register"],  
+      reporter: "spec"      
     })
   );
 });

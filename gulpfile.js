@@ -51,8 +51,17 @@ gulp.task("scripts", function() {
     .src(["js/main.js"])
     .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(rollup({}, "iife"))
-    .pipe(sourcemaps.write(""))
+    .pipe(rollup({
+      plugins: [
+        babel({
+          babelrc: false,
+          exclude: `node_modules/**`,
+          presets: [`@babel/env`]
+        })
+      ]
+    }, `iife`)) 
+    .pipe(uglify())
+    .pipe(sourcemaps.write(``))
     .pipe(gulp.dest("build/js/"));
 });
 

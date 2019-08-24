@@ -42,6 +42,7 @@
     "@babel/core": "^7.5.5",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.5",
+    "babel-polyfill": "^6.26.0",
     "gulp-sourcemap": "^1.0.1",
     "rollup-plugin-babel": "^4.3.3"
   }

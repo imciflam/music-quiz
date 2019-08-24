@@ -861,6 +861,8 @@ class Application {
 
 Application.init(levels);
 
+Application.init();
+
 }());
 
 //# sourceMappingURL=main.js.map

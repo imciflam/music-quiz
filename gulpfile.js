@@ -14,7 +14,9 @@ const imagemin = require("gulp-imagemin");
 const rollup = require("gulp-better-rollup");
 const sourcemaps = require("gulp-sourcemaps");
 const mocha = require("gulp-mocha");
-const ghPages = require("gulp-gh-pages");
+// const ghPages = require("gulp-gh-pages");
+
+const deploy = require("gulp-gh-pages");
 
 gulp.task("style", function() {
   return gulp
@@ -121,6 +123,23 @@ gulp.task("build", ["assemble", "imagemin"]);
 
 // Push build to gh-pages
 
-gulp.task("deploy", function() {
-  return gulp.src("./build/**/*").pipe(ghPages());
-});
+// gulp.task("deploy", function() {
+//   return gulp.src("./build/**/*").pipe(ghPages());
+// });
+
+// gulp.task("deploy", function() {
+//   return gulp.src("./build/**/*").pipe(
+//     deploy({
+//       remoteUrl: "https://github.com/imciflam/music-quiz.git",
+//       branch: "master"
+//     })
+//   );
+// });
+
+import ghPages from "gulp-gh-pages";
+
+import { build } from "./build";
+
+export const publish = () => gulp.src("**/*", { cwd: "dest" }).pipe(ghPages());
+
+export const deploy = gulp.series(build, publish);

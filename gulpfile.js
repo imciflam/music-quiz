@@ -14,7 +14,6 @@ const imagemin = require("gulp-imagemin");
 const rollup = require("gulp-better-rollup");
 const sourcemaps = require("gulp-sourcemaps");
 const mocha = require("gulp-mocha");
-const sourcemaps = require(`gulp-sourcemaps`);
 // const ghPages = require("gulp-gh-pages");
 
 const babel = require(`rollup-plugin-babel`);
@@ -123,54 +122,4 @@ gulp.task("assemble", ["clean"], function() {
 });
 
 gulp.task("build", ["assemble", "imagemin"]);
-
-// Push build to gh-pages
-
-// gulp.task("deploy", function() {
-//   return gulp.src("./build/**/*").pipe(ghPages());
-// });
-
-// gulp.task("deploy", function() {
-//   return gulp.src("./build/**/*").pipe(
-//     deploy({
-//       remoteUrl: "https://github.com/imciflam/music-quiz.git",
-//       branch: "master"
-//     })
-//   );
-// });
-
-import ghPages from "gulp-gh-pages";
-
-import { build } from "./build";
-
-export const publish = () => gulp.src("**/*", { cwd: "dest" }).pipe(ghPages());
-
-export const deploy = gulp.series(build, publish);
-
-gulp.task(`scripts`, () => {
-  return (
-    gulp
-      .src(`js/main.js`)
-      .pipe(plumber())
-      .pipe(sourcemaps.init())
-      .pipe(
-        rollup(
-          {
-            plugins: [
-              resolve({ browser: true }),
-              commonjs(),
-              babel({
-                babelrc: false,
-                exclude: `node_modules/**`,
-                presets: [`@babel/env`]
-              })
-            ]
-          },
-          `iife`
-        )
-      )
-      //.pipe(uglify())
-      .pipe(sourcemaps.write(``))
-      .pipe(gulp.dest(`build/js`))
-  );
-});
+ 

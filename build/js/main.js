@@ -1,6 +1,9 @@
 (function () {
 'use strict';
 
+(function () {
+'use strict';
+
 // create an element
 const createElement = template => {
   const outer = document.createElement(`div`);
@@ -860,6 +863,8 @@ class Application {
 }
 
 Application.init(levels);
+
+}());
 
 }());
 

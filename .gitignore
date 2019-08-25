@@ -4,13 +4,12 @@ Thumbs.db
 
 # Файлы редактора
 .idea
-.vscode
 *.sublime*
+.vscode
 
 # Вспомогательные файлы
-*.log
+*.log*
 node_modules/
 
 # Папка с собранными файлами проекта
 build/
-.vscode/settings.json

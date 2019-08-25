@@ -46,13 +46,15 @@ gulp.task("style", function() {
     .pipe(gulp.dest("build/css"));
 });
 
-gulp.task("scripts", function() {
+gulp.task("scripts", () => {
   return gulp
     .src(["js/main.js"])
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(rollup({
       plugins: [
+        resolve({browser: true}),
+        commonjs(),
         babel({
           babelrc: false,
           exclude: `node_modules/**`,

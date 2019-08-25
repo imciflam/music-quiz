@@ -1,51 +1,48 @@
 {
   "name": "GuessMelody",
-  "version": "3.0.0",
+  "version": "5.0.0",
   "private": true,
+  "text": "Личный проект «Угадай мелодию» от HTML Academy",
   "scripts": {
-    "eslint": "eslint js/",
+    "eslint": "eslint ./gulpfile.js js/",
+    "stylelint": "stylelint 'sass/**/*.scss' --syntax scss",
     "build": "gulp build",
     "start": "gulp serve",
-    "test": "npm run eslint && gulp test"
+    "test": "npm run eslint && npm run stylelint && gulp test"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "autoprefixer": "6.7.7",
-    "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
-    "babel-register": "6.26.0",
-    "browser-sync": "2.18.8",
-    "css-mqpacker": "6.0.0",
-    "del": "2.2.2",
-    "eslint": "4.2.0",
-    "eslint-config-htmlacademy": "0.3.x",
-    "gh-pages": "^2.1.1",
+    "@babel/core": "7.2.2",
+    "@babel/preset-env": "7.2.3",
+    "autoprefixer": "9.0.2",
+    "browser-sync": "2.24.6",
+    "chai": "4.2.0",
+    "css-mqpacker": "7.0.0",
+    "del": "3.0.0",
+    "eslint": "5.7.0",
+    "eslint-config-htmlacademy": "0.5.x",
+    "gulp-uglify": "3.0.1",
+    "rollup-plugin-babel": "4.1.0",
     "gulp": "3.9.1",
-    "gulp-better-rollup": "1.1.1",
-    "gulp-csso": "3.0.0",
-    "gulp-imagemin": "3.2.0",
-    "gulp-mocha": "4.3.1",
-    "gulp-plumber": "1.1.0",
-    "gulp-postcss": "7.0.0",
-    "gulp-rename": "1.2.2",
-    "gulp-sass": "3.1.0",
-    "gulp-sourcemaps": "2.6.1",
-    "gulp-uglify": "^3.0.1",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-node-resolve": "^4.0.0"
+    "gulp-better-rollup": "3.4.0",
+    "gulp-csso": "3.0.1",
+    "gulp-imagemin": "4.1.0",
+    "gulp-mocha": "6.0.0",
+    "gulp-plumber": "1.2.0",
+    "gulp-postcss": "7.0.1",
+    "gulp-rename": "1.4.0",
+    "gulp-sass": "4.0.1",
+    "gulp-sourcemaps": "2.6.4",
+    "gulp-svgstore": "6.1.1",
+    "rollup-plugin-commonjs": "9.2.0",
+    "rollup-plugin-node-resolve": "4.0.0",
+    "stylelint": "9.4.x",
+    "stylelint-config-htmlacademy": "0.1.x"
   },
   "engines": {
-    "node": "6.11.3"
-  },
-  "babel": {
-    "plugins": [
-      "transform-es2015-modules-commonjs"
-    ]
+    "node": "10"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
-    "babel-polyfill": "^6.26.0",
-    "gulp-sourcemap": "^1.0.1",
-    "rollup-plugin-commonjs": "^10.0.2"
+    "@babel/polyfill": "7.2.3",
+    "babel-polyfill": "^6.26.0"
   }
 }

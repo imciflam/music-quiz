@@ -52,8 +52,10 @@ body {
   color: #f00; }
 
 .player-wrapper {
-  animation: fadein 1000ms ease-out;
-  animation-iteration-count: 1;
+  -webkit-animation: fadein 1000ms ease-out;
+          animation: fadein 1000ms ease-out;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
   background: url("../img/player-background.png") no-repeat 0 100%;
   background-size: cover;
   margin-right: 20px; }
@@ -70,6 +72,12 @@ body {
     background-position: 0 0; }
   .player-control--pause {
     background-position: 0 -52px; }
+
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
 
 @keyframes fadein {
   0% {
@@ -104,7 +112,8 @@ body {
   position: absolute;
   text-indent: -100em;
   top: 0;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   width: 186px; }
 
 .title {
@@ -257,14 +266,17 @@ input[type=checkbox]:checked + .genre-answer-check {
   padding: 0;
   position: absolute;
   text-indent: -100em;
-  transform-origin: center;
+  -webkit-transform-origin: center;
+          transform-origin: center;
   width: 0; }
 
 .main-play:hover {
-  transform: scale(1.05); }
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05); }
 
 .main-play:active {
-  transform: scale(1.04); }
+  -webkit-transform: scale(1.04);
+          transform: scale(1.04); }
 
 .timer {
   height: 100%;
@@ -288,7 +300,8 @@ input[type=checkbox]:checked + .genre-answer-check {
   left: 50%;
   position: absolute;
   top: 0;
-  transform: translateX(-50%); }
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%); }
 
 .timer-value-mins,
 .timer-value-secs {
@@ -302,13 +315,22 @@ input[type=checkbox]:checked + .genre-answer-check {
   text-align: left; }
 
 .timer-value-dots {
-  animation: blink 1000ms steps(1, end) infinite; }
+  -webkit-animation: blink 1000ms steps(1, end) infinite;
+          animation: blink 1000ms steps(1, end) infinite; }
 
 .timer-value--finished {
-  animation: shrink 2000ms infinite;
+  -webkit-animation: shrink 2000ms infinite;
+          animation: shrink 2000ms infinite;
   color: red; }
   .timer-value--finished .timer-value-dots {
-    animation: none; }
+    -webkit-animation: none;
+            animation: none; }
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0; }
+  50% {
+    opacity: 1; } }
 
 @keyframes blink {
   0% {
@@ -316,13 +338,27 @@ input[type=checkbox]:checked + .genre-answer-check {
   50% {
     opacity: 1; } }
 
+@-webkit-keyframes shrink {
+  0% {
+    -webkit-transform: translateX(-50%) scale(1);
+            transform: translateX(-50%) scale(1); }
+  50% {
+    -webkit-transform: translateX(-50%) scale(1.1);
+            transform: translateX(-50%) scale(1.1); }
+  100% {
+    -webkit-transform: translateX(-50%) scale(1);
+            transform: translateX(-50%) scale(1); } }
+
 @keyframes shrink {
   0% {
-    transform: translateX(-50%) scale(1); }
+    -webkit-transform: translateX(-50%) scale(1);
+            transform: translateX(-50%) scale(1); }
   50% {
-    transform: translateX(-50%) scale(1.1); }
+    -webkit-transform: translateX(-50%) scale(1.1);
+            transform: translateX(-50%) scale(1.1); }
   100% {
-    transform: translateX(-50%) scale(1); } }
+    -webkit-transform: translateX(-50%) scale(1);
+            transform: translateX(-50%) scale(1); } }
 
 .main-mistakes {
   font-size: 2em;

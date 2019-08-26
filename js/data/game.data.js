@@ -134,7 +134,7 @@ const phrases = {
   noMoreAttempts: () =>
     `You have run out of attempts.<br>Better luck next time!`,
   win: ({ place, playersCount, betterThan }) =>
-    `You've taken ${place} place out of ${playersCount} players. It's&nbsp;better than &nbsp;${betterThan}%&nbsp; other players' results`
+    `You've taken ${place} place out of ${playersCount} players. <br> It's better than ${betterThan} other players' results`
 }
 
 export const welcome = {

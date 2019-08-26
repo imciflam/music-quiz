@@ -10,8 +10,8 @@ export default class ResultView extends AbstractView {
   get template() {
     const { name, button, title, content, isWin, score, errors } = this.data
     const winText = `
-In&nbsp;3&nbsp;m и 25&nbsp;s
-<br>you&nbsp;got ${score} points (8 quick)
+In 1 m и 25 s
+<br>you got ${score} points (8 quick)
 <br>made ${errors} errors`
 
     return `

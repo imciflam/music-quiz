@@ -1,6 +1,9 @@
 # Music quiz game
 
-### Installation
+### Description
+Test your musical knowledge and get to know new music! Try to score maximum number of points in 5 minites.
+
+### Installation (for dev purposes)
 
 1. Clone the repo
 ```sh

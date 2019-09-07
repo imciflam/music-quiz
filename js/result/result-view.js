@@ -1,18 +1,18 @@
-import AbstractView from "../view"
-import { $$, $on, $trigger } from "../util"
+import AbstractView from "../view";
+import { $$, $on, $trigger } from "../util";
 
 export default class ResultView extends AbstractView {
   constructor(data) {
-    super()
-    this.data = data
+    super();
+    this.data = data;
   }
 
   get template() {
-    const { name, button, title, content, isWin, score, errors } = this.data
+    const { name, button, title, content, isWin, score, errors } = this.data;
     const winText = `
 In&nbsp;3&nbsp;m и 25&nbsp;s
-<br>you&nbsp;got ${score} points (8 quick)
-<br>made ${errors} errors`
+<br>you&nbsp;got ${score} points and 
+<br>made ${errors} errors`;
 
     return `
 <section class="main main--result">
@@ -24,10 +24,10 @@ In&nbsp;3&nbsp;m и 25&nbsp;s
   </div>
   ${isWin ? `<span class="main-comparison">${content}</span>` : ``}
   <span role="button" tabindex="0" class="main-replay">${button}</span>
-</section>`.trim()
+</section>`.trim();
   }
 
   bind() {
-    $on(`click`, () => $trigger(`replay`), $$(`.main-replay`, this.element))
+    $on(`click`, () => $trigger(`replay`), $$(`.main-replay`, this.element));
   }
 }

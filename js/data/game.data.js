@@ -42,7 +42,7 @@ const samples = [
     src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`,
     genre: `Electronic`
   }
-]
+];
 
 export const levels = [
   {
@@ -109,12 +109,12 @@ export const levels = [
     src: samples[1].src,
     answer: 1
   }
-]
+];
 
-export const LEVELS_COUNT = 10
-export const FAST_ANSWER_PERIOD = 30
-export const MAX_ERRORS_COUNT = 4
-export const TIME_FOR_GAME = 60 * 5 + 1
+export const LEVELS_COUNT = 10;
+export const FAST_ANSWER_PERIOD = 30;
+export const MAX_ERRORS_COUNT = 4;
+export const TIME_FOR_GAME = 60 * 5 + 1;
 
 const label = {
   GAME: `Guess a melody`,
@@ -127,7 +127,7 @@ const label = {
   BUTTON_WELCOME: `Start game`,
   BUTTON_WIN: `Play again`,
   BUTTON_FAIL: `Try again`
-}
+};
 
 const phrases = {
   timeIsUp: () => `Time is up!<br>You didn't make it on time.`,
@@ -135,7 +135,7 @@ const phrases = {
     `You have run out of attempts.<br>Better luck next time!`,
   win: ({ place, playersCount, betterThan }) =>
     `You've taken ${place} place out of ${playersCount} players. <br> It's better than ${betterThan} other players' results`
-}
+};
 
 export const welcome = {
   name: label.GAME,
@@ -146,14 +146,14 @@ export const welcome = {
     `Good luck!`
   ],
   button: label.BUTTON_WELCOME
-}
+};
 
 export const resultTry = {
   name: label.GAME,
   title: label.TITLE_FAIL_TRY,
   button: label.BUTTON_FAIL,
   isWin: false
-}
+};
 
 export const resultTime = {
   name: label.GAME,
@@ -161,82 +161,82 @@ export const resultTime = {
   button: label.BUTTON_FAIL,
   content: phrases.timeIsUp(),
   isWin: false
-}
+};
 
 export const resultWin = {
   name: label.GAME,
   title: label.TITLE_WIN,
   button: label.BUTTON_WIN,
   isWin: true
-}
+};
 
-export const scoreBoard = []
+export const scoreBoard = [];
 
 export const initialGame = {
   level: -1,
   remainingAttempts: MAX_ERRORS_COUNT,
   time: TIME_FOR_GAME,
   answers: []
-}
+};
 
 // copy game object and reassign it
 export const tick = game => {
-  game = Object.assign({}, game)
-  game.time--
-  return game
-}
+  game = Object.assign({}, game);
+  game.time--;
+  return game;
+};
 
-export const getLevel = (index, allLevels = levels) => allLevels[index]
+export const getLevel = (index, allLevels = levels) => allLevels[index];
 
 export const nextLevel = (state, allLevels = levels) => {
-  const index = state.level + 1
+  const index = state.level + 1;
   if (!getLevel(index, allLevels)) {
-    throw new RangeError(`Can't find level ${index}`)
+    throw new RangeError(`Can't find level ${index}`);
   }
-  state.level = index
-  return state
-}
+  state.level = index;
+  return state;
+};
 
 export const startGame = () => {
-  nextLevel()
-}
+  nextLevel();
+};
 
 export const getAllLevelsTypes = (allLevels = levels) => {
-  return allLevels.map(level => level.type)
-}
+  return allLevels.map(level => level.type);
+};
 
 //copy game object and reassign it
 export const setLives = (game, lives) => {
   if (lives < 0) {
-    throw new RangeError(`Can't set negative lives`)
+    throw new RangeError(`Can't set negative lives`);
   }
-  game = Object.assign({}, game)
-  game.lives = lives
-  return game
-}
+  game = Object.assign({}, game);
+  game.lives = lives;
+  return game;
+};
 
 export const getScore = answers => {
-  let score = -1
+  let score = -1;
   // if all questions were answered
   if (answers.length === LEVELS_COUNT) {
     score = answers.reduce((acc, it) => {
-      let point = -2
+      let point = -2;
       if (it.isCorrect) {
         // if answer was fast
-        point = it.timeSpent < FAST_ANSWER_PERIOD ? 2 : 1
+        point = it.timeSpent < FAST_ANSWER_PERIOD ? 2 : 1;
       }
-      return acc + point
-    }, 0)
+      return acc + point;
+    }, 0);
   }
-  return score
-}
+  return score;
+};
 
 const getTimeSpent = answers => {
   let time = answers.reduce((acc, it) => {
-    return acc + it.timeSpent
-  }, 0)
-  return time
-}
+    return acc + it.timeSpent;
+  }, 0);
+  return time;
+};
 
 // fetching scoreboard and creating array of objs from it, { position, score }
 const getPosition = (statistics, score) => {
@@ -245,40 +245,46 @@ const getPosition = (statistics, score) => {
       position,
       score: scoreFromStaticstics
     })
-  )
+  );
 
   // push a new obj
   statisticsIndexed.push({
     position: null,
     score
-  })
+  });
 
   // get new obj's position
   const position = statisticsIndexed
     .sort((a, b) => b.score - a.score)
     .reduce((acc, it, index) => {
       if (it.position === null) {
-        acc = index
+        acc = index;
       }
-      return acc
-    }, -1)
+      return acc;
+    }, -1);
 
   if (position === -1) {
-    throw new Error(`Can't define position in Scoreboard`)
+    throw new Error(`Can't define position in Scoreboard`);
   }
-  return position
-}
+  return position;
+};
 
+export const getFastScore = answers => {
+  const slowScore = answers.filter(
+    it => it.isCorrect && it.timeSpent >= FAST_ANSWER_PERIOD
+  ).length;
+  return getScore(answers) - slowScore;
+};
 export const printResult = (statistics, game) => {
-  let endGameMessage = ``
-  const score = getScore(game.answers)
-  const time = getTimeSpent(game.answers)
+  let endGameMessage = ``;
+  const score = getScore(game.answers);
+  const time = getTimeSpent(game.answers);
 
   //if time's not up && there's lives
   if (game.remainingAttempts > 0 && time < TIME_FOR_GAME) {
-    const position = getPosition(statistics, score)
-    statistics.push(score)
-    statistics.sort((a, b) => b - a)
+    const position = getPosition(statistics, score);
+    statistics.push(score);
+    statistics.sort((a, b) => b - a);
 
     const stats = {
       place: position + 1,
@@ -286,34 +292,34 @@ export const printResult = (statistics, game) => {
       betterThan: Math.round(
         ((statistics.length - position - 1) * 100) / statistics.length
       )
-    }
-    endGameMessage = phrases.win(stats)
+    };
+    endGameMessage = phrases.win(stats);
   } else {
     endGameMessage =
-      time > TIME_FOR_GAME ? phrases.timeIsUp() : phrases.noMoreAttempts()
+      time > TIME_FOR_GAME ? phrases.timeIsUp() : phrases.noMoreAttempts();
   }
 
-  return endGameMessage
-}
+  return endGameMessage;
+};
 
 export class Timer {
   constructor(time) {
-    this.time = time
+    this.time = time;
   }
 
   get isFinished() {
-    return this.time < 1
+    return this.time < 1;
   }
 
   get time() {
-    return this._time
+    return this._time;
   }
 
   set time(value) {
-    this._time = value
+    this._time = value;
   }
 
   tick() {
-    this.time--
+    this.time--;
   }
 }

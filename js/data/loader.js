@@ -1,5 +1,5 @@
 import Application from "../application";
-const URL = `https://es.dump.academy/guess-melody`;
+const URL = `https://es.dump.academy/pixel-hunter`;
 const NAME_ID = `vita`;
 const CHUNK_SIZE = 4;
 let AUDIO_LOAD_TIMEOUT = 5000; // 5 sec initial timeframe to load one chunk

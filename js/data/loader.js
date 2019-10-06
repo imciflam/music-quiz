@@ -1,5 +1,5 @@
 import Application from "../application";
-const URL = `https://es.dump.academy/pixel-hunter`;
+const URL = `https://es.dump.academy/guess-melody`;
 const NAME_ID = `vita`;
 const CHUNK_SIZE = 4;
 let AUDIO_LOAD_TIMEOUT = 5000; // 5 sec initial timeframe to load one chunk
@@ -9,21 +9,14 @@ let notLoadedUrls = [];
 let loadedAudioQuantity = 0;
 
 export default class Loader {
-  static getLevels() {
-    return fetch(`${URL}/questions`)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else if (response.status === 404) {
-          throw new Error(`Data not found -  ${URL}`);
-        }
-        throw new Error(
-          `Unknown error: ${response.status} ${response.statusText}`
-        );
-      })
-      .then(data => {
-        return data;
-      });
+  static async getLevels() {
+    const response = await fetch(`${URL}/questions`); //waiting for fetch function's results
+    if (response.ok) {
+      return response.json();
+    } else if (response.status === 404) {
+      throw new Error(`Data not found -  ${URL}`);
+    }
+    throw new Error(`Unknown error: ${response.status} ${response.statusText}`);
   }
 
   static loadChunk(urls) {

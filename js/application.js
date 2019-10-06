@@ -21,7 +21,7 @@ export default class Application {
   static init(data) {
     welcomeScreen.init();
     // had to turn loader off bc of server issues. using data as a backup plan.
-    Loader.getLevels().then(result => console.log(result));
+    // Loader.getLevels().then(result => console.log(result));
     Application.game = new GameScreen(data);
     $on(`start`, Application.startGame);
     $on(`replay`, Application.startGame);

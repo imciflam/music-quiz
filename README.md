@@ -20,3 +20,10 @@ App will run on http://localhost:3502
 ```sh
 npm test
 ```
+### Deploy
+
+1. Run gulp
+```sh
+gulp scripts
+```
+2. Push babeled file to git

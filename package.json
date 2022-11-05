@@ -22,7 +22,7 @@
     "eslint-config-htmlacademy": "0.5.x",
     "gulp-uglify": "3.0.1",
     "rollup-plugin-babel": "4.1.0",
-    "gulp": "3.9.1",
+    "gulp": "4.0.2",
     "gulp-better-rollup": "3.4.0",
     "gulp-csso": "3.0.1",
     "gulp-imagemin": "4.1.0",

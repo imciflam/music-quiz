@@ -14,7 +14,7 @@
     "@babel/core": "7.2.2",
     "@babel/preset-env": "7.2.3",
     "autoprefixer": "9.0.2",
-    "browser-sync": "2.24.6",
+    "browser-sync": "2.29.1",
     "chai": "4.2.0",
     "css-mqpacker": "7.0.0",
     "del": "3.0.0",
@@ -35,7 +35,7 @@
     "gulp-svgstore": "6.1.1",
     "rollup-plugin-commonjs": "9.2.0",
     "rollup-plugin-node-resolve": "4.0.0",
-    "stylelint": "9.4.x",
+    "stylelint": "15.6.x",
     "stylelint-config-htmlacademy": "0.1.x"
   },
   "engines": {
